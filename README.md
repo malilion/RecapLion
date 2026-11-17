@@ -1,6 +1,8 @@
 <div align="center">
 
-# 🦁 RecapLion
+<img src="docs/brand/icon.svg" width="128" height="128" alt="RecapLion icon">
+
+# RecapLion
 
 **An animated GitHub year in review — for anyone, with any AI agent.**
 
@@ -189,6 +191,45 @@ Add your own by editing `ACHIEVEMENTS` in `scripts/analyze.py`.
 | 🧵 | Multi-threaded | Repositories with commits |
 | 🍂 | All Seasons | Active months |
 | 🚀 | Shipper | Releases published |
+
+## ❓ FAQ
+
+### If someone installs this skill, does it collect everything, including private repositories?
+
+No. Private data is never collected by default, and nobody can ever reach **someone else's**
+private repositories.
+
+**1. The user is asked first**
+
+| How it runs | What happens |
+|---|---|
+| Through an AI agent (Claude Code, Codex, …) | `SKILL.md` tells the agent to ask "public repositories only, or include your private ones?" before collecting anything |
+| `recap.py` in a terminal | A menu asks you to choose 1 (public) or 2 (all) |
+| Automation (GitHub Action, CI) | Nobody can be asked, so it collects **public data only**; the Action template uses `RECAP_SCOPE: public` |
+
+**2. "All" only works for your own account**
+- `--scope all` requires the token's owner to be the same account as `--user`. The script checks
+  this and stops with an error otherwise.
+- So if someone runs RecapLion for `malilion`, they only see malilion's public repositories. They
+  can never get the private ones, because they don't have malilion's token.
+- Likewise, choosing "all" only ever covers the private repositories **you** can access.
+
+**3. Your data stays on your machine**
+- RecapLion only talks to GitHub's API. It never sends data to the author or to any other server.
+- Reports are written to your own folder; whether to share them is up to you.
+
+### What do I get when I download the skill?
+
+- **`install.sh` or a manual copy** — only the `skills/github-year-review/` folder: scripts and
+  instructions, no one's data.
+- **Claude Code `/plugin install`** — the whole repository, including the website and the demo
+  reports in `docs/`. Those are already public on the website and contain public repositories only.
+
+### Public-only mode: does it hide private work from the totals too?
+
+Yes. With `--scope public`, private activity is left out completely — not even as anonymous
+counts on the calendar. (GitHub itself would count your private work when you use your own token,
+so RecapLion rebuilds the year from public contributions only.)
 
 ## 📁 Structure
 

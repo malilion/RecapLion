@@ -6,6 +6,7 @@ compatibility: Requires Python 3.9+ (standard library only) and HTTPS access to 
 metadata:
   version: "1.2.0"
   project: RecapLion
+  icon: assets/icon.svg
   repository: https://github.com/malilion/RecapLion
 ---
 

@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512" role="img" aria-label="RecapLion">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#151833"/><stop offset="1" stop-color="#22103f"/>
+    </linearGradient>
+    <linearGradient id="ring" x1="0" y1="1" x2="1" y2="0">
+      <stop offset="0" stop-color="#7c5cff"/><stop offset=".5" stop-color="#22d3ee"/><stop offset="1" stop-color="#f472b6"/>
+    </linearGradient>
+    <linearGradient id="maneA" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ffc53d"/><stop offset="1" stop-color="#f97316"/>
+    </linearGradient>
+    <linearGradient id="maneB" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ffb020"/><stop offset="1" stop-color="#ea580c"/>
+    </linearGradient>
+    <radialGradient id="face" cx=".5" cy=".38" r=".7">
+      <stop offset="0" stop-color="#ffe7a8"/><stop offset="1" stop-color="#ffc35a"/>
+    </radialGradient>
+    <radialGradient id="glow" cx=".5" cy=".5" r=".5">
+      <stop offset="0" stop-color="#7c5cff" stop-opacity=".45"/><stop offset="1" stop-color="#7c5cff" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="512" height="512" rx="116" fill="url(#bg)"/>
+  <circle cx="256" cy="266" r="190" fill="url(#glow)"/>
+  <path d="M 100.0 144.1 A 198 198 0 1 0 349.0 91.2" fill="none" stroke="url(#ring)" stroke-width="26" stroke-linecap="round"/>
+  <path d="M 313.9 72.5 L 382.6 79.6 L 358.2 125.6 Z" fill="#f472b6" stroke="#f472b6" stroke-width="8" stroke-linejoin="round"/>
+  <g>
+    <ellipse cx="256" cy="166" rx="40" ry="54" fill="url(#maneA)" transform="rotate(0.00 256 270)"/><ellipse cx="256" cy="166" rx="40" ry="54" fill="url(#maneB)" transform="rotate(25.71 256 270)"/><ellipse cx="256" cy="166" rx="40" ry="54" fill="url(#maneA)" transform="rotate(51.43 256 270)"/><ellipse cx="256" cy="166" rx="40" ry="54" fill="url(#maneB)" transform="rotate(77.14 256 270)"/><ellipse cx="256" cy="166" rx="40" ry="54" fill="url(#maneA)" transform="rotate(102.86 256 270)"/><ellipse cx="256" cy="166" rx="40" ry="54" fill="url(#maneB)" transform="rotate(128.57 256 270)"/><ellipse cx="256" cy="166" rx="40" ry="54" fill="url(#maneA)" transform="rotate(154.29 256 270)"/><ellipse cx="256" cy="166" rx="40" ry="54" fill="url(#maneB)" transform="rotate(180.00 256 270)"/><ellipse cx="256" cy="166" rx="40" ry="54" fill="url(#maneA)" transform="rotate(205.71 256 270)"/><ellipse cx="256" cy="166" rx="40" ry="54" fill="url(#maneB)" transform="rotate(231.43 256 270)"/><ellipse cx="256" cy="166" rx="40" ry="54" fill="url(#maneA)" transform="rotate(257.14 256 270)"/><ellipse cx="256" cy="166" rx="40" ry="54" fill="url(#maneB)" transform="rotate(282.86 256 270)"/><ellipse cx="256" cy="166" rx="40" ry="54" fill="url(#maneA)" transform="rotate(308.57 256 270)"/><ellipse cx="256" cy="166" rx="40" ry="54" fill="url(#maneB)" transform="rotate(334.29 256 270)"/>
+  </g>
+  <circle cx="194" cy="200" r="24" fill="#ffc35a"/><circle cx="194" cy="200" r="12" fill="#f59e0b"/>
+  <circle cx="318" cy="200" r="24" fill="#ffc35a"/><circle cx="318" cy="200" r="12" fill="#f59e0b"/>
+  <circle cx="256" cy="270" r="92" fill="url(#face)"/>
+  <ellipse cx="222" cy="256" rx="11" ry="14" fill="#2a1a3e"/>
+  <ellipse cx="290" cy="256" rx="11" ry="14" fill="#2a1a3e"/>
+  <circle cx="226" cy="251" r="4" fill="#fff"/><circle cx="294" cy="251" r="4" fill="#fff"/>
+  <ellipse cx="236" cy="304" rx="26" ry="20" fill="#fff4d6"/>
+  <ellipse cx="276" cy="304" rx="26" ry="20" fill="#fff4d6"/>
+  <path d="M 239 282 Q 256 276 273 282 Q 268 300 256 302 Q 244 300 239 282 Z" fill="#7c2d12"/>
+  <path d="M 256 302 L 256 312 M 242 320 Q 256 328 270 320" fill="none" stroke="#7c2d12" stroke-width="5" stroke-linecap="round"/>
+  <path d="M226.0,32.0 L234.3,65.7 L268.0,74.0 L234.3,82.3 L226.0,116.0 L217.7,82.3 L184.0,74.0 L217.7,65.7 Z" fill="#ffd166"/>
+  <path d="M226.0,57.0 L229.4,70.6 L243.0,74.0 L229.4,77.4 L226.0,91.0 L222.6,77.4 L209.0,74.0 L222.6,70.6 Z" fill="#fff8e1"/>
+  <path d="M160.0,82.0 L162.8,93.2 L174.0,96.0 L162.8,98.8 L160.0,110.0 L157.2,98.8 L146.0,96.0 L157.2,93.2 Z" fill="#22d3ee"/>
+</svg>

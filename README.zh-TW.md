@@ -1,6 +1,8 @@
 <div align="center">
 
-# 🦁 RecapLion 回顧獅
+<img src="docs/brand/icon.svg" width="128" height="128" alt="RecapLion 圖示">
+
+# RecapLion 回顧獅
 
 **任何人都能用、任何 AI agent 都能跑的 GitHub 年度回顧。**
 
@@ -184,6 +186,39 @@ python3 scripts/render.py /tmp/analysis.json --narrative references/example-narr
 | 🧵 | 多線並行 | 有 commit 的 repo 數 |
 | 🍂 | 四季不輟 | 有產出的月份數 |
 | 🚀 | 出貨達人 | 發佈的 Release 數 |
+
+## ❓ 常見問題
+
+### 別人裝了這個 skill，會把全部（包含私人 repo）都抓走嗎？
+
+不會。預設**不會**抓私人資料，而且無論怎麼設定，都**不可能**抓到別人的私人 repo。
+
+**1. 跑的時候會先問使用者**
+
+| 怎麼用 | 行為 |
+|---|---|
+| 透過 AI agent（Claude Code、Codex…） | `SKILL.md` 規定 agent 要先問「只看公開，還是連私人一起？」，使用者回答後才開始抓 |
+| 自己在終端機跑 `recap.py` | 跳出選單讓你選 1（公開）或 2（全部） |
+| 自動化環境（GitHub Action、CI） | 沒辦法問人，所以預設**只抓公開**；Action 範本也是 `RECAP_SCOPE: public` |
+
+**2. 「全部」只能看自己的帳號**
+- `--scope all` 要求 token 的擁有者必須就是 `--user`，程式會檢查，不符合就直接報錯。
+- 所以別人用 RecapLion 查 `malilion`，只能看到 malilion 的公開 repo，私人 repo 永遠拿不到，因為他們沒有 malilion 的 token。
+- 反過來也一樣：每個人選「全部」時，抓到的只有**他自己**有權限的私人 repo。
+
+**3. 資料只留在自己電腦上**
+- RecapLion 只會連到 GitHub 的 API，不會把任何資料傳給作者或其他伺服器。
+- 產生的報告都存在使用者自己的資料夾，要不要分享由自己決定。
+
+### 下載 skill 時會拿到哪些檔案？
+
+- **用 `install.sh` 或手動複製：** 只會拿到 `skills/github-year-review/` 這個資料夾，裡面是程式和說明，沒有任何人的資料。
+- **用 Claude Code 的 `/plugin install`：** 會下載整個 repo，包含 `docs/` 裡的網站和 Demo 報告。這些本來就公開在網站上，而且只有公開 repo。
+
+### 選「只看公開」時，私人的活動也不會算進總數嗎？
+
+對。`--scope public` 會完全排除私人活動，連貢獻日曆上的匿名數字都不算。（用自己的 token 時，GitHub
+本身會把私人活動算進去，所以 RecapLion 會改用公開的貢獻紀錄重新計算整年。）
 
 ## 📁 結構
 
