@@ -148,7 +148,7 @@ def main() -> None:
     ap.add_argument("--narrative", help="narrative.json written by Claude (optional)")
     ap.add_argument("-o", "--output", default="year-review.html")
     ap.add_argument("--cards-dir", help="also write animated SVG achievement cards here")
-    ap.add_argument("--lang", choices=["zh", "en"], default=None, help="UI language (default: narrative.lang or zh)")
+    ap.add_argument("--lang", choices=["zh", "en"], default=None, help="UI language (default: narrative.lang, else en)")
     args = ap.parse_args()
 
     with open(args.analysis, encoding="utf-8") as f:
@@ -158,7 +158,7 @@ def main() -> None:
         with open(args.narrative, encoding="utf-8") as f:
             narrative = json.load(f)
     data["narrative"] = narrative
-    lang = args.lang or narrative.get("lang") or "zh"
+    lang = args.lang or narrative.get("lang") or "en"
 
     out = render_html(data, lang)
     with open(args.output, "w", encoding="utf-8") as f:

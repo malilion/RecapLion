@@ -1,0 +1,55 @@
+# RecapLion — refresh your year-in-review cards automatically (no AI agent needed).
+#
+# 1. Copy this file to .github/workflows/recaplion.yml in your profile repo (<you>/<you>).
+# 2. Embed the cards in README.md, e.g. ![Year in review](./recap/cards/summary.svg)
+# 3. Optional: commit a recap/narrative.json (written by you or any AI agent) for project stories
+#    and special achievements — it is picked up automatically.
+#
+# GITHUB_TOKEN covers public activity. For private contribution counts add a personal access
+# token as the secret RECAP_TOKEN (scopes: read:user, repo).
+name: RecapLion
+
+on:
+  schedule:
+    - cron: "17 3 * * 1"   # every Monday 03:17 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  recap:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/checkout@v4
+        with:
+          repository: malilion/RecapLion
+          path: .recaplion
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Generate year in review
+        env:
+          GITHUB_TOKEN: ${{ secrets.RECAP_TOKEN || secrets.GITHUB_TOKEN }}
+          RECAP_USER: ${{ github.repository_owner }}
+          RECAP_TZ: UTC        # e.g. Asia/Taipei
+          RECAP_LANG: en       # en | zh
+        run: |
+          NARRATIVE=""
+          [ -f recap/narrative.json ] && NARRATIVE="--narrative recap/narrative.json"
+          python3 .recaplion/skills/github-year-review/scripts/recap.py \
+            --user "$RECAP_USER" --tz "$RECAP_TZ" --lang "$RECAP_LANG" \
+            --exclude-private --out recap $NARRATIVE
+          rm -f recap/raw.json recap/analysis.json
+
+      - name: Commit
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add recap
+          git diff --cached --quiet || git commit -m "chore: refresh RecapLion year in review"
+          git push

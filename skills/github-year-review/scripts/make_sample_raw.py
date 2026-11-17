@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Generate a fictional raw.json so the pipeline can be tried without a GitHub token.
 
-  python3 examples/make_sample_raw.py -o examples/sample/raw.json
+  python3 scripts/make_sample_raw.py -o raw.json
 """
 import argparse
 import datetime as dt
@@ -50,7 +50,7 @@ REPOS = [
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("-o", "--output", default="examples/sample/raw.json")
+    ap.add_argument("-o", "--output", default="raw.json")
     args = ap.parse_args()
 
     start = dt.date(YEAR, 1, 1)

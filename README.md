@@ -1,30 +1,37 @@
-# 🦁 RecapLion 回顧獅 — GitHub 年度回顧
+<div align="center">
 
-一個 Claude Code **Skill**：回顧你今年在 GitHub 上做了哪些專案與系統、達成了哪些成就，
-產生一個**有動畫的年度回顧網頁**，以及可以放進個人 README 的**動畫成就卡**。
+# 🦁 RecapLion
+
+**An animated GitHub year in review — for anyone, with any AI agent.**
+
+**English** · [繁體中文](README.zh-TW.md)
+
+</div>
+
+RecapLion looks back at what you built on GitHub this year — the projects and systems you shipped
+and the achievements you unlocked — and turns it into an **animated web page** plus **animated
+achievement cards** you can put on your profile.
 
 ![hero](docs/hero.png)
 
-## ✨ 功能
+## ✨ Features
 
-- **年度數字**：總貢獻、commits、PR、code review、活躍天數、最長連續天數⋯⋯（數字滾動動畫）
-- **貢獻熱力圖**：一格一格浮現的波浪動畫，加上每月長條圖、commit 時段時鐘圖
-- **語言版圖**：依你在每個專案的 commit 量加權
-- **年度專案卡**：Claude 會讀 README 與 commit 紀錄，替每個專案寫分類、一句話介紹和重點
-- **成就卡**：19 種內建成就 × 4 種稀有度（普通／稀有／史詩／傳說），
-  發牌翻面動畫、3D 傾斜、全息閃光、傳說級發光邊框與彩帶；點擊翻面看門檻與進度
-- **特別成就**：Claude 根據專案內容頒發數據看不出來的成就（例如「從零造資料庫」「首次上線產品」）
-- **下一個目標**：快要解鎖的成就與進度條
-- **動畫 SVG 成就卡**：每個成就一張 + 一張年度總結卡，可以直接嵌入 GitHub 個人頁
-- 單一 HTML 檔、亮／暗主題、手機版排版、支援 `prefers-reduced-motion`
+- **Year in numbers** — contributions, commits, PRs, reviews, active days, longest streak, with count-up animation
+- **Heatmap & charts** — wave-in contribution heatmap, monthly bars, commit-hour clock
+- **Language map** — weighted by your commits per project
+- **Project cards** — your agent reads READMEs and commits, then writes a category, pitch and highlights for each project
+- **Achievement cards** — 19 built-in achievements × 4 tiers (common / rare / epic / legendary) with card-deal flips, 3D tilt, holo shine, glowing legendary borders and confetti
+- **Special achievements** — awarded by the agent from evidence the metrics can't see ("built a database from scratch", "shipped on five platforms")
+- **Next goals** — progress bars for what you're about to unlock
+- **Animated SVG cards** — one per achievement plus a summary card, embeddable in a profile README
+- English and Traditional Chinese, a single HTML file, light & dark themes, phone layout, `prefers-reduced-motion`
+- **Python standard library only** — no `pip install`, no Node
 
-| 熱力圖與圖表 | 年度專案 |
+| Heatmap & charts | Projects |
 |---|---|
 | ![heat](docs/heat.png) | ![projects](docs/projects.png) |
 
 ![achievements](docs/achievements.png)
-
-**動畫 SVG 成就卡**（可放進個人 README）：
 
 <p>
 <img src="examples/sample/cards/first_400_stars.svg" width="200">
@@ -35,10 +42,32 @@
 
 ![summary](examples/sample/cards/summary.svg)
 
-## 📦 安裝
+## 🤖 Works with your agent
 
-### 方式一：當作 Claude Code plugin 安裝
-在 Claude Code 中執行：
+RecapLion is an [Agent Skill](https://agentskills.io): a folder with a `SKILL.md`, the open format
+read by Claude Code, OpenAI Codex, Gemini CLI, GitHub Copilot, Cursor and many other agents. The
+repository also ships an [`AGENTS.md`](AGENTS.md) for agents that read that file instead.
+
+### Install
+
+**Install script (any agent, auto-detect)**
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/malilion/RecapLion/main/install.sh | sh
+```
+
+It detects Claude Code (`~/.claude/skills`) and Codex / other Agent Skills clients
+(`~/.agents/skills`). You can also pick targets or use any folder:
+
+```bash
+sh install.sh claude codex
+```
+
+```bash
+sh install.sh --dir ~/path/to/your/agent/skills
+```
+
+**Claude Code plugin**
 
 ```
 /plugin marketplace add malilion/RecapLion
@@ -48,99 +77,107 @@
 /plugin install recaplion@recaplion
 ```
 
-### 方式二：直接複製 skill 資料夾
+**Skills CLI** (if you use it)
+
+```bash
+npx skills add malilion/RecapLion
+```
+
+**Manual** — copy `skills/github-year-review/` into your agent's skills folder. The folder is self-contained.
+
+### Use
+
+Ask your agent:
+
+> Make my 2026 GitHub year in review. My username is `octocat`, timezone Europe/Berlin.
+
+The agent runs the scripts, reads your projects, writes the story and special achievements, and
+renders the page. See [`SKILL.md`](skills/github-year-review/SKILL.md) for the full workflow.
+
+## 🧑‍💻 No agent? One command
 
 ```bash
 git clone https://github.com/malilion/RecapLion.git
 ```
 
 ```bash
-cp -r RecapLion/skills/github-year-review ~/.claude/skills/
+python3 RecapLion/skills/github-year-review/scripts/recap.py --user <your-login> --tz Europe/Berlin
 ```
 
-## 🚀 使用
+Open `recap-<login>-<year>/year-review.html`. You get every stat, chart and built-in achievement.
+For project stories and special achievements, write a
+[`narrative.json`](skills/github-year-review/references/narrative-schema.md) (by hand or with any
+AI) and re-run with `--narrative narrative.json --skip-fetch`. Use `--lang zh` for Traditional Chinese.
 
-在 Claude Code 裡直接說：
+### GitHub token
 
-> 幫我做一份 2026 年的 GitHub 年度回顧，帳號是 `your-name`，要有成就卡
+A token gives the full picture (calendar, reviews, releases, private contribution counts). It is
+read from `--token`, `GITHUB_TOKEN` / `GH_TOKEN`, or `gh auth token`; the easiest way is
+`gh auth login`. Without a token RecapLion falls back to the public search API: public activity
+only, and it takes a few minutes because of rate limits.
 
-Claude 會依照 [`SKILL.md`](skills/github-year-review/SKILL.md) 的流程：
+### Auto-refresh your profile
 
-1. `fetch_github_year.py` — 透過 GitHub GraphQL API 抓一整年的貢獻、專案與 commit 樣本
-2. `analyze.py` — 計算統計、專案列表、語言比例並判定成就
-3. **Claude 閱讀專案 README 與 commit**，寫出 `narrative.json`（標題、專案介紹、特別成就、總結）
-4. `render.py` — 產生 `year-review.html` 與 `cards/*.svg`
+Copy [`examples/github-action/recaplion.yml`](examples/github-action/recaplion.yml) into
+`.github/workflows/` of your `<you>/<you>` profile repository. It regenerates the cards every week;
+embed them with `![Year in review](./recap/cards/summary.svg)`.
 
-### GitHub Token
-
-有 token 才能拿到完整資料（貢獻日曆、PR、review、私人貢獻數）。依序讀取：
-`--token` 參數 → `GITHUB_TOKEN` / `GH_TOKEN` 環境變數 → `gh auth token`。
-最簡單的方式是先執行 `gh auth login`。沒有 token 或 GraphQL 無法連線時，會自動改用公開的 Search API（只含公開活動，因搜尋速率限制需要幾分鐘）。
-
-### 手動執行
+### Try it offline
 
 ```bash
-cd skills/github-year-review
-python3 scripts/fetch_github_year.py --user your-name --year 2026 --tz Asia/Taipei -o raw.json
-python3 scripts/analyze.py raw.json -o analysis.json            # 公開分享可加 --exclude-private
-# （選用）撰寫 narrative.json，格式見 references/narrative-schema.md
-python3 scripts/render.py analysis.json --narrative narrative.json -o year-review.html --cards-dir cards
+cd RecapLion/skills/github-year-review
+python3 scripts/make_sample_raw.py -o /tmp/raw.json
+python3 scripts/analyze.py /tmp/raw.json -o /tmp/analysis.json
+python3 scripts/render.py /tmp/analysis.json --narrative references/example-narrative.json -o /tmp/year-review.html --cards-dir /tmp/cards
 ```
 
-只需要 Python 3.9+，不必安裝任何套件。
+Or open [`examples/sample/year-review.html`](examples/sample/year-review.html) (fictional user `demo-dev`).
 
-### 沒有 token 也想先看看？
+## 🏅 Achievements
 
-```bash
-python3 examples/make_sample_raw.py -o /tmp/raw.json
-python3 skills/github-year-review/scripts/analyze.py /tmp/raw.json -o /tmp/analysis.json
-python3 skills/github-year-review/scripts/render.py /tmp/analysis.json \
-  --narrative examples/sample/narrative.json -o /tmp/year-review.html --cards-dir /tmp/cards
-```
+Full thresholds: [`references/achievements.md`](skills/github-year-review/references/achievements.md).
+Add your own by editing `ACHIEVEMENTS` in `scripts/analyze.py`.
 
-或直接打開 [`examples/sample/year-review.html`](examples/sample/year-review.html)（虛構使用者 `demo-dev` 的範例）。
-
-## 🏅 成就一覽
-
-完整門檻見 [`references/achievements.md`](skills/github-year-review/references/achievements.md)。
-
-| | 成就 | 條件 |
+| | Achievement | Based on |
 |---|---|---|
-| 🔥 | 不滅之火 | 最長連續貢獻天數 |
-| ⚒️ | 千錘百鍊 | 年度總貢獻 |
-| 📅 | 日更職人 | 活躍天數 |
-| 🌱 | 創世者 | 今年新建的 repo |
-| 🗣️ | 多語通 | 使用的程式語言數 |
-| 🔀 | 合併大師 | 被合併的 PR |
-| 🧭 | 開源旅人 | 合併進別人專案的 PR |
-| 🛡️ | 守門人 | Code Review 次數 |
-| 🐞 | 除錯獵人 | 開 Issue 次數 |
-| ⭐ | 星光收集者 | 自己專案的星星數 |
-| ⚡ | 爆肝日 | 單日最高貢獻 |
-| 🦉 | 夜貓子 | 凌晨 0–5 點 commit 比例 |
-| 🐦 | 晨型人 | 早上 5–9 點 commit 比例 |
-| 🏕️ | 週末戰士 | 週末貢獻比例 |
-| 🗓️ | 全勤月 | 每天都有貢獻的月份 |
-| 🎯 | 專注一擊 | 單一專案 commit 數 |
-| 🧵 | 多線並行 | 有 commit 的 repo 數 |
-| 🍂 | 四季不輟 | 有產出的月份數 |
-| 🚀 | 出貨達人 | 發佈的 Release 數 |
+| 🔥 | Eternal Flame | Longest streak |
+| ⚒️ | Forged in Commits | Total contributions |
+| 📅 | Daily Builder | Active days |
+| 🌱 | Genesis | New repositories |
+| 🗣️ | Polyglot | Languages used |
+| 🔀 | Merge Master | PRs merged |
+| 🧭 | Open Source Voyager | PRs merged into others' repositories |
+| 🛡️ | Gatekeeper | Code reviews |
+| 🐞 | Bug Hunter | Issues opened |
+| ⭐ | Stargazer | Stars on your repositories |
+| ⚡ | Overdrive | Busiest single day |
+| 🦉 | Night Owl | Share of commits 0–5 AM |
+| 🐦 | Early Bird | Share of commits 5–9 AM |
+| 🏕️ | Weekend Warrior | Share of contributions on weekends |
+| 🗓️ | Perfect Month | Months with no empty day |
+| 🎯 | Deep Focus | Commits to a single repository |
+| 🧵 | Multi-threaded | Repositories with commits |
+| 🍂 | All Seasons | Active months |
+| 🚀 | Shipper | Releases published |
 
-想新增成就，編輯 `scripts/analyze.py` 裡的 `ACHIEVEMENTS` 清單即可。
-
-## 📁 結構
+## 📁 Structure
 
 ```
-.claude-plugin/              plugin 與 marketplace 設定
-skills/github-year-review/
-  SKILL.md                   Claude 執行流程
+skills/github-year-review/      the Agent Skill (self-contained, copy anywhere)
+  SKILL.md                      workflow for agents
   scripts/
-    fetch_github_year.py     抓 GitHub 資料
-    analyze.py               統計與成就判定
-    render.py                產生 HTML 與 SVG 卡片
-  assets/report_template.html  動畫網頁模板
-  references/                成就門檻、narrative 格式
-examples/                    範例資料與產出
+    recap.py                    one-shot CLI: fetch → analyze → render
+    fetch_github_year.py        GraphQL data source
+    search_source.py            search API data source (no token needed)
+    analyze.py                  stats + achievement evaluation
+    render.py                   HTML page + SVG cards
+    make_sample_raw.py          fictional demo data
+  assets/report_template.html   animated page template
+  references/                   achievements, narrative schema, example narrative
+AGENTS.md                       instructions for AI coding agents
+install.sh                      installer for Claude Code / Codex / any skills folder
+.claude-plugin/                 Claude Code plugin + marketplace manifests
+examples/                       sample output, GitHub Action
 ```
 
 ## License

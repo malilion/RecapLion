@@ -1,0 +1,51 @@
+{
+  "lang": "zh",
+  "headline": "這是你從「寫程式」走向「打造系統」的一年：一個 AI Agent 框架、一個 Rust 儲存引擎，還有 486 次對 agent-forge 的專注。",
+  "theme_words": ["AI Agents", "Rust", "Homelab", "開源", "Side Project → 產品"],
+  "project_order": ["demo-dev/agent-forge", "demo-dev/rust-kv", "demo-dev/homelab-dash", "demo-dev/kotlin-habit", "demo-dev/invoice-saas"],
+  "max_projects": 8,
+  "projects": {
+    "demo-dev/agent-forge": {
+      "category": "AI 系統",
+      "tagline": "從週末實驗長成 412 顆星的多 Agent 框架",
+      "highlights": ["設計工具沙盒，讓 agent 能安全執行指令", "支援 SSE 串流輸出與規劃器拆分", "全年發佈 4 個版本"]
+    },
+    "demo-dev/rust-kv": {
+      "category": "基礎設施",
+      "tagline": "親手實作 LSM-tree，從 WAL 到 compaction",
+      "highlights": ["背景 compaction worker", "以 fuzz test 抓出 WAL 重播的 off-by-one"]
+    },
+    "demo-dev/homelab-dash": {
+      "category": "工具",
+      "tagline": "Go + Vue 的自架伺服器儀表板"
+    },
+    "demo-dev/kotlin-habit": {
+      "category": "行動 App",
+      "tagline": "年底的新挑戰：第一次用 Jetpack Compose"
+    }
+  },
+  "achievements": {
+    "night_owl": "凌晨的 commit 特別有靈感？記得也要睡覺。",
+    "eternal_flame": "整個暑假，一天都沒斷過。"
+  },
+  "custom_achievements": [
+    {
+      "id": "first_400_stars",
+      "icon": "🌟",
+      "tier": "legendary",
+      "title": {"zh": "破圈之作", "en": "Breakout Project"},
+      "desc": {"zh": "agent-forge 今年突破 400 顆星", "en": "agent-forge passed 400 stars"},
+      "detail": {"zh": "從 2 月建立到現在，agent-forge 成為你第一個被社群大量使用的專案。", "en": "Your first project widely adopted by the community."}
+    },
+    {
+      "id": "db_from_scratch",
+      "icon": "🗄️",
+      "tier": "epic",
+      "title": {"zh": "從零造資料庫", "en": "Database From Scratch"},
+      "desc": {"zh": "親手寫出一個 LSM-tree 儲存引擎", "en": "Built an LSM-tree storage engine"},
+      "detail": {"zh": "WAL、MemTable、SSTable、Compaction，一個都沒少。", "en": "WAL, memtable, SSTables and compaction — all of it."}
+    }
+  ],
+  "summary": "2026 年，你推進了 6 個專案，其中 4 個是今年從零開始。你在 AI Agent 與底層儲存兩條完全不同的路線上同時前進，也開始把作品發佈出去，讓別人真正用上。",
+  "closing": "謝謝這一年的自己。下一年，繼續把想法變成能跑的東西。"
+}
