@@ -3,7 +3,7 @@ name: github-year-review
 description: Generate an animated GitHub "year in review" for a user — yearly stats, contribution heatmap, the projects/systems they built, and tiered achievement cards (HTML page with animations + animated SVG cards for a profile README). Use when the user asks to review their year on GitHub, recap their repos/projects, make a GitHub wrapped / 年度回顧 / 成就卡, or summarize what they built or achieved this year.
 ---
 
-# GitHub Year Review（GitHub 年度回顧）
+# RecapLion — GitHub Year Review（GitHub 年度回顧）
 
 Produce a personal, animated year-in-review for a GitHub user:
 

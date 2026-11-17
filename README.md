@@ -1,4 +1,4 @@
-# 🏆 GitHub Achievement Skill — GitHub 年度回顧
+# 🦁 RecapLion 回顧獅 — GitHub 年度回顧
 
 一個 Claude Code **Skill**：回顧你今年在 GitHub 上做了哪些專案與系統、達成了哪些成就，
 產生一個**有動畫的年度回顧網頁**，以及可以放進個人 README 的**動畫成就卡**。
@@ -41,21 +41,21 @@
 在 Claude Code 中執行：
 
 ```
-/plugin marketplace add malilion/Github-Achievement-Skill
+/plugin marketplace add malilion/RecapLion
 ```
 
 ```
-/plugin install github-achievement@github-achievement-skill
+/plugin install recaplion@recaplion
 ```
 
 ### 方式二：直接複製 skill 資料夾
 
 ```bash
-git clone https://github.com/malilion/Github-Achievement-Skill.git
+git clone https://github.com/malilion/RecapLion.git
 ```
 
 ```bash
-cp -r Github-Achievement-Skill/skills/github-year-review ~/.claude/skills/
+cp -r RecapLion/skills/github-year-review ~/.claude/skills/
 ```
 
 ## 🚀 使用

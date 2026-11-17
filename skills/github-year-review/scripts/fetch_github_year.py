@@ -31,7 +31,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from search_source import fetch_search  # noqa: E402
 
 API = "https://api.github.com"
-UA = "github-year-review-skill"
+UA = "recaplion"
 
 
 # ---------------------------------------------------------------- helpers

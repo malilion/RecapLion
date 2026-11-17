@@ -1,9 +1,9 @@
 {
-  "name": "github-achievement-skill",
+  "name": "recaplion",
   "owner": { "name": "malilion", "email": "malilion.dev@gmail.com" },
   "plugins": [
     {
-      "name": "github-achievement",
+      "name": "recaplion",
       "source": "./",
       "description": "Animated GitHub year-in-review with achievement cards.",
       "version": "1.0.0"

@@ -26,7 +26,7 @@ except ImportError:  # pragma: no cover
     ZoneInfo = None  # type: ignore
 
 API = "https://api.github.com"
-UA = "github-year-review-skill"
+UA = "recaplion"
 MAX_RESULTS = 1000  # search API hard cap per query
 
 LANG_COLORS = {
