@@ -4,6 +4,7 @@ description: Generate an animated GitHub "year in review" (RecapLion) for any Gi
 license: MIT
 compatibility: Requires Python 3.9+ (standard library only) and HTTPS access to api.github.com. Works with any agent that can run shell commands (Claude Code, Codex, Gemini CLI, GitHub Copilot, Cursor, etc.).
 metadata:
+  version: "1.1.0"
   project: RecapLion
   repository: https://github.com/malilion/RecapLion
 ---
@@ -32,12 +33,24 @@ Infer these; ask the user only when you cannot:
 - **Timezone** — IANA name used for night-owl / early-bird stats (e.g. `Asia/Taipei`,
   `Europe/Berlin`). Default `UTC`.
 - **Language** — `en` or `zh` (Traditional Chinese). Match the language the user writes in.
-- **Sharing** — if the page will be public, add `--exclude-private`.
+- **Coverage** — for the user's own account, include authorized private repositories by
+  adding `--include-private`, unless they ask for public activity only. A GitHub token must
+  be available and its authenticated account must match `--user`. It must have access to
+  the intended private repositories; an ordinary workflow `GITHUB_TOKEN` is usually scoped
+  to one repository. Never ask the user to paste a token into the conversation.
+- **Sharing** — the default is a full local report with private names and details retained.
+  Keep it local unless the user requests publication.
+  For a public report add `--exclude-private` as well: private activity still contributes
+  to totals, charts and achievements, but private repository records and commit subjects
+  are omitted. `raw.json` remains private even with this flag; never publish it.
 
 ### 2. Fetch, analyze and render a first draft
 ```bash
 python3 scripts/recap.py --user <login> --year <year> --tz <tz> --lang <en|zh> --out recap-<login>-<year>
 ```
+For the account owner's full local report, add `--include-private`. To share aggregate
+private activity without repository details, combine `--include-private --exclude-private`.
+Do not silently substitute a public-only report when private coverage was requested.
 This runs `fetch_github_year.py` → `analyze.py` → `render.py` and writes `raw.json`,
 `analysis.json`, `year-review.html` and `cards/` into the output folder.
 
@@ -47,6 +60,16 @@ Data sources (`--source auto` picks the best available):
 - **Search API** — automatic fallback with no token or when GraphQL is blocked. Public activity
   only; reviews are approximate and releases unknown. It can take a few minutes because of search
   rate limits (the script waits and retries by itself). Tell the user about these limits.
+- **Inclusive GraphQL** (`--include-private`) — paginates the accessible owned repository
+  inventory, non-fork private default-branch commit histories, authored private PRs/issues,
+  and private reviews. Queries are split to avoid one oversized GraphQL request. An existing
+  private contribution calendar is kept without adding private activity twice. When the
+  calendar omits private events, private activity is reconstructed and combined with it;
+  `meta.private_activity.calendar_reconstructed` records this and the HTML explains the
+  counting method. This reconstructed total is not GitHub's official full calendar total.
+  Deleted/inaccessible repositories and unmerged branches are not covered. Collection
+  failures abort this mode rather than falling back to public search. Very large private
+  review searches stop at GitHub's search cap instead of returning a truncated result.
 
 ### 3. Understand the projects
 Read `analysis.json`: `stats`, `projects`, `achievements`, and `commit_messages` (commit subjects
@@ -72,12 +95,17 @@ Schema: `references/narrative-schema.md`. Full example: `references/example-narr
 Rules: every fact and number must come from the data, READMEs or commits — never invent. Verify
 numbers you quote against `analysis.json`. Celebrate, but stay honest. Do not name private repos
 if `--exclude-private` was used. Text fields may be bilingual: `{"en": "...", "zh": "..."}`.
+Review every narrative field before public sharing: free-form headlines, summaries, custom
+achievements and other supplied prose are not automatically redacted by `--exclude-private`.
+For a local report, private repo names, descriptions and per-project statistics may be shown.
 
 ### 5. Re-render with the story
 ```bash
 python3 scripts/recap.py --user <login> --year <year> --lang <en|zh> --out recap-<login>-<year> \
   --narrative recap-<login>-<year>/narrative.json --skip-fetch
 ```
+Keep the same coverage/sharing flags when re-rendering. `--include-private --skip-fetch`
+requires a cache originally fetched with `--include-private`; an older public cache is rejected.
 If you can, open or screenshot the HTML to check it. Then report: where the files are, the headline
 numbers, unlocked achievements (tier + title), top projects and the nearest next goals, plus any
 data limitations.
@@ -95,6 +123,7 @@ data limitations.
 | Script | Purpose |
 |---|---|
 | `scripts/fetch_github_year.py` | Collect raw yearly data (`--source auto|graphql|search|rest`) |
+| `scripts/private_source.py` | Fully paginate authorized private activity for `--include-private` |
 | `scripts/analyze.py` | Stats, projects, languages, achievement evaluation |
 | `scripts/render.py` | HTML page + SVG cards (`--narrative`, `--lang`, `--cards-dir`) |
 | `scripts/recap.py` | All of the above in one command |

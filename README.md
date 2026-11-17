@@ -120,6 +120,26 @@ read from `--token`, `GITHUB_TOKEN` / `GH_TOKEN`, or `gh auth token`; the easies
 `gh auth login`. Without a token RecapLion falls back to the public search API: public activity
 only, and it takes a few minutes because of rate limits.
 
+### Include your private repositories
+
+For a local report including your authenticated account's accessible private repositories:
+
+```bash
+python3 RecapLion/skills/github-year-review/scripts/recap.py --user <your-login> --tz Asia/Taipei --include-private
+```
+
+The token must belong to `<your-login>` and have access to the private repositories. This
+mode paginates repository inventory, private default-branch commits, authored PRs/issues
+and reviews. If GitHub's calendar omits private activity, RecapLion reconstructs it and
+labels the combined total in the report. Existing private calendar activity is not added
+twice. Failures stop collection instead of silently producing a public-only report.
+
+Add `--exclude-private` to keep private activity in aggregate statistics while removing
+private repository records from the report. Keep `raw.json` private and review any custom
+narrative before sharing: user-written prose is not automatically redacted. To reuse a
+private-inclusive cache, pass `--include-private --skip-fetch`. See
+[`SKILL.md`](skills/github-year-review/SKILL.md) for coverage and sampling limitations.
+
 ### Auto-refresh your profile
 
 Copy [`examples/github-action/recaplion.yml`](examples/github-action/recaplion.yml) into
@@ -172,6 +192,7 @@ skills/github-year-review/      the Agent Skill (self-contained, copy anywhere)
   scripts/
     recap.py                    one-shot CLI: fetch → analyze → render
     fetch_github_year.py        GraphQL data source
+    private_source.py           paginated private activity and missing-calendar reconstruction
     search_source.py            search API data source (no token needed)
     analyze.py                  stats + achievement evaluation
     render.py                   HTML page + SVG cards

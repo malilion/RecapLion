@@ -11,6 +11,9 @@ in `skills/github-year-review/`.
 Follow `skills/github-year-review/SKILL.md`. In short:
 
 1. Run `python3 skills/github-year-review/scripts/recap.py --user <login> --year <year> --tz <tz> --lang <en|zh>`.
+   For the account owner's local full review, add `--include-private` with an authorized token.
+   Keep private names/details locally; `--exclude-private` is an optional sharing filter,
+   not a switch that removes private activity from the totals. Never publish raw private data.
 2. Read `recap-<login>-<year>/analysis.json` (especially `projects` and `commit_messages`) and the
    READMEs of the top projects.
 3. Write `recap-<login>-<year>/narrative.json` following
@@ -30,3 +33,5 @@ Follow `skills/github-year-review/SKILL.md`. In short:
   python3 scripts/analyze.py /tmp/raw.json -o /tmp/analysis.json
   python3 scripts/render.py /tmp/analysis.json --narrative references/example-narrative.json -o /tmp/r.html --cards-dir /tmp/cards
   ```
+- Private coverage, pagination and optional public-output regression tests:
+  `python3 -m unittest discover -s tests -v`.

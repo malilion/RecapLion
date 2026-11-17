@@ -212,6 +212,7 @@ def build(raw: dict, exclude_private: bool) -> dict:
 
     # projects
     start_iso = meta["range"]["from"]
+    end_iso = meta["range"]["to"]
     by_repo = {x["repository"]["nameWithOwner"]: x for x in cc["commitContributionsByRepository"]}
     pr_by_repo = {x["repository"]["nameWithOwner"]: x["contributions"]["totalCount"]
                   for x in cc.get("pullRequestContributionsByRepository", [])}
@@ -219,7 +220,7 @@ def build(raw: dict, exclude_private: bool) -> dict:
     owned = raw["owned_repositories"]["nodes"]
     repos: dict[str, dict] = {}
     for r in owned:
-        if (r.get("createdAt") or "") >= start_iso and not r.get("isFork"):
+        if start_iso <= (r.get("createdAt") or "") < end_iso and not r.get("isFork"):
             repos[r["nameWithOwner"]] = {"repo": r, "commits": 0}
     for name, x in by_repo.items():
         repos.setdefault(name, {"repo": x["repository"], "commits": 0})["commits"] = x["contributions"]["totalCount"]
@@ -240,7 +241,7 @@ def build(raw: dict, exclude_private: bool) -> dict:
                 lang_color[e["node"]["name"]] = e["node"]["color"]
             lang_weight[e["node"]["name"]] += share * max(commits, 1)
         rel_this_year = [x for x in (r.get("releases") or {}).get("nodes", [])
-                         if (x.get("publishedAt") or "") >= start_iso]
+                         if start_iso <= (x.get("publishedAt") or "") < end_iso]
         if r.get("owner", {}).get("login") == login:
             releases += len(rel_this_year)
         private = bool(r.get("isPrivate"))
@@ -256,7 +257,7 @@ def build(raw: dict, exclude_private: bool) -> dict:
             "url": url,
             "homepage": None if (exclude_private and private) else r.get("homepageUrl"),
             "owner_is_user": r.get("owner", {}).get("login") == login,
-            "is_new": (r.get("createdAt") or "") >= start_iso,
+            "is_new": start_iso <= (r.get("createdAt") or "") < end_iso,
             "is_private": private,
             "is_fork": bool(r.get("isFork")),
             "created_at": r.get("createdAt"),
@@ -290,8 +291,11 @@ def build(raw: dict, exclude_private: bool) -> dict:
         "issues": cc.get("totalIssueContributions", 0),
         "reviews": cc.get("totalPullRequestReviewContributions", 0),
         "private_contributions": cc.get("restrictedContributionsCount", 0),
+        "private_commits": sum(p["commits"] for p in projects if p["is_private"]),
+        "private_repos_contributed": sum(1 for p in projects if p["is_private"] and p["commits"] > 0),
         "repos_created": sum(1 for p in projects if p["is_new"] and p["owner_is_user"]),
-        "repos_contributed": sum(1 for p in projects if p["commits"] > 0),
+        "repos_contributed": max(cc.get("totalRepositoriesWithContributedCommits", 0),
+                                 sum(1 for p in projects if p["commits"] > 0)),
         "prs_merged": (search.get("merged") or {}).get("issueCount", 0),
         "external_prs_merged": ext.get("issueCount", 0),
         "issues_closed": (search.get("issuesClosed") or {}).get("issueCount", 0),
@@ -328,7 +332,9 @@ def build(raw: dict, exclude_private: bool) -> dict:
         "weekday": weekday,
         "hours": hours,
         "languages": languages[:10],
-        "projects": projects,
+        # Removing the records also removes IDs, topics, release tags and timestamps.
+        # Counts and achievements above still include private activity.
+        "projects": [p for p in projects if not p["is_private"]] if exclude_private else projects,
         "external_prs": [] if exclude_private else external_prs[:20],
         "achievements": evaluate_achievements(stats),
         # Commit subjects for Claude to read when writing the narrative. Not rendered.
@@ -342,7 +348,7 @@ def main() -> None:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("raw")
     ap.add_argument("-o", "--output", default="analysis.json")
-    ap.add_argument("--exclude-private", action="store_true", help="hide names/descriptions of private repos")
+    ap.add_argument("--exclude-private", action="store_true", help="omit private repo details while retaining aggregate activity")
     args = ap.parse_args()
     with open(args.raw, encoding="utf-8") as f:
         raw = json.load(f)

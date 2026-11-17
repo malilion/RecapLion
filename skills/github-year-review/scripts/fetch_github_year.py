@@ -29,6 +29,7 @@ import urllib.request
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from search_source import fetch_search  # noqa: E402
+from private_source import collect as collect_private  # noqa: E402
 
 API = "https://api.github.com"
 UA = "recaplion"
@@ -71,12 +72,12 @@ def request(url: str, token: str | None, body: dict | None = None) -> tuple[obje
         raise RuntimeError(f"HTTP {e.code} for {url}: {detail}") from None
 
 
-def graphql(query: str, variables: dict, token: str) -> dict:
+def graphql(query: str, variables: dict, token: str, *, strict: bool = False) -> dict:
     data, _ = request(f"{API}/graphql", token, {"query": query, "variables": variables})
     if data.get("errors"):
         msgs = "; ".join(err.get("message", "?") for err in data["errors"])
         # Partial data is still useful (e.g. a search alias failing)
-        if not data.get("data"):
+        if strict or not data.get("data"):
             raise RuntimeError(f"GraphQL error: {msgs}")
         log(f"GraphQL warning: {msgs}")
     return data["data"]
@@ -310,6 +311,8 @@ def main() -> None:
     ap.add_argument("--sample-pages", type=int, default=3, help="pages of 100 commits per sampled repo")
     ap.add_argument("--source", choices=["auto", "graphql", "search", "rest"], default="auto",
                     help="auto = GraphQL when a token works, otherwise the public search API")
+    ap.add_argument("--include-private", action="store_true",
+                    help="include the authenticated account's accessible private repos; requires GraphQL")
     ap.add_argument("-o", "--output", default="raw.json")
     args = ap.parse_args()
 
@@ -322,7 +325,16 @@ def main() -> None:
     token = get_token(args.token)
     source = args.source
     raw = None
-    if source in ("auto", "graphql") and token:
+    if args.include_private:
+        if not token:
+            ap.error("--include-private requires a GitHub token with access to your private repositories")
+        if source not in ("auto", "graphql"):
+            ap.error("--include-private requires --source auto or graphql; public fallbacks are not sufficient")
+        raw = collect_private(args.user, start, end, args.tz,
+                              lambda q, v: graphql(q, v, token, strict=True),
+                              REPO_FIELDS, SEARCH_QUERY, log)
+        source = "graphql+private-history" if raw["private_activity"]["calendar_reconstructed"] else "graphql"
+    if raw is None and source in ("auto", "graphql") and token:
         try:
             raw = fetch_graphql(args.user, args.year, start, end, token)
             source = "graphql"
@@ -347,8 +359,13 @@ def main() -> None:
         "range": {"from": iso(start), "to": iso(end)},
         "generated_at": iso(now),
     }
+    if args.include_private:
+        raw["meta"]["include_private"] = True
+        raw["meta"]["private_activity"] = raw.pop("private_activity")
 
     with open(args.output, "w", encoding="utf-8") as f:
+        if args.include_private:
+            os.chmod(args.output, 0o600)
         json.dump(raw, f, ensure_ascii=False, indent=1)
     log(f"saved {args.output} (source={source})")
 

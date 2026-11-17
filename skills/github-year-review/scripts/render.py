@@ -42,6 +42,14 @@ def render_html(data: dict, lang: str) -> str:
         tpl = f.read()
     payload = dict(data)
     payload.pop("commit_messages", None)  # internal only, never published
+    # Notes for omitted private projects must not survive as unused JSON fields.
+    narrative = dict(payload.get("narrative") or {})
+    visible_ids = {p["id"] for p in data["projects"]}
+    if "projects" in narrative:
+        narrative["projects"] = {k: v for k, v in narrative["projects"].items() if k in visible_ids}
+    if "project_order" in narrative:
+        narrative["project_order"] = [k for k in narrative["project_order"] if k in visible_ids]
+    payload["narrative"] = narrative
     payload["lang"] = lang
     blob = json.dumps(payload, ensure_ascii=False)
     # keep the JSON inert inside <script>

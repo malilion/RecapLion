@@ -118,6 +118,24 @@ python3 RecapLion/skills/github-year-review/scripts/recap.py --user <你的帳�
 `GITHUB_TOKEN` / `GH_TOKEN`、`gh auth token`，最簡單是先執行 `gh auth login`。
 沒有 token 時會自動改用公開的 Search API：只含公開活動，而且因為速率限制需要幾分鐘。
 
+### 納入私人 repo
+
+本地完整回顧可以加上 `--include-private`：
+
+```bash
+python3 RecapLion/skills/github-year-review/scripts/recap.py --user <你的帳號> --tz Asia/Taipei --lang zh --include-private
+```
+
+Token 的帳號須與 `--user` 相同，且有權讀取要計算的私人 repo。此模式會逐頁收集 repo
+清單、私人庫預設分支上的本人提交、本人建立的 PR／Issue 與 Review。若 GitHub 日曆漏掉
+私人活動，就補算後合併，並在報告標明統計方式；日曆已含私人活動時不會重複加總。
+收集失敗會停止，不會悄悄改成只有公開資料的回顧。
+
+如要分享彙總數字，再加上 `--exclude-private`，私人活動仍計入統計，但不輸出私人 repo
+紀錄。`raw.json` 仍須保密；自訂年度故事等文字不會自動遮罩，分享前須確認沒有私人內容。
+重用完整快取時使用 `--include-private --skip-fetch`。涵蓋範圍與取樣限制見
+[`SKILL.md`](skills/github-year-review/SKILL.md)。
+
 ### 自動更新個人頁
 
 把 [`examples/github-action/recaplion.yml`](examples/github-action/recaplion.yml) 放進你的個人頁 repo
