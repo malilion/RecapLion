@@ -75,7 +75,7 @@ Claude 會依照 [`SKILL.md`](skills/github-year-review/SKILL.md) 的流程：
 
 有 token 才能拿到完整資料（貢獻日曆、PR、review、私人貢獻數）。依序讀取：
 `--token` 參數 → `GITHUB_TOKEN` / `GH_TOKEN` 環境變數 → `gh auth token`。
-最簡單的方式是先執行 `gh auth login`。沒有 token 時會改用公開 REST API，資料較不完整。
+最簡單的方式是先執行 `gh auth login`。沒有 token 或 GraphQL 無法連線時，會自動改用公開的 Search API（只含公開活動，因搜尋速率限制需要幾分鐘）。
 
 ### 手動執行
 

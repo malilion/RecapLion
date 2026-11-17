@@ -27,6 +27,9 @@ import urllib.error
 import urllib.parse
 import urllib.request
 
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from search_source import fetch_search  # noqa: E402
+
 API = "https://api.github.com"
 UA = "github-year-review-skill"
 
@@ -305,6 +308,8 @@ def main() -> None:
     ap.add_argument("--token", help="GitHub token (otherwise GITHUB_TOKEN/GH_TOKEN/gh auth token)")
     ap.add_argument("--sample-repos", type=int, default=8, help="repos to sample commit times from")
     ap.add_argument("--sample-pages", type=int, default=3, help="pages of 100 commits per sampled repo")
+    ap.add_argument("--source", choices=["auto", "graphql", "search", "rest"], default="auto",
+                    help="auto = GraphQL when a token works, otherwise the public search API")
     ap.add_argument("-o", "--output", default="raw.json")
     args = ap.parse_args()
 
@@ -315,21 +320,28 @@ def main() -> None:
         end = now.replace(microsecond=0)
 
     token = get_token(args.token)
-    if token:
+    source = args.source
+    raw = None
+    if source in ("auto", "graphql") and token:
         try:
             raw = fetch_graphql(args.user, args.year, start, end, token)
             source = "graphql"
         except RuntimeError as e:
-            log(f"GraphQL failed ({e}); falling back to REST")
-            raw, source = fetch_rest(args.user, args.year, start, end, token), "rest"
-    else:
-        log("No token found - using public REST fallback (limited). Set GITHUB_TOKEN for full data.")
-        raw, source = fetch_rest(args.user, args.year, start, end, None), "rest-public"
+            if args.source == "graphql":
+                raise
+            log(f"GraphQL failed ({str(e)[:160]}); falling back to the search API")
+    if raw is None and source in ("auto", "search", "graphql"):
+        if not token:
+            log("No token found - using the public search API (public activity only).")
+        raw, source = fetch_search(args.user, args.year, start, end, token, args.tz), "search"
+    if raw is None:  # --source rest
+        raw, source = fetch_rest(args.user, args.year, start, end, token), "rest"
 
-    by_repo = sorted(raw["contributions"]["commitContributionsByRepository"],
-                     key=lambda x: -x["contributions"]["totalCount"])
-    raw["commit_samples"] = fetch_commit_samples(args.user, by_repo, start, end, token,
-                                                 args.sample_repos, args.sample_pages)
+    if "commit_samples" not in raw:
+        by_repo = sorted(raw["contributions"]["commitContributionsByRepository"],
+                         key=lambda x: -x["contributions"]["totalCount"])
+        raw["commit_samples"] = fetch_commit_samples(args.user, by_repo, start, end, token,
+                                                     args.sample_repos, args.sample_pages)
     raw["meta"] = {
         "user": args.user, "year": args.year, "tz": args.tz, "source": source,
         "range": {"from": iso(start), "to": iso(end)},

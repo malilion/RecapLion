@@ -35,9 +35,12 @@ Work in a scratch/output directory, e.g. `./year-review-<login>-<year>/`.
 python3 scripts/fetch_github_year.py --user <login> --year <year> --tz <tz> -o raw.json
 ```
 Token lookup: `--token`, `GITHUB_TOKEN`/`GH_TOKEN`, then `gh auth token`. A token gives the full
-GraphQL data (calendar, PRs, reviews, private contribution counts). Without one it falls back to
-limited public REST data — tell the user the result is approximate and how to supply a token
-(a classic token with `read:user` + `repo` for private repos, or just `gh auth login`).
+GraphQL data (calendar, PRs, reviews, private contribution counts). If there is no token or GraphQL
+is unreachable (e.g. sandboxed sessions), it falls back to the public **search API**
+(`--source search`): commits, PRs, issues and repos are collected from search results and the
+calendar is rebuilt from their dates. It takes a few minutes because of search rate limits
+(it sleeps and retries automatically). Tell the user this mode covers public activity only, and
+that reviews are approximate and releases unknown.
 
 ### 3. Analyze
 ```bash
@@ -49,9 +52,10 @@ achievements (see `references/achievements.md`).
 ### 4. Understand the projects and write the narrative  ← the important part
 Read `analysis.json` (`stats`, `projects`, `achievements`, `commit_messages`). For the top
 projects (by commits, stars, or being new this year — up to ~8), learn what they are:
-- read the README via `gh api repos/<owner>/<repo>/readme -H "Accept: application/vnd.github.raw"`,
+- read the README (if reachable) via `gh api repos/<owner>/<repo>/readme -H "Accept: application/vnd.github.raw"`,
   the GitHub MCP `get_file_contents` tool, or a local clone if present;
-- use the commit subjects in `commit_messages` to see what was actually built this year.
+- use the commit subjects in `commit_messages` to see what was actually built this year — in
+  search mode every public commit is there, which is usually enough even without READMEs.
 
 Then write `narrative.json` (schema in `references/narrative-schema.md`, full example in
 `../../examples/sample/narrative.json`):
