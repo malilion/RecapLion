@@ -1,0 +1,458 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>RecapLion — Animated GitHub Year in Review</title>
+<meta name="description" content="RecapLion turns your year on GitHub into an animated story with tiered achievement cards. Works with Claude Code, Codex and any AI agent — or with one command.">
+<meta property="og:title" content="RecapLion — Animated GitHub Year in Review">
+<meta property="og:description" content="Your year on GitHub as an animated story, with achievement cards for your profile.">
+<meta property="og:image" content="https://malilion.github.io/RecapLion/hero.png">
+<meta name="theme-color" content="#07080f">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🦁</text></svg>">
+<style>
+:root {
+  --bg: #07080f; --bg2: #0e1120; --panel: rgba(255,255,255,.045); --border: rgba(255,255,255,.1);
+  --text: #eef0ff; --muted: #9aa0bf; --accent: #7c5cff; --accent2: #22d3ee; --accent3: #f472b6;
+  --gold: #ffb020; --code: #0b0d18; --radius: 18px;
+}
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme="dark"]) {
+    --bg: #f6f6fb; --bg2: #ecebf7; --panel: rgba(255,255,255,.85); --border: rgba(20,20,60,.1);
+    --text: #15162a; --muted: #5a5f7d; --code: #14162a;
+  }
+}
+:root[data-theme="light"] {
+  --bg: #f6f6fb; --bg2: #ecebf7; --panel: rgba(255,255,255,.85); --border: rgba(20,20,60,.1);
+  --text: #15162a; --muted: #5a5f7d; --code: #14162a;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0; background: var(--bg); color: var(--text); line-height: 1.6; overflow-x: hidden;
+  font-family: "Inter", "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", system-ui, -apple-system, sans-serif;
+}
+a { color: inherit; }
+img { max-width: 100%; display: block; }
+#sky { position: fixed; inset: 0; z-index: 0; pointer-events: none; }
+.wrap { max-width: 1140px; margin: 0 auto; padding: 0 16px; position: relative; z-index: 1; }
+.grad { background: linear-gradient(90deg, var(--accent), var(--accent2), var(--accent3)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.panel { background: var(--panel); border: 1px solid var(--border); border-radius: var(--radius); backdrop-filter: blur(10px); }
+
+/* nav */
+nav { position: sticky; top: 0; z-index: 20; backdrop-filter: blur(14px); background: color-mix(in srgb, var(--bg) 72%, transparent); border-bottom: 1px solid var(--border); }
+nav .wrap { display: flex; align-items: center; gap: 18px; height: 60px; }
+.logo { display: flex; align-items: center; gap: 8px; font-weight: 900; font-size: 19px; text-decoration: none; letter-spacing: -.02em; }
+.logo span:first-child { font-size: 24px; }
+.links { display: flex; gap: 20px; margin-left: auto; font-size: 14px; }
+.links a { text-decoration: none; color: var(--muted); }
+.links a:hover { color: var(--text); }
+.tools { display: flex; gap: 8px; }
+.pill { height: 34px; padding: 0 12px; border-radius: 999px; border: 1px solid var(--border); background: var(--panel); color: var(--text); font: inherit; font-size: 13px; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; text-decoration: none; }
+.pill:hover { border-color: var(--accent); }
+@media (max-width: 760px) { .links { display: none; } .tools { margin-left: auto; } }
+
+/* hero */
+.hero { display: grid; grid-template-columns: 1.1fr 1fr; gap: 40px; align-items: center; min-height: calc(100vh - 60px); padding: 40px 16px 60px; }
+@media (max-width: 900px) { .hero { grid-template-columns: 1fr; min-height: auto; padding-top: 48px; text-align: center; } }
+.eyebrow { display: inline-flex; gap: 8px; align-items: center; padding: 6px 14px; border-radius: 999px; border: 1px solid var(--border); background: var(--panel); font-size: 13px; color: var(--muted); animation: up .7s both; }
+.eyebrow b { color: var(--gold); }
+h1 { font-size: clamp(40px, 6.4vw, 74px); line-height: 1.04; letter-spacing: -.035em; margin: 18px 0; font-weight: 900; animation: up .7s .1s both; }
+:lang(zh-Hant) h1 { font-size: clamp(36px, 5.2vw, 60px); line-height: 1.15; }
+.lead { font-size: clamp(17px, 2vw, 20px); color: var(--muted); max-width: 560px; animation: up .7s .2s both; }
+@media (max-width: 900px) { .lead { margin: 0 auto; } }
+.cta { display: flex; gap: 12px; margin-top: 30px; flex-wrap: wrap; animation: up .7s .3s both; }
+@media (max-width: 900px) { .cta { justify-content: center; } }
+.btn { display: inline-flex; align-items: center; gap: 8px; padding: 13px 22px; border-radius: 999px; font-weight: 700; text-decoration: none; border: 1px solid var(--border); background: var(--panel); color: var(--text); font: inherit; font-weight: 700; cursor: pointer; transition: transform .2s, box-shadow .2s; }
+.btn:hover { transform: translateY(-2px); }
+.btn.primary { border: 0; color: #fff; background: linear-gradient(90deg, var(--accent), var(--accent3)); box-shadow: 0 10px 34px -10px var(--accent); }
+.hero-note { margin-top: 18px; font-size: 13px; color: var(--muted); animation: up .7s .4s both; }
+
+.deck { position: relative; height: 470px; perspective: 1400px; }
+@media (max-width: 900px) { .deck { height: 400px; max-width: 420px; margin: 0 auto; width: 100%; } }
+.deck img { position: absolute; width: 230px; left: 50%; top: 50%; border-radius: 22px; box-shadow: 0 30px 60px -20px rgba(0,0,0,.6); transition: transform .5s cubic-bezier(.2,.8,.2,1); animation: deal 1s cubic-bezier(.2,1.2,.3,1) both; }
+@media (max-width: 520px) { .deck img { width: 180px; } }
+.deck img:nth-child(1) { transform: translate(-50%, -50%) translate(-120px, 20px) rotate(-14deg); animation-delay: .5s; }
+.deck img:nth-child(2) { transform: translate(-50%, -50%) translate(120px, 20px) rotate(14deg); animation-delay: .65s; }
+.deck img:nth-child(3) { transform: translate(-50%, -50%) translateY(-6px); animation-delay: .8s; z-index: 2; }
+@media (max-width: 520px) { .deck img:nth-child(1) { transform: translate(-50%, -50%) translate(-80px, 16px) rotate(-12deg); } .deck img:nth-child(2) { transform: translate(-50%, -50%) translate(80px, 16px) rotate(12deg); } }
+.deck:hover img:nth-child(1) { transform: translate(-50%, -50%) translate(-170px, 26px) rotate(-18deg); }
+.deck:hover img:nth-child(2) { transform: translate(-50%, -50%) translate(170px, 26px) rotate(18deg); }
+.deck:hover img:nth-child(3) { transform: translate(-50%, -50%) translateY(-18px) scale(1.04); }
+.deck.float img { animation: float 5s ease-in-out infinite; }
+.deck.float img:nth-child(2) { animation-delay: -1.6s; } .deck.float img:nth-child(3) { animation-delay: -3.2s; }
+
+/* sections */
+section { padding: 90px 0; }
+.kicker { color: var(--accent2); font-weight: 800; font-size: 13px; letter-spacing: .14em; text-transform: uppercase; }
+h2 { font-size: clamp(30px, 4.4vw, 46px); line-height: 1.12; letter-spacing: -.03em; margin: 10px 0 14px; font-weight: 900; }
+.sub { color: var(--muted); max-width: 640px; margin: 0 0 40px; font-size: 17px; }
+.center { text-align: center; } .center .sub { margin-left: auto; margin-right: auto; }
+
+.strip { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-top: -30px; }
+@media (max-width: 760px) { .strip { grid-template-columns: repeat(2, 1fr); } }
+.strip div { padding: 20px; text-align: center; }
+.strip b { display: block; font-size: 30px; font-weight: 900; letter-spacing: -.02em; }
+.strip span { color: var(--muted); font-size: 14px; }
+
+.steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; counter-reset: s; }
+@media (max-width: 860px) { .steps { grid-template-columns: 1fr; } }
+.step { padding: 26px; position: relative; overflow: hidden; }
+.step::before { counter-increment: s; content: "0" counter(s); position: absolute; right: 18px; top: 8px; font-size: 54px; font-weight: 900; opacity: .08; }
+.step .ic { font-size: 30px; }
+.step h3 { margin: 12px 0 6px; font-size: 20px; }
+.step p { margin: 0; color: var(--muted); font-size: 15px; }
+
+.features { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+@media (max-width: 860px) { .features { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 560px) { .features { grid-template-columns: 1fr; } }
+.feat { padding: 22px; transition: border-color .3s, transform .3s; }
+.feat:hover { border-color: var(--accent); transform: translateY(-3px); }
+.feat .ic { font-size: 26px; }
+.feat h3 { margin: 10px 0 4px; font-size: 17px; }
+.feat p { margin: 0; color: var(--muted); font-size: 14px; }
+
+/* demo */
+.browser { overflow: hidden; padding: 0; }
+.browser .bar { display: flex; align-items: center; gap: 8px; padding: 12px 16px; border-bottom: 1px solid var(--border); }
+.browser .bar i { width: 11px; height: 11px; border-radius: 50%; background: #ff5f57; display: inline-block; }
+.browser .bar i:nth-child(2) { background: #febc2e; } .browser .bar i:nth-child(3) { background: #28c840; }
+.browser .bar span { margin-left: 10px; font-size: 13px; color: var(--muted); font-family: ui-monospace, SFMono-Regular, Menlo, monospace; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.browser iframe { display: block; width: 100%; height: min(78vh, 720px); border: 0; background: #07080f; }
+.demo-actions { display: flex; gap: 10px; justify-content: center; margin-top: 18px; flex-wrap: wrap; }
+
+/* gallery */
+.gallery { display: grid; grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); gap: 16px; }
+.gallery img { border-radius: 16px; transition: transform .35s cubic-bezier(.2,.8,.2,1); }
+.gallery img:hover { transform: translateY(-6px) rotate(-1.5deg) scale(1.03); }
+.tiers { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin: -20px 0 34px; }
+.tiers span { padding: 6px 14px; border-radius: 999px; font-size: 13px; font-weight: 800; border: 1px solid currentColor; }
+
+/* agents */
+.agents { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; }
+.agents span { padding: 10px 18px; border-radius: 12px; border: 1px solid var(--border); background: var(--panel); font-weight: 700; }
+.agents span.any { border-style: dashed; color: var(--muted); font-weight: 600; }
+
+/* install */
+.tabs { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 14px; }
+.tab { padding: 9px 16px; border-radius: 999px; border: 1px solid var(--border); background: transparent; color: var(--muted); font: inherit; font-size: 14px; font-weight: 700; cursor: pointer; }
+.tab[aria-selected="true"] { background: var(--text); color: var(--bg); border-color: var(--text); }
+.pane { display: none; padding: 24px; }
+.pane.on { display: block; animation: up .4s both; }
+.pane p { margin: 0 0 12px; color: var(--muted); }
+.code { position: relative; background: var(--code); color: #e6e8ff; border-radius: 12px; padding: 16px 52px 16px 16px; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 14px; overflow-x: auto; white-space: pre; margin: 0 0 12px; border: 1px solid rgba(255,255,255,.08); }
+.copy { position: absolute; right: 8px; top: 8px; height: 30px; padding: 0 10px; border-radius: 8px; border: 1px solid rgba(255,255,255,.15); background: rgba(255,255,255,.06); color: #e6e8ff; cursor: pointer; font: inherit; font-size: 12px; }
+.copy.done { color: #34d399; border-color: #34d399; }
+.prompt { padding: 16px 18px; border-left: 3px solid var(--accent); font-size: 16px; margin: 0 0 10px; }
+
+footer { padding: 50px 0 60px; color: var(--muted); font-size: 14px; border-top: 1px solid var(--border); position: relative; z-index: 1; }
+footer .wrap { display: flex; gap: 16px; justify-content: space-between; flex-wrap: wrap; }
+
+.reveal { opacity: 0; transform: translateY(26px); transition: opacity .8s cubic-bezier(.2,.7,.2,1), transform .8s cubic-bezier(.2,.7,.2,1); }
+.reveal.in { opacity: 1; transform: none; }
+@keyframes up { from { opacity: 0; transform: translateY(18px); } }
+@keyframes deal { from { opacity: 0; transform: translate(-50%, 40%) rotate(0) scale(.6); } }
+@keyframes float { 50% { translate: 0 -10px; } }
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+  .reveal { opacity: 1; transform: none; }
+}
+</style>
+</head>
+<body>
+<canvas id="sky"></canvas>
+
+<nav>
+  <div class="wrap">
+    <a class="logo" href="#"><span>🦁</span><span>RecapLion</span></a>
+    <div class="links">
+      <a href="#how" data-i18n="nav.how">How it works</a>
+      <a href="#demo" data-i18n="nav.demo">Demo</a>
+      <a href="#achievements" data-i18n="nav.ach">Achievements</a>
+      <a href="#install" data-i18n="nav.install">Install</a>
+    </div>
+    <div class="tools">
+      <button class="pill" id="langBtn" aria-label="Switch language">中文</button>
+      <button class="pill" id="themeBtn" aria-label="Toggle theme">◐</button>
+      <a class="pill" href="https://github.com/malilion/RecapLion" target="_blank" rel="noopener">GitHub ↗</a>
+    </div>
+  </div>
+</nav>
+
+<header class="wrap hero">
+  <div>
+    <div class="eyebrow">🏆 <span data-i18n="hero.eyebrow">19 achievements · 4 tiers · <b>legendary</b> included</span></div>
+    <h1><span data-i18n="hero.t1">Your year on GitHub,</span><br><span class="grad" data-i18n="hero.t2">told as a story.</span></h1>
+    <p class="lead" data-i18n="hero.lead">RecapLion looks back at the projects you built and the milestones you hit, then turns them into an animated year-in-review page and achievement cards for your profile.</p>
+    <div class="cta">
+      <a class="btn primary" href="demo/en.html" id="demoCta" target="_blank" rel="noopener"><span data-i18n="hero.demo">See the live demo</span> →</a>
+      <a class="btn" href="#install" data-i18n="hero.install">Install in 1 minute</a>
+    </div>
+    <div class="hero-note" data-i18n="hero.note">Free & open source · Works with Claude Code, Codex and any AI agent · Python standard library only</div>
+  </div>
+  <div class="deck" aria-hidden="true">
+    <img class="cardimg" data-card="night_owl" src="cards/night_owl.svg" alt="">
+    <img class="cardimg" data-card="db_from_scratch" src="cards/db_from_scratch.svg" alt="">
+    <img class="cardimg" data-card="first_400_stars" src="cards/first_400_stars.svg" alt="">
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="strip">
+    <div class="panel reveal"><b class="grad">19</b><span data-i18n="strip.a">built-in achievements</span></div>
+    <div class="panel reveal"><b class="grad">4</b><span data-i18n="strip.b">rarity tiers</span></div>
+    <div class="panel reveal"><b class="grad">0</b><span data-i18n="strip.c">dependencies to install</span></div>
+    <div class="panel reveal"><b class="grad">∞</b><span data-i18n="strip.d">AI agents supported</span></div>
+  </div>
+</div>
+
+<section id="how">
+  <div class="wrap">
+    <div class="kicker reveal" data-i18n="how.k">How it works</div>
+    <h2 class="reveal" data-i18n="how.t">Data from GitHub. The story from your agent.</h2>
+    <p class="sub reveal" data-i18n="how.s">The scripts crunch the numbers; your AI agent reads what you actually built and writes the narrative.</p>
+    <div class="steps">
+      <div class="step panel reveal"><div class="ic">📡</div><h3 data-i18n="how.1t">Collect your year</h3><p data-i18n="how.1p">Contributions, commits, PRs, issues, repositories and languages from the GitHub API — with or without a token.</p></div>
+      <div class="step panel reveal"><div class="ic">🧠</div><h3 data-i18n="how.2t">Your agent writes the story</h3><p data-i18n="how.2p">It reads READMEs and commit history, then writes project highlights, a headline, and special achievements the numbers can't see.</p></div>
+      <div class="step panel reveal"><div class="ic">✨</div><h3 data-i18n="how.3t">Animated page + cards</h3><p data-i18n="how.3p">A single self-contained HTML page and animated SVG cards you can embed in your GitHub profile README.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="features" style="padding-top:0">
+  <div class="wrap">
+    <div class="features">
+      <div class="feat panel reveal"><div class="ic">🔢</div><h3 data-i18n="f.1t">Year in numbers</h3><p data-i18n="f.1p">Contributions, streaks, busiest day and golden hour, with count-up animations.</p></div>
+      <div class="feat panel reveal"><div class="ic">🟩</div><h3 data-i18n="f.2t">Animated heatmap</h3><p data-i18n="f.2p">Your contribution calendar waves in, plus monthly bars and a commit-hour clock.</p></div>
+      <div class="feat panel reveal"><div class="ic">📦</div><h3 data-i18n="f.3t">Project cards</h3><p data-i18n="f.3p">Every project you pushed gets a category, a pitch and concrete highlights.</p></div>
+      <div class="feat panel reveal"><div class="ic">🃏</div><h3 data-i18n="f.4t">Achievement cards</h3><p data-i18n="f.4p">Cards deal and flip, tilt in 3D, shine holographically, and legendary ones glow with confetti.</p></div>
+      <div class="feat panel reveal"><div class="ic">🌟</div><h3 data-i18n="f.5t">Special achievements</h3><p data-i18n="f.5p">Awarded by your agent from real evidence: "built a database from scratch", "shipped on five platforms".</p></div>
+      <div class="feat panel reveal"><div class="ic">🌏</div><h3 data-i18n="f.6t">English & 繁體中文</h3><p data-i18n="f.6p">Light & dark themes, phone layouts, and respect for reduced-motion settings.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="demo">
+  <div class="wrap">
+    <div class="center">
+      <div class="kicker reveal" data-i18n="demo.k">Live demo</div>
+      <h2 class="reveal" data-i18n="demo.t">Scroll through a real report</h2>
+      <p class="sub reveal" data-i18n="demo.s">This is the actual output for a fictional developer, demo-dev. Scroll inside, and click the achievement cards to flip them.</p>
+    </div>
+    <div class="browser panel reveal">
+      <div class="bar"><i></i><i></i><i></i><span id="demoUrl">recap-demo-dev-2026/year-review.html</span></div>
+      <iframe id="demoFrame" title="RecapLion demo" loading="lazy" src="demo/en.html"></iframe>
+    </div>
+    <div class="demo-actions">
+      <a class="btn" href="demo/en.html" target="_blank" rel="noopener">English demo ↗</a>
+      <a class="btn" href="demo/zh.html" target="_blank" rel="noopener">中文範例 ↗</a>
+    </div>
+  </div>
+</section>
+
+<section id="achievements">
+  <div class="wrap">
+    <div class="center">
+      <div class="kicker reveal" data-i18n="ach.k">Achievements</div>
+      <h2 class="reveal" data-i18n="ach.t">Collect them all</h2>
+      <p class="sub reveal" data-i18n="ach.s">Each achievement has four tiers. Every card is an animated SVG you can put on your profile.</p>
+    </div>
+    <div class="tiers reveal">
+      <span style="color:#a3adc2" data-i18n="tier.c">Common</span>
+      <span style="color:#3b9bff" data-i18n="tier.r">Rare</span>
+      <span style="color:#b46cff" data-i18n="tier.e">Epic</span>
+      <span style="color:#ffb020" data-i18n="tier.l">Legendary</span>
+    </div>
+    <div class="gallery" id="gallery"></div>
+  </div>
+</section>
+
+<section id="agents" style="padding-top:20px">
+  <div class="wrap center">
+    <div class="kicker reveal" data-i18n="ag.k">Any agent</div>
+    <h2 class="reveal" data-i18n="ag.t">Built on the open Agent Skills format</h2>
+    <p class="sub reveal" data-i18n="ag.s">RecapLion is a folder with a SKILL.md. Any agent that reads Agent Skills, or can simply run shell commands, can use it.</p>
+    <div class="agents reveal">
+      <span>Claude Code</span><span>OpenAI Codex</span><span>Gemini CLI</span><span>GitHub Copilot</span><span>Cursor</span>
+      <span class="any" data-i18n="ag.any">+ any agent with a shell</span>
+    </div>
+  </div>
+</section>
+
+<section id="install">
+  <div class="wrap">
+    <div class="kicker reveal" data-i18n="in.k">Install</div>
+    <h2 class="reveal" data-i18n="in.t">Up and running in a minute</h2>
+    <p class="sub reveal" data-i18n="in.s">Pick whatever fits how you work.</p>
+    <div class="reveal">
+      <div class="tabs" role="tablist">
+        <button class="tab" role="tab" aria-selected="true" data-pane="p1" data-i18n="in.tab1">Any agent</button>
+        <button class="tab" role="tab" aria-selected="false" data-pane="p2">Claude Code</button>
+        <button class="tab" role="tab" aria-selected="false" data-pane="p3" data-i18n="in.tab3">No agent</button>
+        <button class="tab" role="tab" aria-selected="false" data-pane="p4">GitHub Action</button>
+      </div>
+      <div class="pane panel on" id="p1">
+        <p data-i18n="in.p1">Installs the skill for Claude Code (~/.claude/skills) and Codex / other Agent Skills clients (~/.agents/skills), auto-detected.</p>
+        <div class="code">curl -fsSL https://raw.githubusercontent.com/malilion/RecapLion/main/install.sh | sh</div>
+        <p data-i18n="in.p1b">Or install into any agent's skills folder:</p>
+        <div class="code">git clone https://github.com/malilion/RecapLion.git && sh RecapLion/install.sh --dir ~/path/to/skills</div>
+        <p data-i18n="in.ask">Then ask your agent:</p>
+        <div class="prompt panel" data-i18n="in.prompt">“Make my 2026 GitHub year in review. My username is octocat.”</div>
+      </div>
+      <div class="pane panel" id="p2">
+        <p data-i18n="in.p2">Add the marketplace, then install the plugin:</p>
+        <div class="code">/plugin marketplace add malilion/RecapLion</div>
+        <div class="code">/plugin install recaplion@recaplion</div>
+        <p data-i18n="in.ask">Then ask your agent:</p>
+        <div class="prompt panel" data-i18n="in.prompt">“Make my 2026 GitHub year in review. My username is octocat.”</div>
+      </div>
+      <div class="pane panel" id="p3">
+        <p data-i18n="in.p3">One command gives you every stat, chart and built-in achievement. Only Python 3.9+ is needed.</p>
+        <div class="code">git clone https://github.com/malilion/RecapLion.git</div>
+        <div class="code">python3 RecapLion/skills/github-year-review/scripts/recap.py --user octocat --tz Asia/Taipei</div>
+        <p data-i18n="in.p3b">Add --lang zh for Traditional Chinese. Run gh auth login first for the full data, including private contribution counts.</p>
+      </div>
+      <div class="pane panel" id="p4">
+        <p data-i18n="in.p4">Keep the cards on your profile fresh: copy the workflow into your profile repository's .github/workflows/ folder.</p>
+        <div class="code">curl -fsSL -o .github/workflows/recaplion.yml https://raw.githubusercontent.com/malilion/RecapLion/main/examples/github-action/recaplion.yml</div>
+        <p data-i18n="in.p4b">Then embed the summary card in your README:</p>
+        <div class="code">![Year in review](./recap/cards/summary.svg)</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div>🦁 RecapLion · MIT License · <span data-i18n="foot.by">made by</span> <a href="https://github.com/malilion">malilion</a></div>
+    <div><a href="https://github.com/malilion/RecapLion">GitHub</a> · <a href="https://github.com/malilion/RecapLion/blob/main/skills/github-year-review/SKILL.md">SKILL.md</a> · <a href="https://github.com/malilion/RecapLion/blob/main/README.zh-TW.md">繁體中文 README</a></div>
+  </div>
+</footer>
+
+<script>
+(() => {
+"use strict";
+const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+const ZH = {
+  "nav.how": "運作方式", "nav.demo": "Demo", "nav.ach": "成就", "nav.install": "安裝",
+  "hero.eyebrow": "19 種成就 · 4 種稀有度 · 包含<b>傳說級</b>",
+  "hero.t1": "你的 GitHub 這一年", "hero.t2": "寫成一個故事。",
+  "hero.lead": "RecapLion 會回顧你今年打造的專案與達成的里程碑，產生一個有動畫的年度回顧網頁，以及可以放上個人頁的成就卡。",
+  "hero.demo": "看線上 Demo", "hero.install": "一分鐘安裝",
+  "hero.note": "免費開源 · 支援 Claude Code、Codex 等任何 AI agent · 只需要 Python 標準函式庫",
+  "strip.a": "種內建成就", "strip.b": "種稀有度", "strip.c": "個需要安裝的套件", "strip.d": "支援任何 AI agent",
+  "how.k": "運作方式", "how.t": "數據來自 GitHub，故事由你的 agent 來寫。",
+  "how.s": "腳本負責統計數字；AI agent 閱讀你實際做了什麼，寫出年度故事。",
+  "how.1t": "收集你的一年", "how.1p": "從 GitHub API 取得貢獻、commits、PR、issues、repo 與語言，有沒有 token 都能跑。",
+  "how.2t": "Agent 寫出故事", "how.2p": "閱讀 README 與 commit 紀錄，寫出專案重點、年度標題，以及數字看不出來的特別成就。",
+  "how.3t": "動畫網頁與成就卡", "how.3p": "一個獨立的 HTML 網頁，加上可以嵌入 GitHub 個人頁的動畫 SVG 成就卡。",
+  "f.1t": "年度數字", "f.1p": "總貢獻、連續天數、最爆肝的一天與黃金時段，數字會滾動跑出來。",
+  "f.2t": "動畫熱力圖", "f.2p": "貢獻日曆像波浪一樣浮現，還有每月長條圖與 commit 時段時鐘。",
+  "f.3t": "年度專案卡", "f.3p": "每個推進過的專案都有分類、一句話介紹和具體重點。",
+  "f.4t": "成就卡", "f.4p": "發牌翻面、3D 傾斜、全息閃光，傳說級還會發光並撒下彩帶。",
+  "f.5t": "特別成就", "f.5p": "由 agent 依真實證據頒發，例如「從零造資料庫」「全平台出貨」。",
+  "f.6t": "English & 繁體中文", "f.6p": "亮暗主題、手機版排版，並尊重減少動態效果的設定。",
+  "demo.k": "線上 Demo", "demo.t": "滑滑看真正的報告", "demo.s": "這是虛構開發者 demo-dev 的實際產出。在框裡往下滑，點成就卡可以翻面。",
+  "ach.k": "成就", "ach.t": "全部收集起來", "ach.s": "每個成就都有四個等級。每張卡都是動畫 SVG，可以放上你的個人頁。",
+  "tier.c": "普通", "tier.r": "稀有", "tier.e": "史詩", "tier.l": "傳說",
+  "ag.k": "任何 agent", "ag.t": "採用開放的 Agent Skills 格式", "ag.s": "RecapLion 是一個含 SKILL.md 的資料夾。支援 Agent Skills、或能執行 shell 指令的 agent 都能使用。",
+  "ag.any": "+ 任何能跑 shell 的 agent",
+  "in.k": "安裝", "in.t": "一分鐘就能開始", "in.s": "選一個適合你的方式。",
+  "in.tab1": "任何 agent", "in.tab3": "不用 agent",
+  "in.p1": "自動偵測並安裝到 Claude Code（~/.claude/skills）與 Codex／其他支援 Agent Skills 的工具（~/.agents/skills）。",
+  "in.p1b": "或安裝到任何 agent 的 skills 資料夾：", "in.ask": "接著對 agent 說：",
+  "in.prompt": "「幫我做 2026 年的 GitHub 年度回顧，帳號是 octocat。」",
+  "in.p2": "先加入 marketplace，再安裝 plugin：",
+  "in.p3": "一行指令就有所有統計、圖表與內建成就，只需要 Python 3.9 以上。",
+  "in.p3b": "預設是英文，加 --lang zh 改成繁體中文。先執行 gh auth login 可以拿到完整資料，包含私人貢獻數。",
+  "in.p4": "讓個人頁上的成就卡自動更新：把 workflow 放進個人頁 repo 的 .github/workflows/。",
+  "in.p4b": "然後在 README 嵌入總結卡：", "foot.by": "作者",
+};
+const CARDS = ["first_400_stars","db_from_scratch","stargazer","daily_builder","forged","overdrive","deep_focus","merge_master","polyglot","bug_hunter","gatekeeper","night_owl","weekend_warrior","voyager","shipper","genesis","eternal_flame","multithreaded"];
+
+// gallery
+const gallery = document.getElementById("gallery");
+gallery.innerHTML = CARDS.map((c, i) => `<img class="cardimg reveal" data-card="${c}" src="cards/${c}.svg" alt="" loading="lazy" style="transition-delay:${(i % 6) * 60}ms">`).join("");
+
+// i18n
+const EN = {};
+document.querySelectorAll("[data-i18n]").forEach(el => { EN[el.dataset.i18n] = el.innerHTML; });
+const store = { get(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }, set(k, v) { try { localStorage.setItem(k, v); } catch (e) {} } };
+function setLang(lang) {
+  const zh = lang === "zh";
+  document.documentElement.lang = zh ? "zh-Hant" : "en";
+  document.querySelectorAll("[data-i18n]").forEach(el => { const k = el.dataset.i18n; el.innerHTML = zh && ZH[k] ? ZH[k] : EN[k]; });
+  document.querySelectorAll("img.cardimg").forEach(img => { img.src = `${zh ? "cards-zh" : "cards"}/${img.dataset.card}.svg`; });
+  const demo = zh ? "demo/zh.html" : "demo/en.html";
+  document.getElementById("demoFrame").src = demo;
+  document.getElementById("demoCta").href = demo;
+  document.getElementById("langBtn").textContent = zh ? "English" : "中文";
+  document.title = zh ? "RecapLion 回顧獅 — 有動畫的 GitHub 年度回顧" : "RecapLion — Animated GitHub Year in Review";
+  store.set("recaplion-lang", lang);
+  current = lang;
+}
+const param = new URLSearchParams(location.search).get("lang");
+let current = param || store.get("recaplion-lang") || ((navigator.language || "").toLowerCase().startsWith("zh") ? "zh" : "en");
+if (current === "zh") setLang("zh");
+document.getElementById("langBtn").addEventListener("click", () => setLang(current === "zh" ? "en" : "zh"));
+
+// theme
+document.getElementById("themeBtn").addEventListener("click", () => {
+  const root = document.documentElement;
+  const cur = root.dataset.theme || (matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark");
+  root.dataset.theme = cur === "light" ? "dark" : "light";
+});
+
+// tabs
+document.querySelectorAll(".tab").forEach(t => t.addEventListener("click", () => {
+  document.querySelectorAll(".tab").forEach(x => x.setAttribute("aria-selected", x === t ? "true" : "false"));
+  document.querySelectorAll(".pane").forEach(p => p.classList.toggle("on", p.id === t.dataset.pane));
+}));
+
+// copy buttons
+document.querySelectorAll(".code").forEach(block => {
+  const b = document.createElement("button");
+  b.className = "copy"; b.type = "button"; b.textContent = "Copy";
+  b.addEventListener("click", async () => {
+    const text = block.firstChild.textContent.trim();
+    try { await navigator.clipboard.writeText(text); } catch (e) {
+      const r = document.createRange(); r.selectNodeContents(block.firstChild); const s = getSelection(); s.removeAllRanges(); s.addRange(r);
+    }
+    b.textContent = "✓"; b.classList.add("done");
+    setTimeout(() => { b.textContent = "Copy"; b.classList.remove("done"); }, 1400);
+  });
+  block.appendChild(b);
+});
+
+// reveal
+const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); } }), { threshold: .12 });
+document.querySelectorAll(".reveal").forEach(el => io.observe(el));
+
+// deck float after dealing
+setTimeout(() => document.querySelector(".deck")?.classList.add("float"), 1900);
+
+// starfield
+const c = document.getElementById("sky"), x = c.getContext("2d");
+let stars = [];
+function size() {
+  const d = devicePixelRatio || 1;
+  c.width = innerWidth * d; c.height = innerHeight * d; c.style.width = innerWidth + "px"; c.style.height = innerHeight + "px";
+  x.setTransform(d, 0, 0, d, 0, 0);
+  stars = Array.from({ length: Math.min(140, Math.floor(innerWidth * innerHeight / 10000)) }, () => ({ x: Math.random() * innerWidth, y: Math.random() * innerHeight, r: Math.random() * 1.3 + .2, s: Math.random() * .25 + .04, p: Math.random() * 6 }));
+}
+size(); addEventListener("resize", size);
+(function draw(t) {
+  x.clearRect(0, 0, innerWidth, innerHeight);
+  const light = getComputedStyle(document.documentElement).getPropertyValue("--bg").trim().startsWith("#f");
+  for (const s of stars) {
+    if (!reduce) { s.y -= s.s; if (s.y < 0) { s.y = innerHeight; s.x = Math.random() * innerWidth; } }
+    const a = .3 + .3 * Math.sin((t || 0) / 900 + s.p);
+    x.fillStyle = light ? `rgba(90,80,200,${a * .5})` : `rgba(210,220,255,${a})`;
+    x.beginPath(); x.arc(s.x, s.y, s.r, 0, 7); x.fill();
+  }
+  if (!reduce) requestAnimationFrame(draw);
+})();
+})();
+</script>
+</body>
+</html>

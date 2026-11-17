@@ -284,7 +284,7 @@ const html = [];
 const avatar = safeUrl(P.avatarUrl)
   ? `<img src="${esc(P.avatarUrl)}" alt="">`
   : `<div class="ph">${esc(displayName[0] || "?")}</div>`;
-const chips = (N.theme_words || []).map(w => `<span class="chip">${esc(w)}</span>`).join("");
+const chips = (N.theme_words || []).map(w => `<span class="chip">${esc(tr(w))}</span>`).join("");
 html.push(`<section class="hero">
   <div class="avatar-wrap">${avatar}</div>
   <div class="hello">${esc(T.hello.replace("{name}", displayName))}</div>

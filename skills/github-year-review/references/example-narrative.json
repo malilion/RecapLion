@@ -1,32 +1,42 @@
 {
   "lang": "zh",
-  "headline": "這是你從「寫程式」走向「打造系統」的一年：一個 AI Agent 框架、一個 Rust 儲存引擎，還有 486 次對 agent-forge 的專注。",
-  "theme_words": ["AI Agents", "Rust", "Homelab", "開源", "Side Project → 產品"],
+  "headline": {
+    "zh": "這是你從「寫程式」走向「打造系統」的一年：一個 AI Agent 框架、一個 Rust 儲存引擎，還有 486 次對 agent-forge 的專注。",
+    "en": "The year you went from writing code to building systems: an AI agent framework, a Rust storage engine, and 486 commits of focus on agent-forge."
+  },
+  "theme_words": ["AI Agents", "Rust", "Homelab", "Open Source", "Side Project → Product"],
   "project_order": ["demo-dev/agent-forge", "demo-dev/rust-kv", "demo-dev/homelab-dash", "demo-dev/kotlin-habit", "demo-dev/invoice-saas"],
   "max_projects": 8,
   "projects": {
     "demo-dev/agent-forge": {
-      "category": "AI 系統",
-      "tagline": "從週末實驗長成 412 顆星的多 Agent 框架",
-      "highlights": ["設計工具沙盒，讓 agent 能安全執行指令", "支援 SSE 串流輸出與規劃器拆分", "全年發佈 4 個版本"]
+      "category": {"zh": "AI 系統", "en": "AI system"},
+      "tagline": {"zh": "從週末實驗長成 412 顆星的多 Agent 框架", "en": "From a weekend experiment to a 412-star multi-agent framework"},
+      "highlights": [
+        {"zh": "設計工具沙盒，讓 agent 能安全執行指令", "en": "Designed a tool sandbox so agents can run commands safely"},
+        {"zh": "支援 SSE 串流輸出與規劃器拆分", "en": "Added SSE streaming and split out the planner"},
+        {"zh": "全年發佈 4 個版本", "en": "Shipped 4 releases this year"}
+      ]
     },
     "demo-dev/rust-kv": {
-      "category": "基礎設施",
-      "tagline": "親手實作 LSM-tree，從 WAL 到 compaction",
-      "highlights": ["背景 compaction worker", "以 fuzz test 抓出 WAL 重播的 off-by-one"]
+      "category": {"zh": "基礎設施", "en": "Infrastructure"},
+      "tagline": {"zh": "親手實作 LSM-tree，從 WAL 到 compaction", "en": "An LSM-tree built by hand, from WAL to compaction"},
+      "highlights": [
+        {"zh": "背景 compaction worker", "en": "Background compaction worker"},
+        {"zh": "以 fuzz test 抓出 WAL 重播的 off-by-one", "en": "Fuzz tests caught an off-by-one in WAL replay"}
+      ]
     },
     "demo-dev/homelab-dash": {
-      "category": "工具",
-      "tagline": "Go + Vue 的自架伺服器儀表板"
+      "category": {"zh": "工具", "en": "Tool"},
+      "tagline": {"zh": "Go + Vue 的自架伺服器儀表板", "en": "A Go + Vue dashboard for home servers"}
     },
     "demo-dev/kotlin-habit": {
-      "category": "行動 App",
-      "tagline": "年底的新挑戰：第一次用 Jetpack Compose"
+      "category": {"zh": "行動 App", "en": "Mobile app"},
+      "tagline": {"zh": "年底的新挑戰：第一次用 Jetpack Compose", "en": "A year-end challenge: first app with Jetpack Compose"}
     }
   },
   "achievements": {
-    "night_owl": "凌晨的 commit 特別有靈感？記得也要睡覺。",
-    "eternal_flame": "整個暑假，一天都沒斷過。"
+    "night_owl": {"zh": "凌晨的 commit 特別有靈感？記得也要睡覺。", "en": "Inspiration strikes after midnight? Remember to sleep."},
+    "eternal_flame": {"zh": "整個暑假，一天都沒斷過。", "en": "Not a single day missed all summer."}
   },
   "custom_achievements": [
     {
@@ -35,7 +45,7 @@
       "tier": "legendary",
       "title": {"zh": "破圈之作", "en": "Breakout Project"},
       "desc": {"zh": "agent-forge 今年突破 400 顆星", "en": "agent-forge passed 400 stars"},
-      "detail": {"zh": "從 2 月建立到現在，agent-forge 成為你第一個被社群大量使用的專案。", "en": "Your first project widely adopted by the community."}
+      "detail": {"zh": "從 2 月建立到現在，agent-forge 成為你第一個被社群大量使用的專案。", "en": "Created in February, agent-forge became your first project widely used by the community."}
     },
     {
       "id": "db_from_scratch",
@@ -46,6 +56,12 @@
       "detail": {"zh": "WAL、MemTable、SSTable、Compaction，一個都沒少。", "en": "WAL, memtable, SSTables and compaction — all of it."}
     }
   ],
-  "summary": "2026 年，你推進了 6 個專案，其中 4 個是今年從零開始。你在 AI Agent 與底層儲存兩條完全不同的路線上同時前進，也開始把作品發佈出去，讓別人真正用上。",
-  "closing": "謝謝這一年的自己。下一年，繼續把想法變成能跑的東西。"
+  "summary": {
+    "zh": "2026 年，你推進了 6 個專案，其中 4 個是今年從零開始。你在 AI Agent 與底層儲存兩條完全不同的路線上同時前進，也開始把作品發佈出去，讓別人真正用上。",
+    "en": "In 2026 you pushed 6 projects forward, 4 of them started from scratch this year. You advanced on two very different tracks, AI agents and low-level storage, and began shipping work that other people actually use."
+  },
+  "closing": {
+    "zh": "謝謝這一年的自己。下一年，繼續把想法變成能跑的東西。",
+    "en": "Thank you, this year's you. Next year, keep turning ideas into things that run."
+  }
 }
