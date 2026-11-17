@@ -1,0 +1,612 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Malilion · 2026 GitHub 年度回顧</title>
+<style>
+:root {
+  --bg: #07080f;
+  --bg2: #0e1120;
+  --panel: rgba(255,255,255,.045);
+  --panel-border: rgba(255,255,255,.09);
+  --text: #eef0ff;
+  --muted: #9097b5;
+  --accent: #7c5cff;
+  --accent2: #22d3ee;
+  --accent3: #f472b6;
+  --heat0: rgba(255,255,255,.06);
+  --heat1: #1f3b5c;
+  --heat2: #2563eb;
+  --heat3: #7c5cff;
+  --heat4: #f472b6;
+  --common: #a3adc2;
+  --rare: #3b9bff;
+  --epic: #b46cff;
+  --legendary: #ffb020;
+  --radius: 18px;
+}
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme="dark"]) {
+    --bg: #f6f6fb; --bg2: #ecebf7; --panel: rgba(255,255,255,.8); --panel-border: rgba(20,20,60,.1);
+    --text: #15162a; --muted: #5d6280; --heat0: rgba(20,20,60,.07); --heat1: #bcd3f5;
+    --common: #7b8499; --rare: #1d6fe0; --epic: #8b3fe0; --legendary: #d98a00;
+  }
+}
+:root[data-theme="light"] {
+  --bg: #f6f6fb; --bg2: #ecebf7; --panel: rgba(255,255,255,.8); --panel-border: rgba(20,20,60,.1);
+  --text: #15162a; --muted: #5d6280; --heat0: rgba(20,20,60,.07); --heat1: #bcd3f5;
+  --common: #7b8499; --rare: #1d6fe0; --epic: #8b3fe0; --legendary: #d98a00;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0; background: var(--bg); color: var(--text);
+  font-family: "Inter", "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", system-ui, sans-serif;
+  line-height: 1.55; overflow-x: hidden;
+}
+a { color: inherit; }
+#stars { position: fixed; inset: 0; z-index: 0; pointer-events: none; }
+#confetti { position: fixed; inset: 0; z-index: 50; pointer-events: none; }
+main { position: relative; z-index: 1; }
+section { max-width: 1120px; margin: 0 auto; padding: 72px 16px; }
+.section-title { font-size: clamp(26px, 4vw, 40px); font-weight: 800; margin: 0 0 8px; letter-spacing: -.02em; }
+.section-sub { color: var(--muted); margin: 0 0 36px; }
+.grad { background: linear-gradient(90deg, var(--accent), var(--accent2), var(--accent3)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.panel { background: var(--panel); border: 1px solid var(--panel-border); border-radius: var(--radius); backdrop-filter: blur(10px); }
+
+/* reveal on scroll */
+.reveal { opacity: 0; transform: translateY(28px); transition: opacity .8s cubic-bezier(.2,.7,.2,1), transform .8s cubic-bezier(.2,.7,.2,1); }
+.reveal.in { opacity: 1; transform: none; }
+
+/* ---------- hero ---------- */
+.hero { min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding-top: 40px; }
+.avatar-wrap { position: relative; width: 132px; height: 132px; margin-bottom: 26px; animation: pop 1s cubic-bezier(.2,1.6,.4,1) both; }
+.avatar-wrap::before { content: ""; position: absolute; inset: -6px; border-radius: 50%; background: conic-gradient(var(--accent), var(--accent2), var(--accent3), var(--accent)); animation: spin 6s linear infinite; }
+.avatar-wrap img, .avatar-wrap .ph { position: relative; width: 100%; height: 100%; border-radius: 50%; border: 5px solid var(--bg); object-fit: cover; background: var(--bg2); display: grid; place-items: center; font-size: 52px; font-weight: 800; }
+.hero .hello { color: var(--muted); font-size: 18px; animation: fadeUp .8s .3s both; }
+.year { font-size: clamp(96px, 20vw, 220px); font-weight: 900; line-height: .95; letter-spacing: -.05em; margin: 6px 0; display: flex; gap: .02em; }
+.year span { display: inline-block; animation: digit 1s cubic-bezier(.2,1.4,.3,1) both; }
+.hero h1 { font-size: clamp(22px, 3.4vw, 34px); margin: 4px 0 14px; animation: fadeUp .8s .9s both; }
+.headline { max-width: 680px; color: var(--muted); font-size: 18px; min-height: 2.4em; animation: fadeUp .8s 1.1s both; }
+.caret { display: inline-block; width: 2px; height: 1.1em; background: var(--accent2); vertical-align: -3px; margin-left: 2px; animation: blink 1s steps(1) infinite; }
+.chips { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; margin-top: 18px; animation: fadeUp .8s 1.3s both; }
+.chip { padding: 6px 14px; border-radius: 999px; border: 1px solid var(--panel-border); background: var(--panel); font-size: 14px; }
+.scroll-hint { margin-top: 48px; color: var(--muted); font-size: 13px; animation: bob 2s ease-in-out infinite; }
+
+/* ---------- stats ---------- */
+.stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 14px; }
+.stat { padding: 22px 20px; position: relative; overflow: hidden; }
+.stat .num { font-size: clamp(32px, 5vw, 46px); font-weight: 800; letter-spacing: -.03em; font-variant-numeric: tabular-nums; }
+.stat .lbl { color: var(--muted); font-size: 14px; }
+.stat .ico { font-size: 22px; line-height: 1; margin-bottom: 8px; opacity: .85; }
+.fun-facts { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px; margin-top: 14px; }
+.fact { padding: 18px 20px; display: flex; gap: 14px; align-items: center; }
+.fact .big { font-size: 30px; }
+.fact b { display: block; font-size: 18px; }
+.fact small { color: var(--muted); }
+
+/* ---------- heatmap ---------- */
+.heat-wrap { padding: 22px; overflow-x: auto; }
+.heat { display: grid; grid-auto-flow: column; grid-template-rows: repeat(7, 13px); gap: 3px; width: max-content; }
+.heat i { width: 13px; height: 13px; border-radius: 3px; background: var(--heat0); transform: scale(0); transition: transform .4s cubic-bezier(.2,1.6,.4,1); }
+.heat.in i { transform: scale(1); }
+.heat i[data-l="1"] { background: var(--heat1); } .heat i[data-l="2"] { background: var(--heat2); }
+.heat i[data-l="3"] { background: var(--heat3); } .heat i[data-l="4"] { background: var(--heat4); box-shadow: 0 0 8px var(--heat4); }
+.heat-months { display: flex; color: var(--muted); font-size: 12px; margin-bottom: 6px; position: relative; height: 16px; }
+.heat-months span { position: absolute; }
+.legend { display: flex; gap: 4px; align-items: center; justify-content: flex-end; color: var(--muted); font-size: 12px; margin-top: 10px; }
+.legend i { width: 12px; height: 12px; border-radius: 3px; display: inline-block; }
+.tip { position: fixed; z-index: 60; padding: 6px 10px; border-radius: 8px; background: #000c; color: #fff; font-size: 12px; pointer-events: none; opacity: 0; transition: opacity .15s; white-space: nowrap; }
+
+.charts { display: grid; grid-template-columns: 2fr 1fr; gap: 14px; margin-top: 14px; }
+@media (max-width: 760px) { .charts { grid-template-columns: 1fr; } }
+.chart { padding: 22px; }
+.chart h3 { margin: 0 0 14px; font-size: 16px; }
+.bars { display: flex; align-items: flex-end; gap: 6px; height: 180px; }
+.bar { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; height: 100%; gap: 6px; }
+.bar .fill { width: 100%; border-radius: 6px 6px 3px 3px; background: linear-gradient(180deg, var(--accent2), var(--accent)); height: 0; transition: height 1.1s cubic-bezier(.2,.8,.2,1); position: relative; }
+.bar .fill.top { background: linear-gradient(180deg, var(--accent3), var(--accent)); box-shadow: 0 0 16px var(--accent3); }
+.bar span { font-size: 11px; color: var(--muted); }
+.clock { display: block; margin: 0 auto; max-width: 240px; width: 100%; }
+.clock .h { transform-origin: 120px 120px; transform: scaleY(0); transition: transform .9s cubic-bezier(.2,.8,.2,1); }
+.clock.in .h { transform: scaleY(1); }
+
+/* languages */
+.langbar { display: flex; height: 18px; border-radius: 999px; overflow: hidden; background: var(--heat0); }
+.langbar div { width: 0; transition: width 1.2s cubic-bezier(.2,.8,.2,1); }
+.langs { display: flex; flex-wrap: wrap; gap: 10px 22px; margin-top: 16px; }
+.langs span { display: flex; align-items: center; gap: 8px; font-size: 14px; }
+.langs i { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
+.langs em { color: var(--muted); font-style: normal; }
+
+/* ---------- projects ---------- */
+.projects { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 16px; }
+.proj { padding: 22px; display: flex; flex-direction: column; gap: 10px; position: relative; overflow: hidden; transition: transform .3s, border-color .3s; }
+.proj:hover { transform: translateY(-4px); border-color: var(--accent); }
+.proj::after { content: ""; position: absolute; left: 0; top: 0; height: 3px; width: 100%; background: var(--lc, var(--accent)); }
+.proj .rank { position: absolute; right: 16px; top: 12px; font-size: 40px; font-weight: 900; opacity: .09; }
+.proj h3 { margin: 0; font-size: 19px; display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+.proj h3 a { text-decoration: none; }
+.proj h3 a:hover { text-decoration: underline; }
+.badge { font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 999px; background: color-mix(in srgb, var(--accent2) 22%, transparent); color: var(--accent2); }
+.badge.cat { background: color-mix(in srgb, var(--accent) 22%, transparent); color: var(--accent); }
+.badge.priv { background: var(--heat0); color: var(--muted); }
+.proj .tagline { font-weight: 600; }
+.proj .desc { color: var(--muted); font-size: 14px; margin: 0; }
+.proj ul { margin: 0; padding-left: 18px; font-size: 14px; }
+.proj ul li { margin: 3px 0; }
+.proj .meta { display: flex; gap: 14px; flex-wrap: wrap; color: var(--muted); font-size: 13px; margin-top: auto; padding-top: 6px; }
+.proj .meta i { width: 10px; height: 10px; border-radius: 50%; display: inline-block; margin-right: 5px; vertical-align: -1px; }
+.topics { display: flex; flex-wrap: wrap; gap: 6px; }
+.topics span { font-size: 12px; padding: 2px 8px; border-radius: 6px; background: var(--heat0); color: var(--muted); }
+
+/* ---------- achievement cards ---------- */
+.ach-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 20px; perspective: 1200px; }
+.card { --tc: var(--common); aspect-ratio: 5 / 7; position: relative; cursor: pointer; transform-style: preserve-3d; transition: transform .25s ease-out; }
+.card[data-tier="rare"] { --tc: var(--rare); } .card[data-tier="epic"] { --tc: var(--epic); } .card[data-tier="legendary"] { --tc: var(--legendary); }
+.card .inner { position: absolute; inset: 0; transform-style: preserve-3d; transition: transform .9s cubic-bezier(.3,1.3,.4,1); transform: rotateY(180deg); }
+.card.dealt .inner { transform: rotateY(0); }
+.card.dealt.flipped .inner { transform: rotateY(180deg); }
+.face { position: absolute; inset: 0; border-radius: 20px; backface-visibility: hidden; -webkit-backface-visibility: hidden; overflow: hidden; display: flex; flex-direction: column; align-items: center; text-align: center; padding: 20px 16px; border: 2px solid color-mix(in srgb, var(--tc) 70%, transparent); background: radial-gradient(120% 80% at 50% 0%, color-mix(in srgb, var(--tc) 30%, var(--bg2)) 0%, var(--bg2) 60%); box-shadow: 0 10px 40px -12px color-mix(in srgb, var(--tc) 60%, transparent); }
+.face.back { transform: rotateY(180deg); justify-content: center; gap: 10px; }
+.face .tier { font-size: 11px; letter-spacing: .18em; text-transform: uppercase; font-weight: 800; color: var(--tc); }
+.face .emblem { width: 96px; height: 96px; margin: 16px 0 12px; border-radius: 50%; display: grid; place-items: center; font-size: 50px; background: radial-gradient(circle, color-mix(in srgb, var(--tc) 40%, transparent), transparent 70%); position: relative; }
+.face .emblem::before { content: ""; position: absolute; inset: 0; border-radius: 50%; border: 2px dashed color-mix(in srgb, var(--tc) 60%, transparent); animation: spin 14s linear infinite; }
+.face h4 { margin: 0 0 6px; font-size: 20px; }
+.face p { margin: 0; color: var(--muted); font-size: 13px; }
+.face .val { margin-top: auto; font-size: 30px; font-weight: 900; color: var(--tc); font-variant-numeric: tabular-nums; }
+.face .val small { font-size: 13px; font-weight: 600; color: var(--muted); margin-left: 3px; }
+.pips { display: flex; gap: 5px; margin-top: 8px; }
+.pips i { width: 22px; height: 5px; border-radius: 3px; background: var(--heat0); }
+.pips i.on { background: var(--tc); box-shadow: 0 0 6px var(--tc); }
+.face .shine { position: absolute; inset: 0; pointer-events: none; background: linear-gradient(115deg, transparent 30%, rgba(255,255,255,.28) 45%, transparent 60%); background-size: 250% 100%; background-position: var(--sx, 120%) 0; mix-blend-mode: overlay; }
+.card[data-tier="epic"] .face.front::after, .card[data-tier="legendary"] .face.front::after {
+  content: ""; position: absolute; inset: 0; pointer-events: none; opacity: .35; mix-blend-mode: color-dodge;
+  background: linear-gradient(125deg, #ff008055, #ffcc0055, #00ffaa55, #00aaff55, #aa00ff55, #ff008055); background-size: 300% 300%; animation: holo 6s ease infinite;
+}
+.card[data-tier="legendary"]::before { content: ""; position: absolute; inset: -3px; border-radius: 23px; background: conic-gradient(from var(--ang, 0deg), var(--legendary), #fff6, var(--accent3), var(--legendary)); filter: blur(6px); opacity: .9; animation: angle 4s linear infinite; z-index: -1; }
+.card.cover .face.back { background: repeating-linear-gradient(45deg, var(--bg2) 0 12px, color-mix(in srgb, var(--accent) 12%, var(--bg2)) 12px 24px); }
+.card.cover .face.back > * { display: none; }
+.card.cover .face.back::after { content: "?"; font-size: 72px; font-weight: 900; color: var(--accent); }
+.face.back dl { margin: 0; font-size: 13px; width: 100%; }
+.face.back dt { color: var(--muted); }
+.face.back dd { margin: 0 0 8px; font-weight: 700; }
+.face.back .flavor { font-style: italic; color: var(--text); font-size: 13px; }
+.custom-tag { position: absolute; top: 12px; right: 12px; font-size: 10px; padding: 2px 6px; border-radius: 5px; background: var(--tc); color: #000; font-weight: 800; }
+
+.goals { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 12px; }
+.goal { padding: 16px 18px; display: grid; grid-template-columns: 40px 1fr; gap: 4px 12px; align-items: center; }
+.goal .gi { font-size: 26px; grid-row: span 2; filter: grayscale(.7); opacity: .8; }
+.goal b { font-size: 15px; } .goal b small { color: var(--muted); font-weight: 400; }
+.prog { height: 8px; border-radius: 999px; background: var(--heat0); overflow: hidden; }
+.prog div { height: 100%; width: 0; background: linear-gradient(90deg, var(--accent), var(--accent2)); border-radius: inherit; transition: width 1.2s cubic-bezier(.2,.8,.2,1); }
+
+/* closing */
+.closing { text-align: center; min-height: 80vh; display: flex; flex-direction: column; justify-content: center; align-items: center; }
+.closing p { max-width: 720px; font-size: 18px; color: var(--muted); }
+.closing .next { font-size: clamp(40px, 8vw, 84px); font-weight: 900; margin: 24px 0 0; }
+.btn { margin-top: 28px; padding: 12px 22px; border-radius: 999px; border: 0; cursor: pointer; font: inherit; font-weight: 700; color: #fff; background: linear-gradient(90deg, var(--accent), var(--accent3)); box-shadow: 0 8px 30px -8px var(--accent); }
+footer { text-align: center; color: var(--muted); font-size: 12px; padding: 30px 16px 50px; position: relative; z-index: 1; }
+.theme-toggle { position: fixed; top: 14px; right: 14px; z-index: 40; width: 40px; height: 40px; border-radius: 50%; border: 1px solid var(--panel-border); background: var(--panel); color: var(--text); cursor: pointer; font-size: 18px; backdrop-filter: blur(8px); }
+
+@keyframes spin { to { transform: rotate(360deg); } }
+@keyframes pop { from { transform: scale(0); } }
+@keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } }
+@keyframes digit { from { opacity: 0; transform: translateY(80%) rotateX(-90deg); } }
+@keyframes blink { 50% { opacity: 0; } }
+@keyframes bob { 50% { transform: translateY(6px); } }
+@keyframes holo { 0%,100% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } }
+@property --ang { syntax: "<angle>"; initial-value: 0deg; inherits: false; }
+@keyframes angle { to { --ang: 360deg; } }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+  .reveal { opacity: 1; transform: none; }
+  .heat i { transform: none; }
+  .card .inner { transform: none; }
+}
+</style>
+</head>
+<body>
+<canvas id="stars"></canvas>
+<canvas id="confetti"></canvas>
+<button class="theme-toggle" id="themeBtn" aria-label="Toggle theme">◐</button>
+<div class="tip" id="tip"></div>
+<main id="app"></main>
+<aside style="max-width:1040px;margin:0 auto;padding:24px;color:#8995ab;font:13px/1.8 system-ui,sans-serif" aria-label="資料範圍與統計口徑"><strong>資料範圍與統計口徑</strong><br>2026/01/01–2026/11/17 15:21（台北時間）；貢獻日曆採 GitHub GraphQL，專案僅列公開資料。Commit 貢獻依 GitHub 日曆規則，可能與搜尋到的所有分支提交數不同。時段分析取樣 525 筆 Commit；語言依各庫程式碼比例與 Commit 加權。星數為查詢時快照，非今年新增；Release 每庫最多最近 5 筆，因此可見 10 筆不代表完整年度總量。PR 合併數採 Search 的合併日期查詢，與日曆 PR 貢獻口徑不同。特別成就由專案 README 與今年提交佐證。</aside>
+<footer id="foot"></footer>
+
+<script id="report-data" type="application/json">{"meta": {"user": "malilion", "year": 2026, "tz": "Asia/Taipei", "source": "graphql", "range": {"from": "2026-01-01T00:00:00Z", "to": "2026-11-17T07:21:00Z"}, "generated_at": "2026-11-17T07:27:41Z"}, "profile": {"login": "malilion", "name": "Malilion", "avatarUrl": "https://avatars.githubusercontent.com/u/296698118?u=99516fcd3785242075aaf133725b6c62b9766185\u0026v=4", "bio": "", "url": "https://github.com/malilion", "location": "Taiwan", "company": null}, "stats": {"total_contributions": 1796, "commits": 1634, "pull_requests": 130, "issues": 10, "reviews": 0, "private_contributions": 0, "repos_created": 33, "repos_contributed": 33, "prs_merged": 573, "external_prs_merged": 0, "issues_closed": 255, "active_days": 52, "days_in_range": 321, "active_months": 5, "longest_streak": 11, "longest_streak_start": "2026-10-01", "longest_streak_end": "2026-10-11", "current_streak": 2, "busiest_day": "2026-10-04", "busiest_day_count": 152, "busiest_month": 10, "perfect_months": 0, "weekend_ratio": 31.0, "sampled_commits": 525, "night_ratio": 21.9, "morning_ratio": 17.9, "peak_hour": 7, "language_count": 6, "top_language": "JavaScript", "stars_owned": 10, "top_repo_commits": 250, "releases": 10, "followers": 8}, "calendar": [{"date": "2026-01-01", "count": 0, "weekday": 4}, {"date": "2026-01-02", "count": 0, "weekday": 5}, {"date": "2026-01-03", "count": 0, "weekday": 6}, {"date": "2026-01-04", "count": 0, "weekday": 0}, {"date": "2026-01-05", "count": 0, "weekday": 1}, {"date": "2026-01-06", "count": 0, "weekday": 2}, {"date": "2026-01-07", "count": 0, "weekday": 3}, {"date": "2026-01-08", "count": 0, "weekday": 4}, {"date": "2026-01-09", "count": 0, "weekday": 5}, {"date": "2026-01-10", "count": 0, "weekday": 6}, {"date": "2026-01-11", "count": 0, "weekday": 0}, {"date": "2026-01-12", "count": 0, "weekday": 1}, {"date": "2026-01-13", "count": 0, "weekday": 2}, {"date": "2026-01-14", "count": 0, "weekday": 3}, {"date": "2026-01-15", "count": 0, "weekday": 4}, {"date": "2026-01-16", "count": 0, "weekday": 5}, {"date": "2026-01-17", "count": 0, "weekday": 6}, {"date": "2026-01-18", "count": 0, "weekday": 0}, {"date": "2026-01-19", "count": 0, "weekday": 1}, {"date": "2026-01-20", "count": 0, "weekday": 2}, {"date": "2026-01-21", "count": 0, "weekday": 3}, {"date": "2026-01-22", "count": 0, "weekday": 4}, {"date": "2026-01-23", "count": 0, "weekday": 5}, {"date": "2026-01-24", "count": 0, "weekday": 6}, {"date": "2026-01-25", "count": 0, "weekday": 0}, {"date": "2026-01-26", "count": 0, "weekday": 1}, {"date": "2026-01-27", "count": 0, "weekday": 2}, {"date": "2026-01-28", "count": 0, "weekday": 3}, {"date": "2026-01-29", "count": 0, "weekday": 4}, {"date": "2026-01-30", "count": 0, "weekday": 5}, {"date": "2026-01-31", "count": 0, "weekday": 6}, {"date": "2026-02-01", "count": 0, "weekday": 0}, {"date": "2026-02-02", "count": 0, "weekday": 1}, {"date": "2026-02-03", "count": 0, "weekday": 2}, {"date": "2026-02-04", "count": 0, "weekday": 3}, {"date": "2026-02-05", "count": 0, "weekday": 4}, {"date": "2026-02-06", "count": 0, "weekday": 5}, {"date": "2026-02-07", "count": 0, "weekday": 6}, {"date": "2026-02-08", "count": 0, "weekday": 0}, {"date": "2026-02-09", "count": 0, "weekday": 1}, {"date": "2026-02-10", "count": 0, "weekday": 2}, {"date": "2026-02-11", "count": 0, "weekday": 3}, {"date": "2026-02-12", "count": 0, "weekday": 4}, {"date": "2026-02-13", "count": 0, "weekday": 5}, {"date": "2026-02-14", "count": 0, "weekday": 6}, {"date": "2026-02-15", "count": 0, "weekday": 0}, {"date": "2026-02-16", "count": 0, "weekday": 1}, {"date": "2026-02-17", "count": 0, "weekday": 2}, {"date": "2026-02-18", "count": 0, "weekday": 3}, {"date": "2026-02-19", "count": 0, "weekday": 4}, {"date": "2026-02-20", "count": 0, "weekday": 5}, {"date": "2026-02-21", "count": 0, "weekday": 6}, {"date": "2026-02-22", "count": 0, "weekday": 0}, {"date": "2026-02-23", "count": 0, "weekday": 1}, {"date": "2026-02-24", "count": 0, "weekday": 2}, {"date": "2026-02-25", "count": 0, "weekday": 3}, {"date": "2026-02-26", "count": 0, "weekday": 4}, {"date": "2026-02-27", "count": 0, "weekday": 5}, {"date": "2026-02-28", "count": 0, "weekday": 6}, {"date": "2026-03-01", "count": 0, "weekday": 0}, {"date": "2026-03-02", "count": 0, "weekday": 1}, {"date": "2026-03-03", "count": 0, "weekday": 2}, {"date": "2026-03-04", "count": 0, "weekday": 3}, {"date": "2026-03-05", "count": 0, "weekday": 4}, {"date": "2026-03-06", "count": 0, "weekday": 5}, {"date": "2026-03-07", "count": 0, "weekday": 6}, {"date": "2026-03-08", "count": 0, "weekday": 0}, {"date": "2026-03-09", "count": 0, "weekday": 1}, {"date": "2026-03-10", "count": 0, "weekday": 2}, {"date": "2026-03-11", "count": 0, "weekday": 3}, {"date": "2026-03-12", "count": 0, "weekday": 4}, {"date": "2026-03-13", "count": 0, "weekday": 5}, {"date": "2026-03-14", "count": 0, "weekday": 6}, {"date": "2026-03-15", "count": 0, "weekday": 0}, {"date": "2026-03-16", "count": 0, "weekday": 1}, {"date": "2026-03-17", "count": 0, "weekday": 2}, {"date": "2026-03-18", "count": 0, "weekday": 3}, {"date": "2026-03-19", "count": 0, "weekday": 4}, {"date": "2026-03-20", "count": 0, "weekday": 5}, {"date": "2026-03-21", "count": 0, "weekday": 6}, {"date": "2026-03-22", "count": 0, "weekday": 0}, {"date": "2026-03-23", "count": 0, "weekday": 1}, {"date": "2026-03-24", "count": 0, "weekday": 2}, {"date": "2026-03-25", "count": 0, "weekday": 3}, {"date": "2026-03-26", "count": 0, "weekday": 4}, {"date": "2026-03-27", "count": 0, "weekday": 5}, {"date": "2026-03-28", "count": 0, "weekday": 6}, {"date": "2026-03-29", "count": 0, "weekday": 0}, {"date": "2026-03-30", "count": 0, "weekday": 1}, {"date": "2026-03-31", "count": 0, "weekday": 2}, {"date": "2026-04-01", "count": 0, "weekday": 3}, {"date": "2026-04-02", "count": 0, "weekday": 4}, {"date": "2026-04-03", "count": 0, "weekday": 5}, {"date": "2026-04-04", "count": 0, "weekday": 6}, {"date": "2026-04-05", "count": 0, "weekday": 0}, {"date": "2026-04-06", "count": 0, "weekday": 1}, {"date": "2026-04-07", "count": 0, "weekday": 2}, {"date": "2026-04-08", "count": 0, "weekday": 3}, {"date": "2026-04-09", "count": 0, "weekday": 4}, {"date": "2026-04-10", "count": 0, "weekday": 5}, {"date": "2026-04-11", "count": 0, "weekday": 6}, {"date": "2026-04-12", "count": 0, "weekday": 0}, {"date": "2026-04-13", "count": 0, "weekday": 1}, {"date": "2026-04-14", "count": 0, "weekday": 2}, {"date": "2026-04-15", "count": 0, "weekday": 3}, {"date": "2026-04-16", "count": 0, "weekday": 4}, {"date": "2026-04-17", "count": 0, "weekday": 5}, {"date": "2026-04-18", "count": 0, "weekday": 6}, {"date": "2026-04-19", "count": 0, "weekday": 0}, {"date": "2026-04-20", "count": 0, "weekday": 1}, {"date": "2026-04-21", "count": 0, "weekday": 2}, {"date": "2026-04-22", "count": 0, "weekday": 3}, {"date": "2026-04-23", "count": 0, "weekday": 4}, {"date": "2026-04-24", "count": 0, "weekday": 5}, {"date": "2026-04-25", "count": 0, "weekday": 6}, {"date": "2026-04-26", "count": 0, "weekday": 0}, {"date": "2026-04-27", "count": 0, "weekday": 1}, {"date": "2026-04-28", "count": 0, "weekday": 2}, {"date": "2026-04-29", "count": 0, "weekday": 3}, {"date": "2026-04-30", "count": 0, "weekday": 4}, {"date": "2026-05-01", "count": 0, "weekday": 5}, {"date": "2026-05-02", "count": 0, "weekday": 6}, {"date": "2026-05-03", "count": 0, "weekday": 0}, {"date": "2026-05-04", "count": 0, "weekday": 1}, {"date": "2026-05-05", "count": 0, "weekday": 2}, {"date": "2026-05-06", "count": 0, "weekday": 3}, {"date": "2026-05-07", "count": 0, "weekday": 4}, {"date": "2026-05-08", "count": 0, "weekday": 5}, {"date": "2026-05-09", "count": 0, "weekday": 6}, {"date": "2026-05-10", "count": 0, "weekday": 0}, {"date": "2026-05-11", "count": 0, "weekday": 1}, {"date": "2026-05-12", "count": 0, "weekday": 2}, {"date": "2026-05-13", "count": 0, "weekday": 3}, {"date": "2026-05-14", "count": 0, "weekday": 4}, {"date": "2026-05-15", "count": 0, "weekday": 5}, {"date": "2026-05-16", "count": 0, "weekday": 6}, {"date": "2026-05-17", "count": 0, "weekday": 0}, {"date": "2026-05-18", "count": 0, "weekday": 1}, {"date": "2026-05-19", "count": 0, "weekday": 2}, {"date": "2026-05-20", "count": 0, "weekday": 3}, {"date": "2026-05-21", "count": 0, "weekday": 4}, {"date": "2026-05-22", "count": 0, "weekday": 5}, {"date": "2026-05-23", "count": 0, "weekday": 6}, {"date": "2026-05-24", "count": 0, "weekday": 0}, {"date": "2026-05-25", "count": 0, "weekday": 1}, {"date": "2026-05-26", "count": 0, "weekday": 2}, {"date": "2026-05-27", "count": 0, "weekday": 3}, {"date": "2026-05-28", "count": 0, "weekday": 4}, {"date": "2026-05-29", "count": 0, "weekday": 5}, {"date": "2026-05-30", "count": 0, "weekday": 6}, {"date": "2026-05-31", "count": 0, "weekday": 0}, {"date": "2026-06-01", "count": 0, "weekday": 1}, {"date": "2026-06-02", "count": 0, "weekday": 2}, {"date": "2026-06-03", "count": 0, "weekday": 3}, {"date": "2026-06-04", "count": 0, "weekday": 4}, {"date": "2026-06-05", "count": 0, "weekday": 5}, {"date": "2026-06-06", "count": 0, "weekday": 6}, {"date": "2026-06-07", "count": 0, "weekday": 0}, {"date": "2026-06-08", "count": 0, "weekday": 1}, {"date": "2026-06-09", "count": 0, "weekday": 2}, {"date": "2026-06-10", "count": 0, "weekday": 3}, {"date": "2026-06-11", "count": 0, "weekday": 4}, {"date": "2026-06-12", "count": 0, "weekday": 5}, {"date": "2026-06-13", "count": 0, "weekday": 6}, {"date": "2026-06-14", "count": 0, "weekday": 0}, {"date": "2026-06-15", "count": 0, "weekday": 1}, {"date": "2026-06-16", "count": 0, "weekday": 2}, {"date": "2026-06-17", "count": 0, "weekday": 3}, {"date": "2026-06-18", "count": 0, "weekday": 4}, {"date": "2026-06-19", "count": 0, "weekday": 5}, {"date": "2026-06-20", "count": 0, "weekday": 6}, {"date": "2026-06-21", "count": 0, "weekday": 0}, {"date": "2026-06-22", "count": 0, "weekday": 1}, {"date": "2026-06-23", "count": 0, "weekday": 2}, {"date": "2026-06-24", "count": 0, "weekday": 3}, {"date": "2026-06-25", "count": 1, "weekday": 4}, {"date": "2026-06-26", "count": 0, "weekday": 5}, {"date": "2026-06-27", "count": 0, "weekday": 6}, {"date": "2026-06-28", "count": 0, "weekday": 0}, {"date": "2026-06-29", "count": 0, "weekday": 1}, {"date": "2026-06-30", "count": 0, "weekday": 2}, {"date": "2026-07-01", "count": 0, "weekday": 3}, {"date": "2026-07-02", "count": 0, "weekday": 4}, {"date": "2026-07-03", "count": 0, "weekday": 5}, {"date": "2026-07-04", "count": 0, "weekday": 6}, {"date": "2026-07-05", "count": 0, "weekday": 0}, {"date": "2026-07-06", "count": 0, "weekday": 1}, {"date": "2026-07-07", "count": 0, "weekday": 2}, {"date": "2026-07-08", "count": 0, "weekday": 3}, {"date": "2026-07-09", "count": 0, "weekday": 4}, {"date": "2026-07-10", "count": 0, "weekday": 5}, {"date": "2026-07-11", "count": 0, "weekday": 6}, {"date": "2026-07-12", "count": 0, "weekday": 0}, {"date": "2026-07-13", "count": 0, "weekday": 1}, {"date": "2026-07-14", "count": 0, "weekday": 2}, {"date": "2026-07-15", "count": 0, "weekday": 3}, {"date": "2026-07-16", "count": 0, "weekday": 4}, {"date": "2026-07-17", "count": 0, "weekday": 5}, {"date": "2026-07-18", "count": 0, "weekday": 6}, {"date": "2026-07-19", "count": 0, "weekday": 0}, {"date": "2026-07-20", "count": 0, "weekday": 1}, {"date": "2026-07-21", "count": 0, "weekday": 2}, {"date": "2026-07-22", "count": 0, "weekday": 3}, {"date": "2026-07-23", "count": 0, "weekday": 4}, {"date": "2026-07-24", "count": 0, "weekday": 5}, {"date": "2026-07-25", "count": 0, "weekday": 6}, {"date": "2026-07-26", "count": 0, "weekday": 0}, {"date": "2026-07-27", "count": 0, "weekday": 1}, {"date": "2026-07-28", "count": 0, "weekday": 2}, {"date": "2026-07-29", "count": 0, "weekday": 3}, {"date": "2026-07-30", "count": 0, "weekday": 4}, {"date": "2026-07-31", "count": 0, "weekday": 5}, {"date": "2026-08-01", "count": 0, "weekday": 6}, {"date": "2026-08-02", "count": 0, "weekday": 0}, {"date": "2026-08-03", "count": 0, "weekday": 1}, {"date": "2026-08-04", "count": 0, "weekday": 2}, {"date": "2026-08-05", "count": 0, "weekday": 3}, {"date": "2026-08-06", "count": 0, "weekday": 4}, {"date": "2026-08-07", "count": 0, "weekday": 5}, {"date": "2026-08-08", "count": 0, "weekday": 6}, {"date": "2026-08-09", "count": 0, "weekday": 0}, {"date": "2026-08-10", "count": 0, "weekday": 1}, {"date": "2026-08-11", "count": 0, "weekday": 2}, {"date": "2026-08-12", "count": 0, "weekday": 3}, {"date": "2026-08-13", "count": 0, "weekday": 4}, {"date": "2026-08-14", "count": 0, "weekday": 5}, {"date": "2026-08-15", "count": 0, "weekday": 6}, {"date": "2026-08-16", "count": 0, "weekday": 0}, {"date": "2026-08-17", "count": 0, "weekday": 1}, {"date": "2026-08-18", "count": 0, "weekday": 2}, {"date": "2026-08-19", "count": 0, "weekday": 3}, {"date": "2026-08-20", "count": 0, "weekday": 4}, {"date": "2026-08-21", "count": 0, "weekday": 5}, {"date": "2026-08-22", "count": 0, "weekday": 6}, {"date": "2026-08-23", "count": 0, "weekday": 0}, {"date": "2026-08-24", "count": 0, "weekday": 1}, {"date": "2026-08-25", "count": 84, "weekday": 2}, {"date": "2026-08-26", "count": 24, "weekday": 3}, {"date": "2026-08-27", "count": 0, "weekday": 4}, {"date": "2026-08-28", "count": 0, "weekday": 5}, {"date": "2026-08-29", "count": 0, "weekday": 6}, {"date": "2026-08-30", "count": 0, "weekday": 0}, {"date": "2026-08-31", "count": 0, "weekday": 1}, {"date": "2026-09-01", "count": 14, "weekday": 2}, {"date": "2026-09-02", "count": 69, "weekday": 3}, {"date": "2026-09-03", "count": 4, "weekday": 4}, {"date": "2026-09-04", "count": 38, "weekday": 5}, {"date": "2026-09-05", "count": 72, "weekday": 6}, {"date": "2026-09-06", "count": 10, "weekday": 0}, {"date": "2026-09-07", "count": 0, "weekday": 1}, {"date": "2026-09-08", "count": 24, "weekday": 2}, {"date": "2026-09-09", "count": 4, "weekday": 3}, {"date": "2026-09-10", "count": 0, "weekday": 4}, {"date": "2026-09-11", "count": 0, "weekday": 5}, {"date": "2026-09-12", "count": 0, "weekday": 6}, {"date": "2026-09-13", "count": 0, "weekday": 0}, {"date": "2026-09-14", "count": 0, "weekday": 1}, {"date": "2026-09-15", "count": 4, "weekday": 2}, {"date": "2026-09-16", "count": 0, "weekday": 3}, {"date": "2026-09-17", "count": 0, "weekday": 4}, {"date": "2026-09-18", "count": 0, "weekday": 5}, {"date": "2026-09-19", "count": 0, "weekday": 6}, {"date": "2026-09-20", "count": 0, "weekday": 0}, {"date": "2026-09-21", "count": 29, "weekday": 1}, {"date": "2026-09-22", "count": 0, "weekday": 2}, {"date": "2026-09-23", "count": 0, "weekday": 3}, {"date": "2026-09-24", "count": 0, "weekday": 4}, {"date": "2026-09-25", "count": 6, "weekday": 5}, {"date": "2026-09-26", "count": 2, "weekday": 6}, {"date": "2026-09-27", "count": 100, "weekday": 0}, {"date": "2026-09-28", "count": 0, "weekday": 1}, {"date": "2026-09-29", "count": 2, "weekday": 2}, {"date": "2026-09-30", "count": 0, "weekday": 3}, {"date": "2026-10-01", "count": 8, "weekday": 4}, {"date": "2026-10-02", "count": 71, "weekday": 5}, {"date": "2026-10-03", "count": 26, "weekday": 6}, {"date": "2026-10-04", "count": 152, "weekday": 0}, {"date": "2026-10-05", "count": 96, "weekday": 1}, {"date": "2026-10-06", "count": 16, "weekday": 2}, {"date": "2026-10-07", "count": 14, "weekday": 3}, {"date": "2026-10-08", "count": 18, "weekday": 4}, {"date": "2026-10-09", "count": 78, "weekday": 5}, {"date": "2026-10-10", "count": 139, "weekday": 6}, {"date": "2026-10-11", "count": 19, "weekday": 0}, {"date": "2026-10-12", "count": 0, "weekday": 1}, {"date": "2026-10-13", "count": 6, "weekday": 2}, {"date": "2026-10-14", "count": 3, "weekday": 3}, {"date": "2026-10-15", "count": 22, "weekday": 4}, {"date": "2026-10-16", "count": 52, "weekday": 5}, {"date": "2026-10-17", "count": 0, "weekday": 6}, {"date": "2026-10-18", "count": 0, "weekday": 0}, {"date": "2026-10-19", "count": 0, "weekday": 1}, {"date": "2026-10-20", "count": 84, "weekday": 2}, {"date": "2026-10-21", "count": 55, "weekday": 3}, {"date": "2026-10-22", "count": 76, "weekday": 4}, {"date": "2026-10-23", "count": 87, "weekday": 5}, {"date": "2026-10-24", "count": 2, "weekday": 6}, {"date": "2026-10-25", "count": 0, "weekday": 0}, {"date": "2026-10-26", "count": 0, "weekday": 1}, {"date": "2026-10-27", "count": 0, "weekday": 2}, {"date": "2026-10-28", "count": 0, "weekday": 3}, {"date": "2026-10-29", "count": 15, "weekday": 4}, {"date": "2026-10-30", "count": 21, "weekday": 5}, {"date": "2026-10-31", "count": 4, "weekday": 6}, {"date": "2026-11-01", "count": 0, "weekday": 0}, {"date": "2026-11-02", "count": 0, "weekday": 1}, {"date": "2026-11-03", "count": 0, "weekday": 2}, {"date": "2026-11-04", "count": 0, "weekday": 3}, {"date": "2026-11-05", "count": 2, "weekday": 4}, {"date": "2026-11-06", "count": 71, "weekday": 5}, {"date": "2026-11-07", "count": 15, "weekday": 6}, {"date": "2026-11-08", "count": 11, "weekday": 0}, {"date": "2026-11-09", "count": 18, "weekday": 1}, {"date": "2026-11-10", "count": 11, "weekday": 2}, {"date": "2026-11-11", "count": 3, "weekday": 3}, {"date": "2026-11-12", "count": 21, "weekday": 4}, {"date": "2026-11-13", "count": 20, "weekday": 5}, {"date": "2026-11-14", "count": 4, "weekday": 6}, {"date": "2026-11-15", "count": 0, "weekday": 0}, {"date": "2026-11-16", "count": 61, "weekday": 1}, {"date": "2026-11-17", "count": 8, "weekday": 2}], "monthly": [0, 0, 0, 0, 0, 1, 0, 108, 378, 1064, 245, 0], "weekday": [292, 204, 253, 172, 167, 444, 264], "hours": [18, 32, 28, 18, 19, 15, 14, 43, 22, 18, 30, 36, 17, 22, 12, 26, 27, 30, 11, 18, 27, 15, 21, 6], "languages": [{"name": "JavaScript", "color": "#f1e05a", "share": 0.3194}, {"name": "TypeScript", "color": "#3178c6", "share": 0.2745}, {"name": "HTML", "color": "#e34c26", "share": 0.1762}, {"name": "Python", "color": "#3572A5", "share": 0.105}, {"name": "Vue", "color": "#41b883", "share": 0.0613}, {"name": "CSS", "color": "#663399", "share": 0.0552}, {"name": "Shell", "color": "#89e051", "share": 0.0035}, {"name": "C", "color": "#555555", "share": 0.0022}, {"name": "Inno Setup", "color": "#264b99", "share": 0.0019}, {"name": "Batchfile", "color": "#C1F12E", "share": 0.0005}], "projects": [{"id": "malilion/AURA-REC", "name": "AURA-REC", "full_name": "malilion/AURA-REC", "description": "AURA REC — free, open-source, privacy-first screen recorder and tutorial editor for macOS, Windows and the browser.", "url": "https://github.com/malilion/AURA-REC", "homepage": "https://malilion.github.io/AURA-REC/", "owner_is_user": true, "is_new": true, "is_private": false, "is_fork": false, "created_at": "2026-10-07T23:57:03Z", "pushed_at": "2026-11-16T04:04:04Z", "stars": 0, "forks": 0, "commits": 250, "pull_requests": 5, "primary_language": "HTML", "primary_color": "#e34c26", "languages": [{"name": "HTML", "color": "#e34c26", "share": 0.579}, {"name": "Python", "color": "#3572A5", "share": 0.384}, {"name": "Shell", "color": "#89e051", "share": 0.019}, {"name": "Inno Setup", "color": "#264b99", "share": 0.012}, {"name": "Batchfile", "color": "#C1F12E", "share": 0.003}], "topics": [], "releases": [{"tag": "v2.5.3", "name": "v2.5.3", "date": "2026-10-10T12:43:31Z"}, {"tag": "v2.5.2", "name": "v2.5.2", "date": "2026-10-10T11:27:20Z"}, {"tag": "v2.5.1", "name": "v2.5.1", "date": "2026-10-10T09:44:52Z"}]}, {"id": "malilion/MalilionUI", "name": "MalilionUI", "full_name": "malilion/MalilionUI", "description": "Lion × tech × metal component library for Vue 3 and React — 161 components, TypeScript, two themes, Taiwan validators, zero dependencies.", "url": "https://github.com/malilion/MalilionUI", "homepage": "https://malilion.github.io/MalilionUI/", "owner_is_user": true, "is_new": true, "is_private": false, "is_fork": false, "created_at": "2026-10-01T13:44:41Z", "pushed_at": "2026-11-16T05:57:57Z", "stars": 0, "forks": 0, "commits": 217, "pull_requests": 14, "primary_language": "TypeScript", "primary_color": "#3178c6", "languages": [{"name": "TypeScript", "color": "#3178c6", "share": 0.637}, {"name": "Vue", "color": "#41b883", "share": 0.249}, {"name": "CSS", "color": "#663399", "share": 0.102}, {"name": "JavaScript", "color": "#f1e05a", "share": 0.011}, {"name": "Python", "color": "#3572A5", "share": 0.001}], "topics": [], "releases": []}, {"id": "malilion/taiwan-county-wars", "name": "taiwan-county-wars", "full_name": "malilion/taiwan-county-wars", "description": "台灣縣市大戰 — 22 Taiwan counties battle to unite the island: a turn-based strategy game and a real-map battle royale.", "url": "https://github.com/malilion/taiwan-county-wars", "homepage": "https://malilion.github.io/taiwan-county-wars/", "owner_is_user": true, "is_new": true, "is_private": false, "is_fork": false, "created_at": "2026-10-20T22:20:18Z", "pushed_at": "2026-10-24T14:36:31Z", "stars": 0, "forks": 0, "commits": 153, "pull_requests": 12, "primary_language": "JavaScript", "primary_color": "#f1e05a", "languages": [{"name": "JavaScript", "color": "#f1e05a", "share": 0.642}, {"name": "HTML", "color": "#e34c26", "share": 0.27}, {"name": "CSS", "color": "#663399", "share": 0.088}], "topics": [], "releases": []}, {"id": "malilion/malilion", "name": "malilion", "full_name": "malilion/malilion", "description": "Personal profile and selected projects by Malilion.", "url": "https://github.com/malilion/malilion", "homepage": null, "owner_is_user": true, "is_new": true, "is_private": false, "is_fork": false, "created_at": "2026-09-01T13:49:37Z", "pushed_at": "2026-11-16T22:00:08Z", "stars": 0, "forks": 0, "commits": 122, "pull_requests": 39, "primary_language": "JavaScript", "primary_color": "#f1e05a", "languages": [{"name": "JavaScript", "color": "#f1e05a", "share": 1.0}], "topics": [], "releases": []}, {"id": "malilion/The-Nocturne-Atlas", "name": "The-Nocturne-Atlas", "full_name": "malilion/The-Nocturne-Atlas", "description": "A seed-driven 3D wizarding world built with Three.js and TypeScript.", "url": "https://github.com/malilion/The-Nocturne-Atlas", "homepage": "https://malilion.github.io/The-Nocturne-Atlas/", "owner_is_user": true, "is_new": true, "is_private": false, "is_fork": false, "created_at": "2026-08-25T16:10:21Z", "pushed_at": "2026-11-10T07:41:30Z", "stars": 1, "forks": 0, "commits": 118, "pull_requests": 5, "primary_language": "TypeScript", "primary_color": "#3178c6", "languages": [{"name": "TypeScript", "color": "#3178c6", "share": 0.999}, {"name": "JavaScript", "color": "#f1e05a", "share": 0.001}], "topics": [], "releases": []}, {"id": "malilion/prize", "name": "prize", "full_name": "malilion/prize", "description": "抽獎轉盤 — offline prize wheel: set prizes and names, spin on a projector, record every draw, export winners and proof.", "url": "https://github.com/malilion/prize", "homepage": "https://malilion.github.io/prize/", "owner_is_user": true, "is_new": true, "is_private": false, "is_fork": false, "created_at": "2026-09-25T03:56:02Z", "pushed_at": "2026-10-23T09:06:00Z", "stars": 0, "forks": 0, "commits": 114, "pull_requests": 1, "primary_language": "JavaScript", "primary_color": "#f1e05a", "languages": [{"name": "JavaScript", "color": "#f1e05a", "share": 0.85}, {"name": "HTML", "color": "#e34c26", "share": 0.075}, {"name": "CSS", "color": "#663399", "share": 0.075}], "topics": [], "releases": []}, {"id": "malilion/BlockUI", "name": "BlockUI", "full_name": "malilion/BlockUI", "description": "Block × pixel × crafting game-style React component library — inventory, crafting, HUD, cards, 5 themes, pixel icons, WCAG 2.2 AA.", "url": "https://github.com/malilion/BlockUI", "homepage": "https://malilion.github.io/BlockUI/", "owner_is_user": true, "is_new": true, "is_private": false, "is_fork": false, "created_at": "2026-10-01T18:21:32Z", "pushed_at": "2026-11-10T07:40:52Z", "stars": 1, "forks": 0, "commits": 102, "pull_requests": 4, "primary_language": "TypeScript", "primary_color": "#3178c6", "languages": [{"name": "TypeScript", "color": "#3178c6", "share": 0.856}, {"name": "CSS", "color": "#663399", "share": 0.124}, {"name": "JavaScript", "color": "#f1e05a", "share": 0.017}, {"name": "MDX", "color": "#fcb32c", "share": 0.003}, {"name": "HTML", "color": "#e34c26", "share": 0.0}], "topics": ["accessibility", "component-library", "game-ui", "pixel-art", "react", "storybook", "typescript", "ui"], "releases": [{"tag": "v0.6.1", "name": "v0.6.1", "date": "2026-10-04T12:14:07Z"}, {"tag": "v0.6.0", "name": "v0.6.0", "date": "2026-10-04T10:17:56Z"}, {"tag": "v0.5.1", "name": "v0.5.1", "date": "2026-10-04T08:27:13Z"}, {"tag": "v0.5.0", "name": "v0.5.0", "date": "2026-10-04T04:25:21Z"}, {"tag": "v0.4.0", "name": "v0.4.0", "date": "2026-10-04T02:26:29Z"}]}, {"id": "malilion/Malilion-AI-Radar", "name": "Malilion-AI-Radar", "full_name": "malilion/Malilion-AI-Radar", "description": "Malilion AI Radar — hourly-updated news and AI intelligence site: Taiwan headlines, Threads, AI industry and developer radar.", "url": "https://github.com/malilion/Malilion-AI-Radar", "homepage": "https://malilion.github.io/Malilion-AI-Radar/", "owner_is_user": true, "is_new": true, "is_private": false, "is_fork": false, "created_at": "2026-10-20T02:20:07Z", "pushed_at": "2026-11-17T03:20:18Z", "stars": 0, "forks": 0, "commits": 102, "pull_requests": 7, "primary_language": "Python", "primary_color": "#3572A5", "languages": [{"name": "Python", "color": "#3572A5", "share": 0.417}, {"name": "JavaScript", "color": "#f1e05a", "share": 0.266}, {"name": "CSS", "color": "#663399", "share": 0.212}, {"name": "HTML", "color": "#e34c26", "share": 0.105}], "topics": [], "releases": []}, {"id": "malilion/ContextLion", "name": "ContextLion", "full_name": "malilion/ContextLion", "description": "Turn any webpage into clean, AI-ready GFM Markdown in one click. CJK-aware token estimates, prompt presets, 100% local-first.", "url": "https://github.com/malilion/ContextLion", "homepage": null, "owner_is_user": true, "is_new": true, "is_private": false, "is_fork": false, "created_at": "2026-09-04T15:38:54Z", "pushed_at": "2026-11-10T07:40:54Z", "stars": 0, "forks": 0, "commits": 59, "pull_requests": 4, "primary_language": "TypeScript", "primary_color": "#3178c6", "languages": [{"name": "TypeScript", "color": "#3178c6", "share": 0.455}, {"name": "Vue", "color": "#41b883", "share": 0.309}, {"name": "JavaScript", "color": "#f1e05a", "share": 0.232}, {"name": "HTML", "color": "#e34c26", "share": 0.003}, {"name": "CSS", "color": "#663399", "share": 0.001}], "topics": [], "releases": []}, {"id": "malilion/StockLion", "name": "StockLion", "full_name": "malilion/StockLion", "description": "StockLion 股力獅 — browser extension for Taiwan stocks: quotes, watchlists and market moves on any webpage.", "url": "https://github.com/malilion/StockLion", "homepage": null, "owner_is_user": true, "is_new": true, "is_private": false, "is_fork": false, "created_at": "2026-09-05T05:05:31Z", "pushed_at": "2026-11-10T07:41:28Z", "stars": 0, "forks": 0, "commits": 43, "pull_requests": 4, "primary_language": "TypeScript", "primary_color": "#3178c6", "languages": [{"name": "TypeScript", "color": "#3178c6", "share": 0.615}, {"name": "Vue", "color": "#41b883", "share": 0.257}, {"name": "Python", "color": "#3572A5", "share": 0.126}, {"name": "HTML", "color": "#e34c26", "share": 0.002}], "topics": [], "releases": []}, {"id": "malilion/DevTraceLion", "name": "DevTraceLion", "full_name": "malilion/DevTraceLion", "description": "API debugging inside DevTools. Zero permissions. Local-first. Secrets redacted by default.", "url": "https://github.com/malilion/DevTraceLion", "homepage": null, "owner_is_user": true, "is_new": true, "is_private": false, "is_fork": false, "created_at": "2026-09-04T15:47:46Z", "pushed_at": "2026-11-10T07:40:58Z", "stars": 0, "forks": 0, "commits": 36, "pull_requests": 5, "primary_language": "TypeScript", "primary_color": "#3178c6", "languages": [{"name": "TypeScript", "color": "#3178c6", "share": 0.541}, {"name": "Vue", "color": "#41b883", "share": 0.366}, {"name": "JavaScript", "color": "#f1e05a", "share": 0.087}, {"name": "HTML", "color": "#e34c26", "share": 0.003}, {"name": "CSS", "color": "#663399", "share": 0.002}], "topics": [], "releases": []}, {"id": "malilion/cow-pasture", "name": "cow-pasture", "full_name": "malilion/cow-pasture", "description": "我的持股已經綠到上面有牛在吃草了 — 全台股 3D 牧場儀表板（紅漲綠跌）", "url": "https://github.com/malilion/cow-pasture", "homepage": "https://malilion.github.io/cow-pasture/", "owner_is_user": true, "is_new": true, "is_private": false, "is_fork": false, "created_at": "2026-11-06T01:42:33Z", "pushed_at": "2026-11-10T07:40:56Z", "stars": 0, "forks": 0, "commits": 30, "pull_requests": 0, "primary_language": "JavaScript", "primary_color": "#f1e05a", "languages": [{"name": "JavaScript", "color": "#f1e05a", "share": 1.0}], "topics": [], "releases": []}, {"id": "malilion/haute-jewelry-from-photo", "name": "haute-jewelry-from-photo", "full_name": "malilion/haute-jewelry-from-photo", "description": "Codex skill: translate an image's palette, materials and mood into an original haute joaillerie design and campaign set.", "url": "https://github.com/malilion/haute-jewelry-from-photo", "homepage": null, "owner_is_user": true, "is_new": true, "is_private": false, "is_fork": false, "created_at": "2026-09-02T01:19:59Z", "pushed_at": "2026-10-23T09:06:07Z", "stars": 0, "forks": 0, "commits": 30, "pull_requests": 1, "primary_language": null, "primary_color": null, "languages": [], "topics": [], "releases": []}, {"id": "malilion/inkfx", "name": "inkfx", "full_name": "malilion/inkfx", "description": "InkFX · 墨起，意隨 — procedural ink and wuxia effects library for games and websites: 132 seeded effects, four palettes.", "url": "https://github.com/malilion/inkfx", "homepage": "https://malilion.github.io/inkfx/", "owner_is_user": true, "is_new": true, "is_private": false, "is_fork": false, "created_at": "2026-11-06T07:23:00Z", "pushed_at": "2026-11-16T03:36:50Z", "stars": 0, "forks": 0, "commits": 26, "pull_requests": 3, "primary_language": "JavaScript", "primary_color": "#f1e05a", "languages": [{"name": "JavaScript", "color": "#f1e05a", "share": 0.761}, {"name": "CSS", "color": "#663399", "share": 0.129}, {"name": "HTML", "color": "#e34c26", "share": 0.111}], "topics": [], "releases": []}, {"id": "malilion/Polar-Bear-BBQ-Game", "name": "Polar-Bear-BBQ-Game", "full_name": "malilion/Polar-Bear-BBQ-Game", "description": "北極熊烤肉店 3D — a grill-shop game modelled in Blender and played in Three.js: three grills, combos and 90-second rounds.", "url": "https://github.com/malilion/Polar-Bear-BBQ-Game", "homepage": "https://malilion.github.io/Polar-Bear-BBQ-Game/", "owner_is_user": true, "is_new": true, "is_private": false, "is_fork": false, "created_at": "2026-09-08T14:45:04Z", "pushed_at": "2026-11-13T12:18:35Z", "stars": 0, "forks": 0, "commits": 23, "pull_requests": 5, "primary_language": "TypeScript", "primary_color": "#3178c6", "languages": [{"name": "TypeScript", "color": "#3178c6", "share": 0.678}, {"name": "Python", "color": "#3572A5", "share": 0.221}, {"name": "JavaScript", "color": "#f1e05a", "share": 0.093}, {"name": "HTML", "color": "#e34c26", "share": 0.008}], "topics": [], "releases": []}, {"id": "malilion/github-repo-landing-page-skill", "name": "github-repo-landing-page-skill", "full_name": "malilion/github-repo-landing-page-skill", "description": "Agent skill (SKILL.md) that turns any GitHub repository into a polished landing page, with live demos.", "url": "https://github.com/malilion/github-repo-landing-page-skill", "homepage": "https://malilion.github.io/github-repo-landing-page-skill/", "owner_is_user": true, "is_new": true, "is_private": false, "is_fork": false, "created_at": "2026-10-29T08:08:45Z", "pushed_at": "2026-10-30T09:38:00Z", "stars": 0, "forks": 0, "commits": 22, "pull_requests": 2, "primary_language": "HTML", "primary_color": "#e34c26", "languages": [{"name": "HTML", "color": "#e34c26", "share": 0.806}, {"name": "JavaScript", "color": "#f1e05a", "share": 0.194}], "topics": [], "releases": []}, {"id": "malilion/fx-skill-kit", "name": "fx-skill-kit", "full_name": "malilion/fx-skill-kit", "description": "Zero-dependency procedural FX suite: the inkfx ink engine, the oledfx MCU compiler, quality gates, contact-sheet review and MCP tools.", "url": "https://github.com/malilion/fx-skill-kit", "homepage": "https://malilion.github.io/fx-skill-kit/", "owner_is_user": true, "is_new": true, "is_private": false, "is_fork": false, "created_at": "2026-11-06T07:22:53Z", "pushed_at": "2026-11-16T03:47:04Z", "stars": 0, "forks": 0, "commits": 18, "pull_requests": 2, "primary_language": "JavaScript", "primary_color": "#f1e05a", "languages": [{"name": "JavaScript", "color": "#f1e05a", "share": 0.596}, {"name": "HTML", "color": "#e34c26", "share": 0.223}, {"name": "C", "color": "#555555", "share": 0.181}], "topics": [], "releases": []}, {"id": "malilion/editorial-photo-poster", "name": "editorial-photo-poster", "full_name": "malilion/editorial-photo-poster", "description": "Codex skill: turn a photo into a 3:4 editorial art poster — the photo on top, a restrained hand-drawn scene below.", "url": "https://github.com/malilion/editorial-photo-poster", "homepage": null, "owner_is_user": true, "is_new": true, "is_private": false, "is_fork": false, "created_at": "2026-09-01T13:40:38Z", "pushed_at": "2026-11-10T07:41:01Z", "stars": 4, "forks": 0, "commits": 17, "pull_requests": 3, "primary_language": null, "primary_color": null, "languages": [], "topics": [], "releases": []}, {"id": "malilion/oledfx", "name": "oledfx", "full_name": "malilion/oledfx", "description": "Procedural small-screen animations exported as C headers for SSD1306 OLEDs, LED matrices and ST7789 — 100 effects, no sprite sheets.", "url": "https://github.com/malilion/oledfx", "homepage": "https://malilion.github.io/oledfx/", "owner_is_user": true, "is_new": true, "is_private": false, "is_fork": false, "created_at": "2026-11-06T07:23:06Z", "pushed_at": "2026-11-16T03:37:18Z", "stars": 0, "forks": 0, "commits": 17, "pull_requests": 2, "primary_language": "JavaScript", "primary_color": "#f1e05a", "languages": [{"name": "JavaScript", "color": "#f1e05a", "share": 0.78}, {"name": "CSS", "color": "#663399", "share": 0.135}, {"name": "HTML", "color": "#e34c26", "share": 0.064}, {"name": "C++", "color": "#f34b7d", "share": 0.012}, {"name": "C", "color": "#555555", "share": 0.01}], "topics": [], "releases": []}, {"id": "malilion/riso-mv-kit", "name": "riso-mv-kit", "full_name": "malilion/riso-mv-kit", "description": "Riso-print picture-book music videos, drawn by code and rendered frame by frame", "url": "https://github.com/malilion/riso-mv-kit", "homepage": null, "owner_is_user": true, "is_new": true, "is_private": false, "is_fork": false, "created_at": "2026-10-06T14:42:00Z", "pushed_at": "2026-11-10T07:41:24Z", "stars": 0, "forks": 0, "commits": 17, "pull_requests": 1, "primary_language": "JavaScript", "primary_color": "#f1e05a", "languages": [{"name": "JavaScript", "color": "#f1e05a", "share": 0.857}, {"name": "HTML", "color": "#e34c26", "share": 0.103}, {"name": "Shell", "color": "#89e051", "share": 0.04}], "topics": [], "releases": []}, {"id": "malilion/fuji-sakura-vista", "name": "fuji-sakura-vista", "full_name": "malilion/fuji-sakura-vista", "description": "Procedural Blender scene of Arakurayama at dawn — Chureito pagoda, sakura and Mount Fuji — with Cycles renders and a real-time Three.js showcase", "url": "https://github.com/malilion/fuji-sakura-vista", "homepage": "https://malilion.github.io/fuji-sakura-vista/", "owner_is_user": true, "is_new": true, "is_private": false, "is_fork": false, "created_at": "2026-09-08T14:33:15Z", "pushed_at": "2026-11-10T07:41:07Z", "stars": 0, "forks": 0, "commits": 17, "pull_requests": 3, "primary_language": "Python", "primary_color": "#3572A5", "languages": [{"name": "Python", "color": "#3572A5", "share": 0.605}, {"name": "JavaScript", "color": "#f1e05a", "share": 0.211}, {"name": "HTML", "color": "#e34c26", "share": 0.102}, {"name": "CSS", "color": "#663399", "share": 0.082}], "topics": ["3d", "blender", "gltf", "mount-fuji", "procedural-generation", "sakura", "threejs", "webgl"], "releases": [{"tag": "v1.1", "name": "First Light v1.1", "date": "2026-09-08T15:57:49Z"}, {"tag": "v1.0", "name": "First Light v1.0", "date": "2026-09-08T15:22:15Z"}]}, {"id": "malilion/shuangyue-wenjian", "name": "shuangyue-wenjian", "full_name": "malilion/shuangyue-wenjian", "description": "霜月問劍 — top-down wuxia action game: three stages, waves of foes and two-phase bosses. Also plays offline from one file.", "url": "https://github.com/malilion/shuangyue-wenjian", "homepage": "https://malilion.github.io/shuangyue-wenjian/", "owner_is_user": true, "is_new": true, "is_private": false, "is_fork": false, "created_at": "2026-11-12T13:19:55Z", "pushed_at": "2026-11-12T22:39:04Z", "stars": 0, "forks": 0, "commits": 16, "pull_requests": 0, "primary_language": "JavaScript", "primary_color": "#f1e05a", "languages": [{"name": "JavaScript", "color": "#f1e05a", "share": 0.87}, {"name": "HTML", "color": "#e34c26", "share": 0.124}, {"name": "Shell", "color": "#89e051", "share": 0.006}], "topics": [], "releases": []}, {"id": "malilion/bee_scene", "name": "bee_scene", "full_name": "malilion/bee_scene", "description": "Realistic Bee \u0026 Flowers — a honeybee forages a 3D meadow and flies back to the hive. One offline HTML file.", "url": "https://github.com/malilion/bee_scene", "homepage": "https://malilion.github.io/bee_scene/", "owner_is_user": true, "is_new": true, "is_private": false, "is_fork": false, "created_at": "2026-10-22T10:06:16Z", "pushed_at": "2026-10-23T14:57:03Z", "stars": 0, "forks": 0, "commits": 16, "pull_requests": 1, "primary_language": "HTML", "primary_color": "#e34c26", "languages": [{"name": "HTML", "color": "#e34c26", "share": 0.96}, {"name": "JavaScript", "color": "#f1e05a", "share": 0.039}, {"name": "PowerShell", "color": "#012456", "share": 0.001}], "topics": [], "releases": []}, {"id": "malilion/scenic-bookmark-travel-poster", "name": "scenic-bookmark-travel-poster", "full_name": "malilion/scenic-bookmark-travel-poster", "description": "Create refined Japanese-style travel posters with matching premium souvenir bookmarks.", "url": "https://github.com/malilion/scenic-bookmark-travel-poster", "homepage": null, "owner_is_user": true, "is_new": true, "is_private": false, "is_fork": false, "created_at": "2026-09-04T04:15:37Z", "pushed_at": "2026-11-10T07:41:26Z", "stars": 2, "forks": 1, "commits": 10, "pull_requests": 1, "primary_language": null, "primary_color": null, "languages": [], "topics": [], "releases": []}, {"id": "malilion/Painterly-Meadow", "name": "Painterly-Meadow", "full_name": "malilion/Painterly-Meadow", "description": "風之草原 · Painterly Meadow — a hand-painted-style NPR nature sandbox in a single Three.js file", "url": "https://github.com/malilion/Painterly-Meadow", "homepage": "https://malilion.github.io/Painterly-Meadow/", "owner_is_user": true, "is_new": true, "is_private": false, "is_fork": false, "created_at": "2026-10-15T05:10:10Z", "pushed_at": "2026-11-10T07:41:22Z", "stars": 0, "forks": 0, "commits": 10, "pull_requests": 0, "primary_language": "HTML", "primary_color": "#e34c26", "languages": [{"name": "HTML", "color": "#e34c26", "share": 1.0}], "topics": [], "releases": []}, {"id": "malilion/lyricreel", "name": "lyricreel", "full_name": "malilion/lyricreel", "description": "Song + lyrics in, beat-synced lyric music video out. Every frame drawn in code; built to be driven by Claude Code / Codex.", "url": "https://github.com/malilion/lyricreel", "homepage": null, "owner_is_user": true, "is_new": true, "is_private": false, "is_fork": false, "created_at": "2026-09-29T14:35:11Z", "pushed_at": "2026-11-10T07:41:14Z", "stars": 1, "forks": 0, "commits": 9, "pull_requests": 4, "primary_language": "JavaScript", "primary_color": "#f1e05a", "languages": [{"name": "JavaScript", "color": "#f1e05a", "share": 0.758}, {"name": "Python", "color": "#3572A5", "share": 0.184}, {"name": "HTML", "color": "#e34c26", "share": 0.058}], "topics": ["canvas", "claude-code", "generative-art", "lyric-video", "music-video", "whisper"], "releases": []}, {"id": "malilion/prachute", "name": "prachute", "full_name": "malilion/prachute", "description": "雲海跳傘 Cloud Dive — skydive from 4,000 m through a golden sea of clouds and land on the target. Three.js + Vite.", "url": "https://github.com/malilion/prachute", "homepage": "https://malilion.github.io/prachute/", "owner_is_user": true, "is_new": true, "is_private": false, "is_fork": false, "created_at": "2026-11-12T23:13:03Z", "pushed_at": "2026-11-13T03:09:19Z", "stars": 0, "forks": 0, "commits": 9, "pull_requests": 0, "primary_language": "JavaScript", "primary_color": "#f1e05a", "languages": [{"name": "JavaScript", "color": "#f1e05a", "share": 0.88}, {"name": "CSS", "color": "#663399", "share": 0.071}, {"name": "HTML", "color": "#e34c26", "share": 0.026}, {"name": "Python", "color": "#3572A5", "share": 0.023}], "topics": [], "releases": []}, {"id": "malilion/RecapLion", "name": "RecapLion", "full_name": "malilion/RecapLion", "description": null, "url": "https://github.com/malilion/RecapLion", "homepage": null, "owner_is_user": true, "is_new": true, "is_private": false, "is_fork": false, "created_at": "2026-11-17T06:07:36Z", "pushed_at": "2026-11-17T07:24:33Z", "stars": 0, "forks": 0, "commits": 7, "pull_requests": 0, "primary_language": "Python", "primary_color": "#3572A5", "languages": [{"name": "Python", "color": "#3572A5", "share": 0.512}, {"name": "HTML", "color": "#e34c26", "share": 0.488}], "topics": [], "releases": []}, {"id": "malilion/neon-taipei-overdrive", "name": "neon-taipei-overdrive", "full_name": "malilion/neon-taipei-overdrive", "description": "Neon Taipei Overdrive — cyberpunk 3D action on a rainy Taipei night. One HTML file, code-built art and synthesized audio.", "url": "https://github.com/malilion/neon-taipei-overdrive", "homepage": "https://malilion.github.io/neon-taipei-overdrive/", "owner_is_user": true, "is_new": true, "is_private": false, "is_fork": false, "created_at": "2026-10-15T06:01:09Z", "pushed_at": "2026-10-15T16:12:57Z", "stars": 0, "forks": 0, "commits": 6, "pull_requests": 0, "primary_language": "HTML", "primary_color": "#e34c26", "languages": [{"name": "HTML", "color": "#e34c26", "share": 1.0}], "topics": [], "releases": []}, {"id": "malilion/Snowboarding", "name": "Snowboarding", "full_name": "malilion/Snowboarding", "description": "粉雪狂飆 POWDER RUSH — 3D snowboarding game in the browser: a 3,200 m run, 18 kickers, spins, flips, grabs and gates.", "url": "https://github.com/malilion/Snowboarding", "homepage": "https://malilion.github.io/Snowboarding/", "owner_is_user": true, "is_new": true, "is_private": false, "is_fork": false, "created_at": "2026-11-12T23:39:44Z", "pushed_at": "2026-11-14T02:23:45Z", "stars": 0, "forks": 0, "commits": 5, "pull_requests": 0, "primary_language": "JavaScript", "primary_color": "#f1e05a", "languages": [{"name": "JavaScript", "color": "#f1e05a", "share": 0.85}, {"name": "CSS", "color": "#663399", "share": 0.094}, {"name": "HTML", "color": "#e34c26", "share": 0.056}], "topics": [], "releases": []}, {"id": "malilion/star-garden-rumble", "name": "star-garden-rumble", "full_name": "malilion/star-garden-rumble", "description": "星之庭院保衛戰 Star Garden Rumble — low-poly 3D physics defence: knock monsters off a floating island. Three.js + Rapier.", "url": "https://github.com/malilion/star-garden-rumble", "homepage": "https://malilion.github.io/star-garden-rumble/", "owner_is_user": true, "is_new": true, "is_private": false, "is_fork": false, "created_at": "2026-11-12T10:27:22Z", "pushed_at": "2026-11-12T13:01:15Z", "stars": 0, "forks": 0, "commits": 5, "pull_requests": 0, "primary_language": "JavaScript", "primary_color": "#f1e05a", "languages": [{"name": "JavaScript", "color": "#f1e05a", "share": 0.905}, {"name": "CSS", "color": "#663399", "share": 0.067}, {"name": "HTML", "color": "#e34c26", "share": 0.028}], "topics": [], "releases": []}, {"id": "malilion/Watercolor-Travel", "name": "Watercolor-Travel", "full_name": "malilion/Watercolor-Travel", "description": "Prompt for AI watercolor travel prints: photos into quiet, Japanese-inspired watercolor illustrations on ivory paper.", "url": "https://github.com/malilion/Watercolor-Travel", "homepage": null, "owner_is_user": true, "is_new": true, "is_private": false, "is_fork": false, "created_at": "2026-09-08T16:08:27Z", "pushed_at": "2026-10-23T09:06:17Z", "stars": 1, "forks": 0, "commits": 4, "pull_requests": 1, "primary_language": null, "primary_color": null, "languages": [], "topics": [], "releases": []}, {"id": "malilion/my-bear-jelly", "name": "my-bear-jelly", "full_name": "malilion/my-bear-jelly", "description": "Gummy/Bears. — grab and stretch wobbly gummy bears; every pixel is raymarched in one shader, no meshes or images.", "url": "https://github.com/malilion/my-bear-jelly", "homepage": "https://malilion.github.io/my-bear-jelly/", "owner_is_user": true, "is_new": true, "is_private": false, "is_fork": false, "created_at": "2026-10-15T09:25:19Z", "pushed_at": "2026-10-15T12:41:58Z", "stars": 0, "forks": 0, "commits": 4, "pull_requests": 0, "primary_language": "HTML", "primary_color": "#e34c26", "languages": [{"name": "HTML", "color": "#e34c26", "share": 1.0}], "topics": [], "releases": []}], "external_prs": [], "achievements": [{"id": "genesis", "icon": "🌱", "metric": "repos_created", "unit": "", "title": {"zh": "創世者", "en": "Genesis"}, "desc": {"zh": "今年從零開了 {v} 個新專案", "en": "Started {v} new repositories"}, "value": 33, "thresholds": [1, 5, 10, 20], "unlocked": true, "eligible": true, "tier": "legendary", "tier_index": 3, "next_threshold": null, "progress_to_next": 1.0}, {"id": "merge_master", "icon": "🔀", "metric": "prs_merged", "unit": "", "title": {"zh": "合併大師", "en": "Merge Master"}, "desc": {"zh": "{v} 個 Pull Request 被合併", "en": "{v} pull requests merged"}, "value": 573, "thresholds": [5, 25, 100, 250], "unlocked": true, "eligible": true, "tier": "legendary", "tier_index": 3, "next_threshold": null, "progress_to_next": 1.0}, {"id": "overdrive", "icon": "⚡", "metric": "busiest_day_count", "unit": "", "title": {"zh": "爆肝日", "en": "Overdrive"}, "desc": {"zh": "單日最高 {v} 次貢獻", "en": "{v} contributions in a single day"}, "value": 152, "thresholds": [10, 20, 40, 80], "unlocked": true, "eligible": true, "tier": "legendary", "tier_index": 3, "next_threshold": null, "progress_to_next": 1.0}, {"id": "multithreaded", "icon": "🧵", "metric": "repos_contributed", "unit": "", "title": {"zh": "多線並行", "en": "Multi-threaded"}, "desc": {"zh": "同時推進 {v} 個專案", "en": "Pushed code to {v} repositories"}, "value": 33, "thresholds": [3, 8, 15, 30], "unlocked": true, "eligible": true, "tier": "legendary", "tier_index": 3, "next_threshold": null, "progress_to_next": 1.0}, {"id": "forged", "icon": "⚒️", "metric": "total_contributions", "unit": "", "title": {"zh": "千錘百鍊", "en": "Forged in Commits"}, "desc": {"zh": "今年累積 {v} 次貢獻", "en": "{v} contributions this year"}, "value": 1796, "thresholds": [100, 500, 1000, 3000], "unlocked": true, "eligible": true, "tier": "epic", "tier_index": 2, "next_threshold": 3000, "progress_to_next": 0.398}, {"id": "polyglot", "icon": "🗣️", "metric": "language_count", "unit": "", "title": {"zh": "多語通", "en": "Polyglot"}, "desc": {"zh": "使用了 {v} 種程式語言", "en": "Wrote code in {v} languages"}, "value": 6, "thresholds": [2, 4, 6, 8], "unlocked": true, "eligible": true, "tier": "epic", "tier_index": 2, "next_threshold": 8, "progress_to_next": 0.0}, {"id": "shipper", "icon": "🚀", "metric": "releases", "unit": "", "title": {"zh": "出貨達人", "en": "Shipper"}, "desc": {"zh": "今年發佈了 {v} 個 Release", "en": "Published {v} releases"}, "value": 10, "thresholds": [1, 5, 15, 40], "unlocked": true, "eligible": true, "tier": "rare", "tier_index": 1, "next_threshold": 15, "progress_to_next": 0.5}, {"id": "deep_focus", "icon": "🎯", "metric": "top_repo_commits", "unit": "", "title": {"zh": "專注一擊", "en": "Deep Focus"}, "desc": {"zh": "在單一專案提交 {v} 次", "en": "{v} commits to a single project"}, "value": 250, "thresholds": [50, 150, 400, 1000], "unlocked": true, "eligible": true, "tier": "rare", "tier_index": 1, "next_threshold": 400, "progress_to_next": 0.4}, {"id": "night_owl", "icon": "🦉", "metric": "night_ratio", "unit": "%", "title": {"zh": "夜貓子", "en": "Night Owl"}, "desc": {"zh": "{v}% 的 commit 在午夜到清晨 5 點", "en": "{v}% of commits between 0–5 AM"}, "value": 21.9, "thresholds": [10, 20, 35, 50], "unlocked": true, "eligible": true, "tier": "rare", "tier_index": 1, "next_threshold": 35, "progress_to_next": 0.127}, {"id": "weekend_warrior", "icon": "🏕️", "metric": "weekend_ratio", "unit": "%", "title": {"zh": "週末戰士", "en": "Weekend Warrior"}, "desc": {"zh": "{v}% 的貢獻發生在週末", "en": "{v}% of contributions on weekends"}, "value": 31.0, "thresholds": [20, 30, 40, 50], "unlocked": true, "eligible": true, "tier": "rare", "tier_index": 1, "next_threshold": 40, "progress_to_next": 0.1}, {"id": "early_bird", "icon": "🐦", "metric": "morning_ratio", "unit": "%", "title": {"zh": "晨型人", "en": "Early Bird"}, "desc": {"zh": "{v}% 的 commit 在早上 5–9 點", "en": "{v}% of commits between 5–9 AM"}, "value": 17.9, "thresholds": [10, 20, 35, 50], "unlocked": true, "eligible": true, "tier": "common", "tier_index": 0, "next_threshold": 20, "progress_to_next": 0.79}, {"id": "bug_hunter", "icon": "🐞", "metric": "issues", "unit": "", "title": {"zh": "除錯獵人", "en": "Bug Hunter"}, "desc": {"zh": "開了 {v} 個 Issue", "en": "Opened {v} issues"}, "value": 10, "thresholds": [5, 20, 50, 150], "unlocked": true, "eligible": true, "tier": "common", "tier_index": 0, "next_threshold": 20, "progress_to_next": 0.333}, {"id": "eternal_flame", "icon": "🔥", "metric": "longest_streak", "unit": "days", "title": {"zh": "不滅之火", "en": "Eternal Flame"}, "desc": {"zh": "連續 {v} 天都有貢獻", "en": "Contributed {v} days in a row"}, "value": 11, "thresholds": [7, 30, 100, 200], "unlocked": true, "eligible": true, "tier": "common", "tier_index": 0, "next_threshold": 30, "progress_to_next": 0.174}, {"id": "daily_builder", "icon": "📅", "metric": "active_days", "unit": "days", "title": {"zh": "日更職人", "en": "Daily Builder"}, "desc": {"zh": "一年中有 {v} 天在寫程式", "en": "Active on {v} days"}, "value": 52, "thresholds": [50, 100, 200, 300], "unlocked": true, "eligible": true, "tier": "common", "tier_index": 0, "next_threshold": 100, "progress_to_next": 0.04}, {"id": "stargazer", "icon": "⭐", "metric": "stars_owned", "unit": "", "title": {"zh": "星光收集者", "en": "Stargazer"}, "desc": {"zh": "活躍專案共獲得 {v} 顆星", "en": "{v} stars across active repos"}, "value": 10, "thresholds": [10, 50, 250, 1000], "unlocked": true, "eligible": true, "tier": "common", "tier_index": 0, "next_threshold": 50, "progress_to_next": 0.0}, {"id": "all_seasons", "icon": "🍂", "metric": "active_months", "unit": "", "title": {"zh": "四季不輟", "en": "All Seasons"}, "desc": {"zh": "{v} 個月份都有產出", "en": "Active in {v} months"}, "value": 5, "thresholds": [6, 9, 11, 12], "unlocked": false, "eligible": true, "tier": null, "tier_index": -1, "next_threshold": 6, "progress_to_next": 0.833}, {"id": "voyager", "icon": "🧭", "metric": "external_prs_merged", "unit": "", "title": {"zh": "開源旅人", "en": "Open Source Voyager"}, "desc": {"zh": "在別人的專案合併了 {v} 個 PR", "en": "{v} PRs merged into others' projects"}, "value": 0, "thresholds": [1, 5, 20, 50], "unlocked": false, "eligible": true, "tier": null, "tier_index": -1, "next_threshold": 1, "progress_to_next": 0.0}, {"id": "gatekeeper", "icon": "🛡️", "metric": "reviews", "unit": "", "title": {"zh": "守門人", "en": "Gatekeeper"}, "desc": {"zh": "完成 {v} 次 Code Review", "en": "{v} code reviews"}, "value": 0, "thresholds": [5, 25, 100, 300], "unlocked": false, "eligible": true, "tier": null, "tier_index": -1, "next_threshold": 5, "progress_to_next": 0.0}, {"id": "perfect_month", "icon": "🗓️", "metric": "perfect_months", "unit": "", "title": {"zh": "全勤月", "en": "Perfect Month"}, "desc": {"zh": "{v} 個月每天都有貢獻", "en": "{v} months with no empty day"}, "value": 0, "thresholds": [1, 3, 6, 12], "unlocked": false, "eligible": true, "tier": null, "tier_index": -1, "next_threshold": 1, "progress_to_next": 0.0}], "narrative": {"lang": "zh", "headline": "把日常需求與創作靈感，做成 33 個有自己性格的公開專案。", "theme_words": ["Local-first", "Vue × React", "AI Tools", "Three.js", "Taiwan", "Agent Skills"], "max_projects": 12, "project_order": ["malilion/AURA-REC", "malilion/MalilionUI", "malilion/BlockUI", "malilion/ContextLion", "malilion/DevTraceLion", "malilion/StockLion", "malilion/cow-pasture", "malilion/taiwan-county-wars", "malilion/The-Nocturne-Atlas", "malilion/prize", "malilion/Malilion-AI-Radar", "malilion/RecapLion"], "projects": {"malilion/AURA-REC": {"category": "跨平台創作工具", "tagline": "從錄螢幕到教學剪輯，把整段工作流程留在本機。", "highlights": ["macOS、Windows 桌面版與免安裝網頁版", "今年提交加入內建剪輯、FFmpeg 打包與 x264 畫質改善", "今年 250 次 GitHub Commit 貢獻"]}, "malilion/MalilionUI": {"category": "設計系統／元件庫", "tagline": "把獅子金屬美學，做成 Vue 與 React 都能使用的元件系統。", "highlights": ["Vue 3、React、TypeScript 與台灣格式驗證器", "今年提交加入 SchemaForm、Wizard、ProTable 與 MCP 服務", "今年 217 次 GitHub Commit 貢獻"]}, "malilion/BlockUI": {"category": "遊戲風格元件庫", "tagline": "讓背包、合成台與 HUD，成為能重複使用的 React 元件。", "highlights": ["像素風格、五種主題與原創圖示", "今年提交加入繁體中文、本地化與 Block Miner 示範遊戲", "今年 102 次 GitHub Commit 貢獻"]}, "malilion/ContextLion": {"category": "AI／瀏覽器擴充", "tagline": "把雜亂網頁整理成能直接交給 AI 的 Markdown。", "highlights": ["移除廣告與雜訊，保留程式碼區塊與表格", "CJK token 估算、提示詞預設與本機優先設計", "今年 59 次 GitHub Commit 貢獻"]}, "malilion/DevTraceLion": {"category": "開發者工具", "tagline": "把 API 偵錯、敏感資訊遮罩與重現程式碼，放進 DevTools。", "highlights": ["依 README 提供寫入前遮罩與 JSON 回應差異比較", "支援 cURL、Python、C# 等八種程式碼產生格式", "今年 36 次 GitHub Commit 貢獻"]}, "malilion/StockLion": {"category": "台灣金融工具", "tagline": "看文章時，讓台股資訊出現在需要的位置。", "highlights": ["網頁股票卡、自選清單與到價警示", "區分收盤與即時行情，行情金鑰保存在本機", "今年 43 次 GitHub Commit 貢獻"]}, "malilion/cow-pasture": {"category": "資料視覺化", "tagline": "把紅漲綠跌的台股，變成可以走逛的 3D 牧場。", "highlights": ["依產業分區的牧場、熱圖與個股明細", "本機觀察清單、兩檔比較與分享卡片", "今年 30 次 GitHub Commit 貢獻"]}, "malilion/taiwan-county-wars": {"category": "在地題材遊戲", "tagline": "讓台灣 22 縣市成為一張可玩的策略地圖。", "highlights": ["回合制策略與真實地圖大亂鬥兩種玩法", "今年提交持續改善戰術、暫停狀態與鍵盤操作", "今年 153 次 GitHub Commit 貢獻"]}, "malilion/The-Nocturne-Atlas": {"category": "3D／程序化世界", "tagline": "用種子生成一座能探索的原創魔法世界。", "highlights": ["Three.js 與 TypeScript 驅動的 3D 場景", "今年提交加入原創音樂、靜態匯出與 GitHub Pages 部署", "今年 118 次 GitHub Commit 貢獻"]}, "malilion/prize": {"category": "離線活動工具", "tagline": "把抽獎現場需要的操作、存證與查核，放進一個離線工具。", "highlights": ["投影轉盤、場次備份與每抽錄影存證", "今年提交加入憑證包驗證、分卷與發獎核對表", "今年 114 次 GitHub Commit 貢獻"]}, "malilion/Malilion-AI-Radar": {"category": "資訊整理／自動化", "tagline": "把 AI 業界與開發者消息，整理成可回看的情報站。", "highlights": ["新聞、AI 官方來源與開發者雷達", "今年提交加入更多 RSS 來源與 Hugging Face 論文趨勢榜", "今年 102 次 GitHub Commit 貢獻"]}, "malilion/RecapLion": {"category": "Agent Skill／年度回顧", "tagline": "讓開源作品自己說故事，也讓這一年的成果有了入口。", "highlights": ["Python 標準函式庫完成資料收集、分析與輸出", "動畫回顧頁、SVG 成就卡與可補寫的專案敘事", "今年 7 次 GitHub Commit 貢獻"]}}, "custom_achievements": [{"id": "cross_platform_creator", "icon": "🎬", "tier": "epic", "title": "跨平台出貨", "desc": "錄影工具走進桌面與瀏覽器", "detail": "AURA-REC 的 README 提供 macOS、Windows 與網頁版；今年的提交包含 Python/Tk 與 FFmpeg 打包、內建剪輯與 x264 錄影畫質調整。這份成果跨過了介面、錄製與交付。"}, {"id": "component_workshop", "icon": "🧩", "tier": "epic", "title": "元件雙工坊", "desc": "金屬獅系與像素方塊兩種語言", "detail": "MalilionUI 的 Vue／React 元件與 BlockUI 的像素 React 元件，是兩套不同的設計語言。今年提交同時推進表單、管理介面、本地化、文件與示範遊戲。"}, {"id": "taiwan_playground", "icon": "🏝️", "tier": "rare", "title": "台灣創意家", "desc": "縣市地圖與股市，都能成為作品", "detail": "台灣縣市大戰把 22 縣市變成策略與大亂鬥遊戲；StockLion 把台股資訊帶進瀏覽情境；cow-pasture 則用 3D 牧場呈現市場漲跌。共同題材，長出不同的互動方式。"}], "achievements": {"genesis": "33 個今年建立、列入本次分析的自有專案，從元件庫、工具到遊戲與創作技能。", "multithreaded": "33 個有 GitHub 貢獻日曆 Commit 的專案；跨領域的作品仍保有明確使用情境。", "deep_focus": "AURA-REC 有 250 次 GitHub Commit 貢獻，是本次分析投入最多的專案。", "forged": "1,796 次 GitHub 日曆貢獻，是本次回顧採用的年度總數。", "eternal_flame": "最長連續貢獻為 2026 年 10 月 1 日至 10 月 11 日，共 11 天。", "shipper": "本次資料可見 10 筆年度 Release；收集器每個專案最多讀取最近 5 筆，這是可見數量。", "merge_master": "合併數來自 GitHub Search 的 merged 日期查詢；與日曆的年度 PR 貢獻數採用不同口徑。", "night_owl": "時段分布以台北時間分析 525 筆 Commit 樣本；不是全年度全部 Commit 的完整時段統計。"}, "summary": "2026 年截至 11 月 17 日，你留下 1,796 次 GitHub 日曆貢獻，包含 1,634 次 Commit 貢獻，參與 33 個專案。AURA-REC、MalilionUI 與台灣縣市大戰是 Commit 貢獻最多的三個作品。從本機工具、元件庫到互動世界，這些作品呈現出你持續把實際需求與創作題材做成可操作成果的方向。", "closing": "接下來可以挑選幾個代表作，整理使用者回饋、教學與版本里程碑，讓已完成的功能更容易被使用。活躍月份目前為 5，下一個有貢獻的新月份就能解鎖「四季不輟」；年度仍在進行，故事也還能繼續長。"}, "lang": "zh"}</script>
+<script>
+(() => {
+"use strict";
+const D = JSON.parse(document.getElementById("report-data").textContent);
+const N = D.narrative || {};
+const L = D.lang === "en" ? "en" : "zh";
+const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+const T = {
+  zh: {
+    hello: "嗨，{name}", title: "GitHub 年度回顧", scroll: "往下滑，看看你的這一年 ↓",
+    statsT: "這一年的數字", statsS: "每一個綠格子，都是你留下的足跡",
+    contrib: "總貢獻", commits: "Commits", prs: "Pull Requests", reviews: "Code Reviews", issues: "Issues",
+    activeDays: "活躍天數", streak: "最長連續", repos: "參與專案", newRepos: "新開專案", stars: "獲得星星",
+    days: "天", busiest: "最爆肝的一天", busiestS: "{n} 次貢獻", peak: "黃金時段", peakS: "最常在這個時間 commit",
+    curStreak: "目前連續", topLang: "年度語言", weekend: "週末比例", privateC: "私人貢獻",
+    heatT: "貢獻熱力圖", heatS: "一整年的節奏", less: "少", more: "多",
+    monthT: "每月貢獻", hourT: "一天中的 commit 時段", weekT: "星期分佈",
+    langT: "語言版圖", langS: "依照你在各專案的提交量加權",
+    projT: "年度專案", projS: "今年你打造、推進的系統與作品",
+    newB: "NEW", privB: "私人", commitsU: "commits", starsU: "★",
+    achT: "成就解鎖", achS: "點擊卡片翻面查看細節", goalT: "下一個目標", goalS: "還差一點點就能解鎖",
+    tiers: { common: "普通", rare: "稀有", epic: "史詩", legendary: "傳說" }, special: "特別",
+    value: "達成數值", nextTier: "下一階", maxed: "已達最高等級", unlockedAt: "解鎖門檻",
+    next: "明年見！", replay: "🎉 再放一次煙火", footer: "由 RecapLion 產生",
+    months: ["1月","2月","3月","4月","5月","6月","7月","8月","9月","10月","11月","12月"],
+    weekdays: ["日","一","二","三","四","五","六"], extPR: "開源貢獻",
+    oss: "合併進他人專案的 PR",
+  },
+  en: {
+    hello: "Hi, {name}", title: "GitHub Year in Review", scroll: "Scroll to relive your year ↓",
+    statsT: "Your year in numbers", statsS: "Every green square is a footprint you left",
+    contrib: "Contributions", commits: "Commits", prs: "Pull Requests", reviews: "Code Reviews", issues: "Issues",
+    activeDays: "Active days", streak: "Longest streak", repos: "Repositories", newRepos: "New repos", stars: "Stars earned",
+    days: "days", busiest: "Busiest day", busiestS: "{n} contributions", peak: "Golden hour", peakS: "when you commit most",
+    curStreak: "Current streak", topLang: "Language of the year", weekend: "Weekend share", privateC: "Private contributions",
+    heatT: "Contribution heatmap", heatS: "The rhythm of your year", less: "Less", more: "More",
+    monthT: "Monthly contributions", hourT: "Commit hours", weekT: "By weekday",
+    langT: "Language map", langS: "Weighted by your commits per project",
+    projT: "Projects of the year", projS: "Systems and work you built and pushed forward",
+    newB: "NEW", privB: "Private", commitsU: "commits", starsU: "★",
+    achT: "Achievements unlocked", achS: "Click a card to flip it", goalT: "Next goals", goalS: "So close to unlocking",
+    tiers: { common: "Common", rare: "Rare", epic: "Epic", legendary: "Legendary" }, special: "Special",
+    value: "Value", nextTier: "Next tier", maxed: "Max tier reached", unlockedAt: "Thresholds",
+    next: "See you next year!", replay: "🎉 Replay confetti", footer: "Generated by RecapLion",
+    months: ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],
+    weekdays: ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"], extPR: "Open source",
+    oss: "PRs merged into other projects",
+  },
+}[L];
+
+const $ = (s, el = document) => el.querySelector(s);
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+const fmt = n => Number(n || 0).toLocaleString(L === "zh" ? "zh-TW" : "en-US");
+const tr = (o) => (o && typeof o === "object") ? (o[L] ?? o.zh ?? o.en ?? "") : (o ?? "");
+const S = D.stats, P = D.profile, Y = D.meta.year;
+const displayName = P.name || P.login;
+const safeUrl = u => (typeof u === "string" && /^https?:\/\//i.test(u)) ? u : null;
+
+/* ---------- build DOM ---------- */
+const app = $("#app");
+const html = [];
+
+// HERO
+const avatar = safeUrl(P.avatarUrl)
+  ? `<img src="${esc(P.avatarUrl)}" alt="">`
+  : `<div class="ph">${esc(displayName[0] || "?")}</div>`;
+const chips = (N.theme_words || []).map(w => `<span class="chip">${esc(w)}</span>`).join("");
+html.push(`<section class="hero">
+  <div class="avatar-wrap">${avatar}</div>
+  <div class="hello">${esc(T.hello.replace("{name}", displayName))}</div>
+  <div class="year grad">${String(Y).split("").map((d, i) => `<span style="animation-delay:${.35 + i * .12}s">${d}</span>`).join("")}</div>
+  <h1>${esc(T.title)}</h1>
+  <div class="headline"><span id="typed"></span><span class="caret"></span></div>
+  <div class="chips">${chips}</div>
+  <div class="scroll-hint">${esc(T.scroll)}</div>
+</section>`);
+
+// STATS
+const statItems = [
+  ["🟩", S.total_contributions, T.contrib], ["📝", S.commits, T.commits], ["🔀", S.pull_requests, T.prs],
+  ["👀", S.reviews, T.reviews], ["🐞", S.issues, T.issues], ["📅", S.active_days, T.activeDays],
+  ["🔥", S.longest_streak, `${T.streak} (${T.days})`], ["📦", S.repos_contributed, T.repos],
+  ["🌱", S.repos_created, T.newRepos], ["⭐", S.stars_owned, T.stars],
+].filter(x => x[1] > 0 || x[2] === T.contrib);
+const facts = [];
+if (S.busiest_day) facts.push(["⚡", T.busiest, `${S.busiest_day} · ${T.busiestS.replace("{n}", S.busiest_day_count)}`]);
+if (S.peak_hour !== null && S.peak_hour !== undefined) facts.push(["⏰", `${T.peak} ${String(S.peak_hour).padStart(2, "0")}:00`, T.peakS]);
+if (S.top_language) facts.push(["💬", T.topLang, S.top_language]);
+if (S.longest_streak_start) facts.push(["🔥", `${T.streak} ${S.longest_streak} ${T.days}`, `${S.longest_streak_start} → ${S.longest_streak_end}`]);
+if (S.external_prs_merged) facts.push(["🧭", T.extPR, `${S.external_prs_merged} ${T.oss}`]);
+if (S.private_contributions) facts.push(["🔒", T.privateC, fmt(S.private_contributions)]);
+html.push(`<section id="stats">
+  <h2 class="section-title reveal">${esc(T.statsT)}</h2><p class="section-sub reveal">${esc(T.statsS)}</p>
+  <div class="stats">${statItems.map(([ico, n, l]) => `<div class="stat panel reveal"><div class="ico">${ico}</div><div class="num" data-count="${n}">0</div><div class="lbl">${esc(l)}</div></div>`).join("")}</div>
+  <div class="fun-facts">${facts.map(([i, b, s]) => `<div class="fact panel reveal"><div class="big">${i}</div><div><b>${esc(b)}</b><small>${esc(s)}</small></div></div>`).join("")}</div>
+</section>`);
+
+// HEATMAP + CHARTS
+const cal = D.calendar || [];
+const nz = cal.map(d => d.count).filter(c => c > 0).sort((a, b) => a - b);
+const q = p => nz.length ? nz[Math.min(nz.length - 1, Math.floor(p * nz.length))] : 1;
+const [q1, q2, q3] = [q(.25), q(.5), q(.8)];
+const lvl = c => c <= 0 ? 0 : c <= q1 ? 1 : c <= q2 ? 2 : c <= q3 ? 3 : 4;
+let cells = "";
+let monthLabels = "";
+if (cal.length) {
+  const pad = cal[0].weekday;
+  for (let i = 0; i < pad; i++) cells += `<i style="visibility:hidden"></i>`;
+  let lastMonth = -1;
+  cal.forEach((d, i) => {
+    const wk = Math.floor((i + pad) / 7);
+    const m = +d.date.slice(5, 7) - 1;
+    if (m !== lastMonth) { monthLabels += `<span style="left:${wk * 16}px">${esc(T.months[m])}</span>`; lastMonth = m; }
+    cells += `<i data-l="${lvl(d.count)}" data-d="${d.date}" data-c="${d.count}" style="transition-delay:${wk * 18}ms"></i>`;
+  });
+}
+const maxM = Math.max(1, ...D.monthly);
+const topM = D.monthly.indexOf(Math.max(...D.monthly));
+const monthBars = D.monthly.map((v, i) => `<div class="bar" title="${v}"><div class="fill${i === topM && v ? " top" : ""}" data-h="${(v / maxM) * 100}"></div><span>${esc(T.months[i])}</span></div>`).join("");
+const maxW = Math.max(1, ...D.weekday);
+const weekBars = D.weekday.map((v, i) => `<div class="bar" title="${v}"><div class="fill" data-h="${(v / maxW) * 100}"></div><span>${esc(T.weekdays[i])}</span></div>`).join("");
+const hours = D.hours || [];
+const maxH = Math.max(1, ...hours);
+let clock = "";
+if (S.sampled_commits > 0) {
+  const parts = hours.map((v, h) => {
+    const len = 18 + (v / maxH) * 72;
+    const a = (h / 24) * Math.PI * 2 - Math.PI / 2;
+    const x1 = 120 + Math.cos(a) * 26, y1 = 120 + Math.sin(a) * 26;
+    const x2 = 120 + Math.cos(a) * len, y2 = 120 + Math.sin(a) * len;
+    const col = h < 5 ? "var(--accent)" : h < 9 ? "var(--accent2)" : h < 18 ? "var(--legendary)" : "var(--accent3)";
+    return `<line class="h" x1="${x1.toFixed(1)}" y1="${y1.toFixed(1)}" x2="${x2.toFixed(1)}" y2="${y2.toFixed(1)}" stroke="${col}" stroke-width="7" stroke-linecap="round" opacity="${.35 + .65 * v / maxH}" style="transition-delay:${h * 40}ms"><title>${h}:00 · ${v}</title></line>`;
+  }).join("");
+  const labels = [0, 6, 12, 18].map(h => { const a = (h / 24) * Math.PI * 2 - Math.PI / 2; return `<text x="${120 + Math.cos(a) * 108}" y="${124 + Math.sin(a) * 108}" fill="currentColor" font-size="11" text-anchor="middle" opacity=".6">${h}</text>`; }).join("");
+  clock = `<div class="chart panel reveal"><h3>${esc(T.hourT)}</h3><svg class="clock" viewBox="0 0 240 240">${parts}${labels}<text x="120" y="126" text-anchor="middle" font-size="18" font-weight="800" fill="currentColor">${S.peak_hour}:00</text></svg></div>`;
+} else {
+  clock = `<div class="chart panel reveal"><h3>${esc(T.weekT)}</h3><div class="bars">${weekBars}</div></div>`;
+}
+html.push(`<section id="heat">
+  <h2 class="section-title reveal">${esc(T.heatT)}</h2><p class="section-sub reveal">${esc(T.heatS)}</p>
+  <div class="heat-wrap panel reveal"><div class="heat-months">${monthLabels}</div><div class="heat" id="heatGrid">${cells}</div>
+  <div class="legend">${esc(T.less)} ${[0, 1, 2, 3, 4].map(l => `<i style="background:var(--heat${l})"></i>`).join("")} ${esc(T.more)}</div></div>
+  <div class="charts"><div class="chart panel reveal"><h3>${esc(T.monthT)}</h3><div class="bars">${monthBars}</div></div>${clock}</div>
+</section>`);
+
+// LANGUAGES
+const langs = (D.languages || []).filter(l => l.share >= .005);
+if (langs.length) {
+  const palette = ["#7c5cff", "#22d3ee", "#f472b6", "#facc15", "#34d399", "#fb923c", "#60a5fa", "#a3e635", "#e879f9", "#94a3b8"];
+  langs.forEach((l, i) => { l._c = l.color || palette[i % palette.length]; });
+  html.push(`<section id="langs">
+    <h2 class="section-title reveal">${esc(T.langT)}</h2><p class="section-sub reveal">${esc(T.langS)}</p>
+    <div class="panel reveal" style="padding:24px"><div class="langbar" id="langbar">${langs.map(l => `<div style="background:${esc(l._c)}" data-w="${l.share * 100}" title="${esc(l.name)}"></div>`).join("")}</div>
+    <div class="langs">${langs.map(l => `<span><i style="background:${esc(l._c)}"></i>${esc(l.name)} <em>${(l.share * 100).toFixed(1)}%</em></span>`).join("")}</div></div>
+  </section>`);
+}
+
+// PROJECTS
+const np = N.projects || {};
+const projects = (D.projects || []).filter(p => p.commits > 0 || p.is_new || np[p.id]);
+const order = N.project_order || [];
+projects.sort((a, b) => {
+  const ia = order.indexOf(a.id), ib = order.indexOf(b.id);
+  if (ia !== -1 || ib !== -1) return (ia === -1 ? 1e9 : ia) - (ib === -1 ? 1e9 : ib);
+  return 0;
+});
+const shown = projects.slice(0, N.max_projects || 12);
+if (shown.length) {
+  html.push(`<section id="projects">
+    <h2 class="section-title reveal">${esc(T.projT)}</h2><p class="section-sub reveal">${esc(T.projS)}</p>
+    <div class="projects">${shown.map((p, i) => {
+      const n = np[p.id] || {};
+      const url = safeUrl(p.url);
+      const name = url ? `<a href="${esc(url)}" target="_blank" rel="noopener">${esc(p.name)}</a>` : esc(p.name);
+      const hl = (n.highlights || []).map(h => `<li>${esc(tr(h))}</li>`).join("");
+      return `<article class="proj panel reveal" style="--lc:${esc(p.primary_color || "var(--accent)")}; transition-delay:${(i % 3) * 90}ms">
+        <div class="rank">#${i + 1}</div>
+        <h3>${name}${p.is_new ? `<span class="badge">${T.newB}</span>` : ""}${n.category ? `<span class="badge cat">${esc(tr(n.category))}</span>` : ""}${p.is_private ? `<span class="badge priv">${T.privB}</span>` : ""}</h3>
+        ${n.tagline ? `<div class="tagline">${esc(tr(n.tagline))}</div>` : ""}
+        ${p.description ? `<p class="desc">${esc(p.description)}</p>` : ""}
+        ${hl ? `<ul>${hl}</ul>` : ""}
+        ${p.topics?.length ? `<div class="topics">${p.topics.slice(0, 5).map(t => `<span>#${esc(t)}</span>`).join("")}</div>` : ""}
+        <div class="meta">${p.primary_language ? `<span><i style="background:${esc(p.primary_color || "#888")}"></i>${esc(p.primary_language)}</span>` : ""}
+          ${p.commits ? `<span>📝 ${fmt(p.commits)} ${T.commitsU}</span>` : ""}${p.stars ? `<span>${T.starsU} ${fmt(p.stars)}</span>` : ""}
+          ${p.releases?.length ? `<span>🚀 ${esc(p.releases[0].tag)}</span>` : ""}</div>
+      </article>`;
+    }).join("")}</div>
+  </section>`);
+}
+
+// ACHIEVEMENTS
+const custom = (N.custom_achievements || []).map(c => ({ ...c, unlocked: true, custom: true, tier: c.tier || "epic" }));
+const flavor = N.achievements || {};
+const unlocked = [...custom, ...(D.achievements || []).filter(a => a.unlocked)];
+const tierRank = { legendary: 3, epic: 2, rare: 1, common: 0 };
+unlocked.sort((a, b) => (tierRank[b.tier] ?? 0) - (tierRank[a.tier] ?? 0));
+const locked = (D.achievements || []).filter(a => !a.unlocked && a.eligible !== false && a.progress_to_next > 0).sort((a, b) => b.progress_to_next - a.progress_to_next).slice(0, 6);
+const upgrades = (D.achievements || []).filter(a => a.unlocked && a.next_threshold && a.progress_to_next >= .4).slice(0, Math.max(0, 6 - locked.length));
+const card = (a, i) => {
+  const ti = tierRank[a.tier] ?? 0;
+  const v = a.value !== undefined ? `<div class="val">${a.custom ? "" : `<span data-count="${a.value}">0</span>`}<small>${a.unit === "%" ? "%" : a.unit === "days" ? T.days : ""}</small></div>` : `<div class="val"></div>`;
+  const desc = tr(a.desc).replace("{v}", fmt(a.value));
+  const back = a.custom
+    ? `<p class="flavor">${esc(tr(a.detail || a.desc))}</p>`
+    : `<dl><dt>${T.value}</dt><dd>${fmt(a.value)}${a.unit === "%" ? "%" : ""}</dd>
+        <dt>${T.unlockedAt}</dt><dd>${a.thresholds.map((t, k) => k <= ti ? `<b>${t}</b>` : t).join(" · ")}</dd>
+        <dt>${T.nextTier}</dt><dd>${a.next_threshold ? `${fmt(a.next_threshold)} (${Math.round(a.progress_to_next * 100)}%)` : T.maxed}</dd></dl>
+       ${flavor[a.id] ? `<p class="flavor">“${esc(tr(flavor[a.id]))}”</p>` : ""}`;
+  return `<div class="card cover" data-tier="${esc(a.tier)}" data-i="${i}" tabindex="0">
+    <div class="inner">
+      <div class="face front">${a.custom ? `<span class="custom-tag">${T.special}</span>` : ""}
+        <div class="tier">${esc(T.tiers[a.tier] || a.tier)}</div>
+        <div class="emblem">${esc(a.icon || "🏅")}</div>
+        <h4>${esc(tr(a.title))}</h4><p>${esc(desc)}</p>
+        ${v}<div class="pips">${[0, 1, 2, 3].map(k => `<i class="${k <= ti ? "on" : ""}"></i>`).join("")}</div>
+        <div class="shine"></div>
+      </div>
+      <div class="face back"><div class="tier">${esc(tr(a.title))}</div>${back}</div>
+    </div></div>`;
+};
+const goalRow = a => {
+  const pct = Math.round(a.progress_to_next * 100);
+  return `<div class="goal panel reveal"><div class="gi">${esc(a.icon)}</div>
+    <b>${esc(tr(a.title))} <small>${fmt(a.value)} / ${fmt(a.next_threshold)}${a.unit === "%" ? "%" : ""}</small></b>
+    <div class="prog"><div data-w="${pct}"></div></div></div>`;
+};
+if (unlocked.length) {
+  html.push(`<section id="achievements">
+    <h2 class="section-title reveal"><span class="grad">${esc(T.achT)}</span> · ${unlocked.length}</h2><p class="section-sub reveal">${esc(T.achS)}</p>
+    <div class="ach-grid" id="achGrid">${unlocked.map(card).join("")}</div>
+  </section>`);
+}
+if (locked.length + upgrades.length) {
+  html.push(`<section id="goals" style="padding-top:0">
+    <h2 class="section-title reveal">${esc(T.goalT)}</h2><p class="section-sub reveal">${esc(T.goalS)}</p>
+    <div class="goals">${[...locked, ...upgrades].map(goalRow).join("")}</div>
+  </section>`);
+}
+
+// CLOSING
+html.push(`<section class="closing" id="closing">
+  ${N.summary ? `<p class="reveal">${esc(tr(N.summary))}</p>` : ""}
+  ${N.closing ? `<p class="reveal">${esc(tr(N.closing))}</p>` : ""}
+  <div class="next grad reveal">${esc(T.next)} ${Y + 1}</div>
+  <button class="btn reveal" id="replay">${esc(T.replay)}</button>
+</section>`);
+
+app.innerHTML = html.join("");
+$("#foot").textContent = `${T.footer} · ${D.meta.generated_at?.slice(0, 10) || ""} · @${P.login}`;
+
+/* ---------- typed headline ---------- */
+const headline = tr(N.headline) || (L === "zh"
+  ? `今年你留下了 ${fmt(S.total_contributions)} 次貢獻，推進了 ${S.repos_contributed} 個專案。`
+  : `You made ${fmt(S.total_contributions)} contributions across ${S.repos_contributed} projects this year.`);
+const typed = $("#typed");
+if (reduce) typed.textContent = headline;
+else { let k = 0; setTimeout(function tick() { typed.textContent = headline.slice(0, ++k); if (k < headline.length) setTimeout(tick, 38); }, 1400); }
+
+/* ---------- count-up ---------- */
+function countUp(el) {
+  const target = parseFloat(el.dataset.count) || 0;
+  const dec = String(el.dataset.count).includes(".") ? 1 : 0;
+  if (reduce) { el.textContent = dec ? target.toFixed(1) : fmt(target); return; }
+  const t0 = performance.now(), dur = 1400;
+  requestAnimationFrame(function step(t) {
+    const p = Math.min(1, (t - t0) / dur), e = 1 - Math.pow(1 - p, 4);
+    el.textContent = dec ? (target * e).toFixed(1) : fmt(Math.round(target * e));
+    if (p < 1) requestAnimationFrame(step);
+  });
+}
+
+/* ---------- observers ---------- */
+const io = new IntersectionObserver(entries => {
+  for (const en of entries) {
+    if (!en.isIntersecting) continue;
+    const el = en.target;
+    io.unobserve(el);
+    el.classList.add("in");
+    el.querySelectorAll("[data-count]").forEach(countUp);
+    el.querySelectorAll(".fill[data-h]").forEach(f => f.style.height = f.dataset.h + "%");
+    el.querySelectorAll("[data-w]").forEach(f => f.style.width = f.dataset.w + "%");
+    el.querySelectorAll(".clock").forEach(c => c.classList.add("in"));
+    if (el.id === "heatGrid") el.classList.add("in");
+    if (el.id === "achGrid") dealCards(el);
+  }
+}, { threshold: .15 });
+document.querySelectorAll(".reveal, #heatGrid, #achGrid").forEach(el => io.observe(el));
+
+/* ---------- heatmap tooltip ---------- */
+const tip = $("#tip");
+$("#heatGrid")?.addEventListener("mousemove", e => {
+  const c = e.target.closest("i[data-d]");
+  if (!c) { tip.style.opacity = 0; return; }
+  tip.textContent = `${c.dataset.d} · ${c.dataset.c}`;
+  tip.style.left = e.clientX + 12 + "px"; tip.style.top = e.clientY - 30 + "px"; tip.style.opacity = 1;
+});
+$("#heatGrid")?.addEventListener("mouseleave", () => tip.style.opacity = 0);
+
+/* ---------- achievement cards ---------- */
+function dealCards(grid) {
+  const cards = [...grid.querySelectorAll(".card")];
+  let bigWin = false;
+  cards.forEach((c, i) => {
+    setTimeout(() => {
+      c.classList.add("dealt");
+      c.classList.remove("cover");
+      c.querySelectorAll("[data-count]").forEach(countUp);
+      if (c.dataset.tier === "legendary") burst(c);
+    }, reduce ? 0 : 250 + i * 180);
+    if (c.dataset.tier === "legendary" || c.dataset.tier === "epic") bigWin = true;
+  });
+  if (bigWin) setTimeout(() => confetti(160), reduce ? 0 : 300 + cards.length * 180);
+}
+document.addEventListener("click", e => {
+  const c = e.target.closest(".card.dealt");
+  if (c) c.classList.toggle("flipped");
+});
+document.addEventListener("keydown", e => {
+  if ((e.key === "Enter" || e.key === " ") && e.target.matches?.(".card.dealt")) { e.preventDefault(); e.target.classList.toggle("flipped"); }
+});
+if (!reduce) {
+  document.addEventListener("pointermove", e => {
+    const c = e.target.closest?.(".card.dealt");
+    document.querySelectorAll(".card.tilt").forEach(x => { if (x !== c) { x.classList.remove("tilt"); x.style.transform = ""; } });
+    if (!c || c.classList.contains("flipped")) return;
+    const r = c.getBoundingClientRect();
+    const x = (e.clientX - r.left) / r.width - .5, y = (e.clientY - r.top) / r.height - .5;
+    c.classList.add("tilt");
+    c.style.transform = `rotateY(${x * 18}deg) rotateX(${-y * 18}deg) scale(1.04)`;
+    const s = c.querySelector(".shine"); if (s) s.style.setProperty("--sx", `${(x + .5) * 100}%`);
+  });
+}
+
+/* ---------- starfield ---------- */
+const sc = $("#stars"), sx = sc.getContext("2d");
+let stars = [];
+function resize() {
+  const dpr = devicePixelRatio || 1;
+  for (const c of [sc, $("#confetti")]) { c.width = innerWidth * dpr; c.height = innerHeight * dpr; c.style.width = innerWidth + "px"; c.style.height = innerHeight + "px"; c.getContext("2d").setTransform(dpr, 0, 0, dpr, 0, 0); }
+  stars = Array.from({ length: Math.min(160, Math.floor(innerWidth * innerHeight / 9000)) }, () => ({ x: Math.random() * innerWidth, y: Math.random() * innerHeight, r: Math.random() * 1.4 + .2, s: Math.random() * .3 + .05, p: Math.random() * 6 }));
+}
+resize(); addEventListener("resize", resize);
+(function drawStars(t) {
+  sx.clearRect(0, 0, innerWidth, innerHeight);
+  const light = getComputedStyle(document.documentElement).getPropertyValue("--bg").trim().startsWith("#f");
+  for (const s of stars) {
+    if (!reduce) { s.y -= s.s; if (s.y < 0) { s.y = innerHeight; s.x = Math.random() * innerWidth; } }
+    const a = .35 + .35 * Math.sin((t || 0) / 900 + s.p);
+    sx.fillStyle = light ? `rgba(90,80,200,${a * .5})` : `rgba(210,220,255,${a})`;
+    sx.beginPath(); sx.arc(s.x, s.y, s.r, 0, 7); sx.fill();
+  }
+  if (!reduce) requestAnimationFrame(drawStars);
+})();
+
+/* ---------- confetti ---------- */
+const cc = $("#confetti"), cx = cc.getContext("2d");
+let parts = [], running = false;
+const colors = ["#7c5cff", "#22d3ee", "#f472b6", "#ffb020", "#34d399", "#ffffff"];
+function spawn(x, y, n, spread) {
+  for (let i = 0; i < n; i++) {
+    const a = Math.random() * Math.PI * 2, v = Math.random() * spread + 2;
+    parts.push({ x, y, vx: Math.cos(a) * v, vy: Math.sin(a) * v - 4, g: .18, s: Math.random() * 6 + 3, r: Math.random() * 6, vr: Math.random() * .3 - .15, c: colors[i % colors.length], life: 1 });
+  }
+  if (!running) { running = true; requestAnimationFrame(loop); }
+}
+function loop() {
+  cx.clearRect(0, 0, innerWidth, innerHeight);
+  parts = parts.filter(p => p.life > 0 && p.y < innerHeight + 20);
+  for (const p of parts) {
+    p.vy += p.g; p.vx *= .99; p.x += p.vx; p.y += p.vy; p.r += p.vr; p.life -= .006;
+    cx.save(); cx.translate(p.x, p.y); cx.rotate(p.r); cx.globalAlpha = Math.max(0, p.life);
+    cx.fillStyle = p.c; cx.fillRect(-p.s / 2, -p.s / 4, p.s, p.s / 2); cx.restore();
+  }
+  if (parts.length) requestAnimationFrame(loop); else { running = false; cx.clearRect(0, 0, innerWidth, innerHeight); }
+}
+function confetti(n) { if (reduce) return; spawn(innerWidth * .25, innerHeight * .6, n / 2, 12); spawn(innerWidth * .75, innerHeight * .6, n / 2, 12); }
+function burst(el) { if (reduce) return; const r = el.getBoundingClientRect(); spawn(r.left + r.width / 2, r.top + r.height / 2, 40, 7); }
+$("#replay").addEventListener("click", () => confetti(220));
+const closingObs = new IntersectionObserver(es => { if (es[0].isIntersecting) { confetti(200); closingObs.disconnect(); } }, { threshold: .6 });
+closingObs.observe($("#closing"));
+
+/* ---------- theme toggle ---------- */
+$("#themeBtn").addEventListener("click", () => {
+  const root = document.documentElement;
+  const cur = root.dataset.theme || (matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark");
+  root.dataset.theme = cur === "light" ? "dark" : "light";
+});
+})();
+</script>
+</body>
+</html>

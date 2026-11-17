@@ -8,6 +8,8 @@
 
 [🌐 Website & live demo](https://malilion.github.io/RecapLion/)
 
+[🦁 malilion’s real 2026 review · 繁體中文](https://malilion.github.io/RecapLion/demo/malilion-2026/)
+
 </div>
 
 RecapLion looks back at what you built on GitHub this year — the projects and systems you shipped

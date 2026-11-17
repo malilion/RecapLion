@@ -119,6 +119,14 @@ h2 { font-size: clamp(30px, 4.4vw, 46px); line-height: 1.12; letter-spacing: -.0
 .browser .bar i:nth-child(2) { background: #febc2e; } .browser .bar i:nth-child(3) { background: #28c840; }
 .browser .bar span { margin-left: 10px; font-size: 13px; color: var(--muted); font-family: ui-monospace, SFMono-Regular, Menlo, monospace; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .browser iframe { display: block; width: 100%; height: min(78vh, 720px); border: 0; background: #07080f; }
+.real-demo { display: grid; grid-template-columns: 1fr 1.15fr; gap: 28px; align-items: center; margin-top: 36px; padding: 28px; }
+.real-demo h3 { margin: 8px 0; font-size: 24px; }
+.real-demo p { margin: 0 0 18px; color: var(--muted); }
+.real-demo .snapshot { display: block; margin-top: 12px; color: var(--muted); font-size: 13px; }
+.real-demo .summary-link { display: block; border-radius: 20px; }
+.real-demo img { width: 100%; height: auto; }
+.real-demo .summary-link:focus-visible { outline: 3px solid var(--accent2); outline-offset: 5px; }
+@media (max-width: 760px) { .real-demo { grid-template-columns: 1fr; padding: 22px; } }
 .demo-actions { display: flex; gap: 10px; justify-content: center; margin-top: 18px; flex-wrap: wrap; }
 
 /* gallery */
@@ -247,6 +255,18 @@ footer .wrap { display: flex; gap: 16px; justify-content: space-between; flex-wr
       <a class="btn" href="demo/en.html" target="_blank" rel="noopener">English demo ↗</a>
       <a class="btn" href="demo/zh.html" target="_blank" rel="noopener">中文範例 ↗</a>
     </div>
+    <article class="real-demo panel reveal" aria-labelledby="realDemoTitle">
+      <div>
+        <div class="kicker" data-i18n="real.k">Real GitHub activity</div>
+        <h3 id="realDemoTitle" data-i18n="real.t">malilion · 2026 year in review</h3>
+        <p data-i18n="real.s">1,796 contributions, 33 projects and 18 achievement cards. Explore the projects behind the numbers in this Traditional Chinese report.</p>
+        <a class="btn primary" href="demo/malilion-2026/" target="_blank" rel="noopener" data-i18n="real.open">Open malilion’s report ↗</a>
+        <small class="snapshot" data-i18n="real.date">Snapshot: Nov 17, 2026 · Asia/Taipei · 繁體中文</small>
+      </div>
+      <a class="summary-link" href="demo/malilion-2026/" target="_blank" rel="noopener" aria-labelledby="realDemoTitle">
+        <img src="demo/malilion-2026/cards/summary.svg" width="840" height="260" alt="malilion · 2026 GitHub year in review: 1,796 contributions, 52 active days, an 11-day streak, 33 projects and 18 achievements" loading="lazy">
+      </a>
+    </article>
   </div>
 </section>
 
@@ -353,6 +373,9 @@ const ZH = {
   "f.5t": "特別成就", "f.5p": "由 agent 依真實證據頒發，例如「從零造資料庫」「全平台出貨」。",
   "f.6t": "English & 繁體中文", "f.6p": "亮暗主題、手機版排版，並尊重減少動態效果的設定。",
   "demo.k": "線上 Demo", "demo.t": "滑滑看真正的報告", "demo.s": "這是虛構開發者 demo-dev 的實際產出。在框裡往下滑，點成就卡可以翻面。",
+  "real.k": "真實 GitHub 活動", "real.t": "malilion · 2026 年度回顧",
+  "real.s": "1,796 次貢獻、33 個專案、18 張成就卡。打開這份繁體中文回顧，看看數字背後實際做了哪些作品。",
+  "real.open": "開啟 malilion 的年度回顧 ↗", "real.date": "資料快照：2026/11/17 · 台北時間 · 繁體中文",
   "ach.k": "成就", "ach.t": "全部收集起來", "ach.s": "每個成就都有四個等級。每張卡都是動畫 SVG，可以放上你的個人頁。",
   "tier.c": "普通", "tier.r": "稀有", "tier.e": "史詩", "tier.l": "傳說",
   "ag.k": "任何 agent", "ag.t": "採用開放的 Agent Skills 格式", "ag.s": "RecapLion 是一個含 SKILL.md 的資料夾。支援 Agent Skills、或能執行 shell 指令的 agent 都能使用。",
