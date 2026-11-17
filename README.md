@@ -108,6 +108,13 @@ git clone https://github.com/malilion/RecapLion.git
 python3 RecapLion/skills/github-year-review/scripts/recap.py --user <your-login> --tz Europe/Berlin
 ```
 
+It first asks which repositories to cover (or pass `--scope` to skip the question):
+
+| Choice | Covers | Needs |
+|---|---|---|
+| `--scope public` | Public repositories only. Nothing private, not even anonymous counts. Safe to share. | Nothing; a token just makes it faster and more complete |
+| `--scope all` | Public **and** your own private repositories | A GitHub token for that same account (`gh auth login`) |
+
 Open `recap-<login>-<year>/year-review.html`. You get every stat, chart and built-in achievement.
 For project stories and special achievements, write a
 [`narrative.json`](skills/github-year-review/references/narrative-schema.md) (by hand or with any
@@ -115,30 +122,29 @@ AI) and re-run with `--narrative narrative.json --skip-fetch`. Use `--lang zh` f
 
 ### GitHub token
 
-A token gives the full picture (calendar, reviews, releases, private contribution counts). It is
-read from `--token`, `GITHUB_TOKEN` / `GH_TOKEN`, or `gh auth token`; the easiest way is
-`gh auth login`. Without a token RecapLion falls back to the public search API: public activity
-only, and it takes a few minutes because of rate limits.
+The token is read from `--token`, `GITHUB_TOKEN` / `GH_TOKEN`, or `gh auth token`; the easiest way
+is `gh auth login`. With `--scope public` a token gives exact GraphQL data, filtered to public
+repositories. Without a token RecapLion uses the public search API instead: it takes a few minutes
+because of rate limits, reviews are approximate and releases unknown.
 
-### Include your private repositories
-
-For a local report including your authenticated account's accessible private repositories:
+### Including your private repositories (`--scope all`)
 
 ```bash
-python3 RecapLion/skills/github-year-review/scripts/recap.py --user <your-login> --tz Asia/Taipei --include-private
+python3 RecapLion/skills/github-year-review/scripts/recap.py --user <your-login> --tz Asia/Taipei --scope all
 ```
 
-The token must belong to `<your-login>` and have access to the private repositories. This
-mode paginates repository inventory, private default-branch commits, authored PRs/issues
-and reviews. If GitHub's calendar omits private activity, RecapLion reconstructs it and
-labels the combined total in the report. Existing private calendar activity is not added
-twice. Failures stop collection instead of silently producing a public-only report.
+The token must belong to `<your-login>` and have access to the private repositories. This mode
+paginates the repository inventory, private default-branch commits, authored PRs/issues and
+reviews. If GitHub's calendar omits private activity, RecapLion reconstructs it and labels the
+combined total in the report; activity already in the calendar is not added twice. Failures stop
+with an error instead of silently producing a public-only report.
 
-Add `--exclude-private` to keep private activity in aggregate statistics while removing
-private repository records from the report. Keep `raw.json` private and review any custom
-narrative before sharing: user-written prose is not automatically redacted. To reuse a
-private-inclusive cache, pass `--include-private --skip-fetch`. See
-[`SKILL.md`](skills/github-year-review/SKILL.md) for coverage and sampling limitations.
+This report is meant for you. To share it, add `--exclude-private`: private activity still counts
+in totals, charts and achievements, but private repository names, descriptions and commit subjects
+are left out. Keep `raw.json` and `analysis.json` private, and review any custom narrative before
+sharing — free-form text is not redacted automatically. `--skip-fetch` never mixes scopes: a public
+run refuses a cache that contains private data. See [`SKILL.md`](skills/github-year-review/SKILL.md)
+for coverage and sampling limitations.
 
 ### Auto-refresh your profile
 
@@ -193,6 +199,7 @@ skills/github-year-review/      the Agent Skill (self-contained, copy anywhere)
     recap.py                    one-shot CLI: fetch → analyze → render
     fetch_github_year.py        GraphQL data source
     private_source.py           paginated private activity and missing-calendar reconstruction
+    public_source.py            public-only GraphQL data (--scope public)
     search_source.py            search API data source (no token needed)
     analyze.py                  stats + achievement evaluation
     render.py                   HTML page + SVG cards

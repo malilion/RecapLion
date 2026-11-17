@@ -10,10 +10,12 @@ in `skills/github-year-review/`.
 ## If a user asks you for a GitHub year in review
 Follow `skills/github-year-review/SKILL.md`. In short:
 
-1. Run `python3 skills/github-year-review/scripts/recap.py --user <login> --year <year> --tz <tz> --lang <en|zh>`.
-   For the account owner's local full review, add `--include-private` with an authorized token.
-   Keep private names/details locally; `--exclude-private` is an optional sharing filter,
-   not a switch that removes private activity from the totals. Never publish raw private data.
+1. **Ask the user** whether the review should cover public repositories only or all repositories
+   including their private ones (skip only if they already said). Then run
+   `python3 skills/github-year-review/scripts/recap.py --user <login> --year <year> --tz <tz> --lang <en|zh> --scope <public|all>`.
+   `--scope all` needs a token for that same account. `--exclude-private` is an optional sharing
+   filter for `--scope all` reports; it hides private repository details but keeps the totals.
+   Never publish `raw.json`/`analysis.json` from a `--scope all` run.
 2. Read `recap-<login>-<year>/analysis.json` (especially `projects` and `commit_messages`) and the
    READMEs of the top projects.
 3. Write `recap-<login>-<year>/narrative.json` following

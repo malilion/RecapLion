@@ -30,7 +30,10 @@ class PublicReportPrivacyTests(unittest.TestCase):
         self.assertEqual(public["achievements"], full["achievements"])
         self.assertEqual(public["stats"]["private_commits"], sum(p["commits"] for p in private))
         self.assertFalse(any(p["is_private"] for p in public["projects"]))
-        self.assertEqual(public["commit_messages"], {})
+        private_ids = {p["id"] for p in private}
+        self.assertFalse(private_ids & set(public["commit_messages"]))
+        self.assertEqual(public["commit_messages"],
+                         {k: v for k, v in full["commit_messages"].items() if k not in private_ids})
         self.assertEqual(public["external_prs"], [])
         serialized = json.dumps(public)
         for p in private:

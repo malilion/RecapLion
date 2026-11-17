@@ -330,7 +330,7 @@ footer .wrap { display: flex; gap: 16px; justify-content: space-between; flex-wr
         <p data-i18n="in.p3">One command gives you every stat, chart and built-in achievement. Only Python 3.9+ is needed.</p>
         <div class="code">git clone https://github.com/malilion/RecapLion.git</div>
         <div class="code">python3 RecapLion/skills/github-year-review/scripts/recap.py --user octocat --tz Asia/Taipei</div>
-        <p data-i18n="in.p3b">Add --lang zh for Traditional Chinese. Run gh auth login first for the full data, including private contribution counts.</p>
+        <p data-i18n="in.p3b">It asks whether to cover public repositories only or include your private ones (or pass --scope public / --scope all). Add --lang zh for Traditional Chinese; run gh auth login first for complete data.</p>
       </div>
       <div class="pane panel" id="p4">
         <p data-i18n="in.p4">Keep the cards on your profile fresh: copy the workflow into your profile repository's .github/workflows/ folder.</p>
@@ -387,7 +387,7 @@ const ZH = {
   "in.prompt": "「幫我做 2026 年的 GitHub 年度回顧，帳號是 octocat。」",
   "in.p2": "先加入 marketplace，再安裝 plugin：",
   "in.p3": "一行指令就有所有統計、圖表與內建成就，只需要 Python 3.9 以上。",
-  "in.p3b": "預設是英文，加 --lang zh 改成繁體中文。先執行 gh auth login 可以拿到完整資料，包含私人貢獻數。",
+  "in.p3b": "執行時會問你只要公開 repo，還是連私人 repo 一起算（也可以直接加 --scope public 或 --scope all）。加 --lang zh 改成繁體中文；先執行 gh auth login 可以拿到完整資料。",
   "in.p4": "讓個人頁上的成就卡自動更新：把 workflow 放進個人頁 repo 的 .github/workflows/。",
   "in.p4b": "然後在 README 嵌入總結卡：", "foot.by": "作者",
 };

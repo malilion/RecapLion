@@ -1,4 +1,4 @@
-"""Search-API data source for fetch_github_year.py.
+"""Search-API data source for fetch_github_year.py (public activity only).
 
 Builds the same raw structure as the GraphQL path using only GitHub's public search
 endpoints (search/commits, search/issues, search/repositories, search/users). Works
@@ -136,32 +136,33 @@ def fetch_search(login: str, year: int, start: dt.datetime, end: dt.datetime, to
     repos: list[dict] = []
     page = 1
     while True:
-        batch = s.get("search/repositories", {"q": f"user:{login} fork:true", "per_page": 100, "page": page,
+        batch = s.get("search/repositories", {"q": f"user:{login} fork:true is:public", "per_page": 100, "page": page,
                                               "sort": "updated"})
         repos += batch.get("items", [])
         if len(batch.get("items", [])) < 100 or len(repos) >= min(MAX_RESULTS, batch.get("total_count", 0)):
             break
         page += 1
+    repos = [r for r in repos if not r.get("private")]
     repo_by_name = {r["full_name"]: r for r in repos}
 
     log("commits")
-    commits = s.collect("search/commits", lambda rng: f"author:{login} author-date:{rng}", d0, d1,
+    commits = s.collect("search/commits", lambda rng: f"author:{login} is:public author-date:{rng}", d0, d1,
                         {"sort": "author-date", "order": "asc"})
     seen, uniq = set(), []
     for c in commits:
-        if c["sha"] in seen:
+        if c["sha"] in seen or c["repository"].get("private"):
             continue
         seen.add(c["sha"])
         uniq.append(c)
 
     log("pull requests / issues")
-    prs = s.collect("search/issues", lambda rng: f"author:{login} is:pr created:{rng}", d0, d1)
-    issues = s.collect("search/issues", lambda rng: f"author:{login} is:issue created:{rng}", d0, d1)
+    prs = s.collect("search/issues", lambda rng: f"author:{login} is:pr is:public created:{rng}", d0, d1)
+    issues = s.collect("search/issues", lambda rng: f"author:{login} is:issue is:public created:{rng}", d0, d1)
     rng = f"{d0}..{d1}"
-    merged = s.get("search/issues", {"q": f"author:{login} is:pr is:merged merged:{rng}", "per_page": 1})
-    ext = s.get("search/issues", {"q": f"author:{login} is:pr is:merged merged:{rng} -user:{login}", "per_page": 30})
-    closed = s.get("search/issues", {"q": f"author:{login} is:issue is:closed closed:{rng}", "per_page": 1})
-    reviewed = s.get("search/issues", {"q": f"reviewed-by:{login} -author:{login} is:pr updated:{rng}", "per_page": 1})
+    merged = s.get("search/issues", {"q": f"author:{login} is:pr is:public is:merged merged:{rng}", "per_page": 1})
+    ext = s.get("search/issues", {"q": f"author:{login} is:pr is:public is:merged merged:{rng} -user:{login}", "per_page": 30})
+    closed = s.get("search/issues", {"q": f"author:{login} is:issue is:public is:closed closed:{rng}", "per_page": 1})
+    reviewed = s.get("search/issues", {"q": f"reviewed-by:{login} -author:{login} is:pr is:public updated:{rng}", "per_page": 1})
 
     # calendar (local dates in the user's timezone)
     days: collections.Counter = collections.Counter()

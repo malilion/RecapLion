@@ -107,6 +107,13 @@ git clone https://github.com/malilion/RecapLion.git
 python3 RecapLion/skills/github-year-review/scripts/recap.py --user <你的帳號> --tz Asia/Taipei --lang zh
 ```
 
+執行時會先問你要涵蓋哪些 repo（也可以直接加 `--scope` 跳過提問）：
+
+| 選擇 | 涵蓋範圍 | 需要 |
+|---|---|---|
+| `--scope public` | 只有公開 repo，完全不含私人資料（連匿名的數字都沒有），可以放心分享 | 不需要；有 token 會更快、更完整 |
+| `--scope all` | 公開 **加上** 你自己的私人 repo | 同一個帳號的 GitHub token（`gh auth login`） |
+
 打開 `recap-<帳號>-<年份>/year-review.html` 即可，所有統計、圖表與內建成就都會有。
 想加上專案故事與特別成就，可以自己或請任何 AI 寫一份
 [`narrative.json`](skills/github-year-review/references/narrative-schema.md)，
@@ -114,27 +121,25 @@ python3 RecapLion/skills/github-year-review/scripts/recap.py --user <你的帳�
 
 ### GitHub token
 
-有 token 才有完整資料（貢獻日曆、review、release、私人貢獻數）。讀取順序是 `--token`、
-`GITHUB_TOKEN` / `GH_TOKEN`、`gh auth token`，最簡單是先執行 `gh auth login`。
-沒有 token 時會自動改用公開的 Search API：只含公開活動，而且因為速率限制需要幾分鐘。
+讀取順序是 `--token`、`GITHUB_TOKEN` / `GH_TOKEN`、`gh auth token`，最簡單是先執行 `gh auth login`。
+`--scope public` 有 token 時會用 GraphQL 取得精確資料，並過濾成只剩公開 repo；
+沒有 token 時改用公開的 Search API，因為速率限制需要幾分鐘，review 數為估計值，也拿不到 release。
 
-### 納入私人 repo
-
-本地完整回顧可以加上 `--include-private`：
+### 納入私人 repo（`--scope all`）
 
 ```bash
-python3 RecapLion/skills/github-year-review/scripts/recap.py --user <你的帳號> --tz Asia/Taipei --lang zh --include-private
+python3 RecapLion/skills/github-year-review/scripts/recap.py --user <你的帳號> --tz Asia/Taipei --lang zh --scope all
 ```
 
-Token 的帳號須與 `--user` 相同，且有權讀取要計算的私人 repo。此模式會逐頁收集 repo
-清單、私人庫預設分支上的本人提交、本人建立的 PR／Issue 與 Review。若 GitHub 日曆漏掉
-私人活動，就補算後合併，並在報告標明統計方式；日曆已含私人活動時不會重複加總。
-收集失敗會停止，不會悄悄改成只有公開資料的回顧。
+Token 的帳號須與 `--user` 相同，且有權讀取要計算的私人 repo。此模式會逐頁收集 repo 清單、
+私人 repo 預設分支上的本人 commit、本人建立的 PR／Issue 與 Review。若 GitHub 日曆漏掉私人活動，
+就補算後合併，並在報告標明統計方式；日曆已含的活動不會重複加總。收集失敗會直接報錯，
+不會悄悄改成只有公開資料的回顧。
 
-如要分享彙總數字，再加上 `--exclude-private`，私人活動仍計入統計，但不輸出私人 repo
-紀錄。`raw.json` 仍須保密；自訂年度故事等文字不會自動遮罩，分享前須確認沒有私人內容。
-重用完整快取時使用 `--include-private --skip-fetch`。涵蓋範圍與取樣限制見
-[`SKILL.md`](skills/github-year-review/SKILL.md)。
+這份報告是給你自己看的。要分享時加上 `--exclude-private`：私人活動仍計入總數、圖表與成就，
+但不會輸出私人 repo 的名稱、描述與 commit 訊息。`raw.json` 和 `analysis.json` 要保密；
+自訂的年度故事等文字不會自動遮罩，分享前請自己確認。`--skip-fetch` 不會混用範圍：
+公開模式會拒絕使用含私人資料的快取。涵蓋範圍與取樣限制見 [`SKILL.md`](skills/github-year-review/SKILL.md)。
 
 ### 自動更新個人頁
 
@@ -188,6 +193,7 @@ skills/github-year-review/      Agent Skill 本體（可單獨複製使用）
   scripts/
     recap.py                    一鍵指令：抓資料 → 分析 → 產生
     fetch_github_year.py        GraphQL 資料來源
+    public_source.py            只含公開 repo 的 GraphQL 資料（--scope public）
     search_source.py            Search API 資料來源（不需 token）
     analyze.py                  統計與成就判定
     render.py                   產生 HTML 與 SVG 卡片

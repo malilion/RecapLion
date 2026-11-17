@@ -323,6 +323,7 @@ def build(raw: dict, exclude_private: bool) -> dict:
         "followers": raw["profile"].get("followers", {}).get("totalCount", 0),
     }
 
+    private_names = {p["id"] for p in projects if p["is_private"]}
     return {
         "meta": meta,
         "profile": {k: raw["profile"].get(k) for k in ("login", "name", "avatarUrl", "bio", "url", "location", "company")},
@@ -338,8 +339,10 @@ def build(raw: dict, exclude_private: bool) -> dict:
         "external_prs": [] if exclude_private else external_prs[:20],
         "achievements": evaluate_achievements(stats),
         # Commit subjects for Claude to read when writing the narrative. Not rendered.
-        "commit_messages": {} if exclude_private else {
+        # With --exclude-private only private repositories' subjects are dropped.
+        "commit_messages": {
             s["repository"]: [c["message"] for c in s["commits"][:60]] for s in raw.get("commit_samples", [])
+            if not (exclude_private and s["repository"] in private_names)
         },
     }
 

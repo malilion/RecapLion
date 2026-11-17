@@ -5,8 +5,11 @@
 # 3. Optional: commit a recap/narrative.json (written by you or any AI agent) for project stories
 #    and special achievements — it is picked up automatically.
 #
-# GITHUB_TOKEN covers public activity. For private contribution counts add a personal access
-# token as the secret RECAP_TOKEN (scopes: read:user, repo).
+# RECAP_SCOPE decides what is covered:
+#   public  public repositories only (default; works with the built-in GITHUB_TOKEN)
+#   all     also your private repositories, counted in the totals but never named on the page.
+#           Needs a personal access token of your own account as the secret RECAP_TOKEN
+#           (classic: read:user + repo).
 name: RecapLion
 
 on:
@@ -38,12 +41,13 @@ jobs:
           RECAP_USER: ${{ github.repository_owner }}
           RECAP_TZ: UTC        # e.g. Asia/Taipei
           RECAP_LANG: en       # en | zh
+          RECAP_SCOPE: public  # public | all
         run: |
           NARRATIVE=""
           [ -f recap/narrative.json ] && NARRATIVE="--narrative recap/narrative.json"
           python3 .recaplion/skills/github-year-review/scripts/recap.py \
             --user "$RECAP_USER" --tz "$RECAP_TZ" --lang "$RECAP_LANG" \
-            --exclude-private --out recap $NARRATIVE
+            --scope "$RECAP_SCOPE" --exclude-private --out recap $NARRATIVE
           rm -f recap/raw.json recap/analysis.json
 
       - name: Commit
