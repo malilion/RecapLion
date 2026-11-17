@@ -1,0 +1,12 @@
+{
+  "name": "github-achievement-skill",
+  "owner": { "name": "malilion", "email": "malilion.dev@gmail.com" },
+  "plugins": [
+    {
+      "name": "github-achievement",
+      "source": "./",
+      "description": "Animated GitHub year-in-review with achievement cards.",
+      "version": "1.0.0"
+    }
+  ]
+}

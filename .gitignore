@@ -1,0 +1,6 @@
+__pycache__/
+*.pyc
+year-review-*/
+raw.json
+!examples/sample/raw.json
+.DS_Store

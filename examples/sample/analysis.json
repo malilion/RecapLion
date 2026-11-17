@@ -1,0 +1,2795 @@
+{
+ "meta": {
+  "user": "demo-dev",
+  "year": 2026,
+  "tz": "Asia/Taipei",
+  "source": "sample",
+  "range": {
+   "from": "2026-01-01T00:00:00Z",
+   "to": "2026-11-17T00:00:00Z"
+  },
+  "generated_at": "2026-11-17T00:00:00Z"
+ },
+ "profile": {
+  "login": "demo-dev",
+  "name": "Demo Dev",
+  "avatarUrl": null,
+  "bio": "Building tools for builders",
+  "url": "https://github.com/demo-dev",
+  "location": "Taipei",
+  "company": null
+ },
+ "stats": {
+  "total_contributions": 1395,
+  "commits": 1044,
+  "pull_requests": 71,
+  "issues": 34,
+  "reviews": 58,
+  "private_contributions": 118,
+  "repos_created": 4,
+  "repos_contributed": 6,
+  "prs_merged": 63,
+  "external_prs_merged": 7,
+  "issues_closed": 20,
+  "active_days": 248,
+  "days_in_range": 321,
+  "active_months": 11,
+  "longest_streak": 23,
+  "longest_streak_start": "2026-06-18",
+  "longest_streak_end": "2026-07-10",
+  "current_streak": 7,
+  "busiest_day": "2026-04-12",
+  "busiest_day_count": 47,
+  "busiest_month": 4,
+  "perfect_months": 0,
+  "weekend_ratio": 31.9,
+  "sampled_commits": 478,
+  "night_ratio": 25.1,
+  "morning_ratio": 0.0,
+  "peak_hour": 23,
+  "language_count": 5,
+  "top_language": "TypeScript",
+  "stars_owned": 639,
+  "top_repo_commits": 486,
+  "releases": 6,
+  "followers": 230
+ },
+ "calendar": [
+  {
+   "date": "2026-01-01",
+   "count": 3,
+   "weekday": 4
+  },
+  {
+   "date": "2026-01-02",
+   "count": 8,
+   "weekday": 5
+  },
+  {
+   "date": "2026-01-03",
+   "count": 0,
+   "weekday": 6
+  },
+  {
+   "date": "2026-01-04",
+   "count": 4,
+   "weekday": 0
+  },
+  {
+   "date": "2026-01-05",
+   "count": 6,
+   "weekday": 1
+  },
+  {
+   "date": "2026-01-06",
+   "count": 5,
+   "weekday": 2
+  },
+  {
+   "date": "2026-01-07",
+   "count": 6,
+   "weekday": 3
+  },
+  {
+   "date": "2026-01-08",
+   "count": 1,
+   "weekday": 4
+  },
+  {
+   "date": "2026-01-09",
+   "count": 0,
+   "weekday": 5
+  },
+  {
+   "date": "2026-01-10",
+   "count": 2,
+   "weekday": 6
+  },
+  {
+   "date": "2026-01-11",
+   "count": 5,
+   "weekday": 0
+  },
+  {
+   "date": "2026-01-12",
+   "count": 1,
+   "weekday": 1
+  },
+  {
+   "date": "2026-01-13",
+   "count": 17,
+   "weekday": 2
+  },
+  {
+   "date": "2026-01-14",
+   "count": 7,
+   "weekday": 3
+  },
+  {
+   "date": "2026-01-15",
+   "count": 3,
+   "weekday": 4
+  },
+  {
+   "date": "2026-01-16",
+   "count": 0,
+   "weekday": 5
+  },
+  {
+   "date": "2026-01-17",
+   "count": 3,
+   "weekday": 6
+  },
+  {
+   "date": "2026-01-18",
+   "count": 2,
+   "weekday": 0
+  },
+  {
+   "date": "2026-01-19",
+   "count": 5,
+   "weekday": 1
+  },
+  {
+   "date": "2026-01-20",
+   "count": 0,
+   "weekday": 2
+  },
+  {
+   "date": "2026-01-21",
+   "count": 2,
+   "weekday": 3
+  },
+  {
+   "date": "2026-01-22",
+   "count": 2,
+   "weekday": 4
+  },
+  {
+   "date": "2026-01-23",
+   "count": 3,
+   "weekday": 5
+  },
+  {
+   "date": "2026-01-24",
+   "count": 0,
+   "weekday": 6
+  },
+  {
+   "date": "2026-01-25",
+   "count": 6,
+   "weekday": 0
+  },
+  {
+   "date": "2026-01-26",
+   "count": 3,
+   "weekday": 1
+  },
+  {
+   "date": "2026-01-27",
+   "count": 1,
+   "weekday": 2
+  },
+  {
+   "date": "2026-01-28",
+   "count": 11,
+   "weekday": 3
+  },
+  {
+   "date": "2026-01-29",
+   "count": 3,
+   "weekday": 4
+  },
+  {
+   "date": "2026-01-30",
+   "count": 0,
+   "weekday": 5
+  },
+  {
+   "date": "2026-01-31",
+   "count": 0,
+   "weekday": 6
+  },
+  {
+   "date": "2026-02-01",
+   "count": 0,
+   "weekday": 0
+  },
+  {
+   "date": "2026-02-02",
+   "count": 9,
+   "weekday": 1
+  },
+  {
+   "date": "2026-02-03",
+   "count": 4,
+   "weekday": 2
+  },
+  {
+   "date": "2026-02-04",
+   "count": 2,
+   "weekday": 3
+  },
+  {
+   "date": "2026-02-05",
+   "count": 9,
+   "weekday": 4
+  },
+  {
+   "date": "2026-02-06",
+   "count": 2,
+   "weekday": 5
+  },
+  {
+   "date": "2026-02-07",
+   "count": 11,
+   "weekday": 6
+  },
+  {
+   "date": "2026-02-08",
+   "count": 3,
+   "weekday": 0
+  },
+  {
+   "date": "2026-02-09",
+   "count": 4,
+   "weekday": 1
+  },
+  {
+   "date": "2026-02-10",
+   "count": 7,
+   "weekday": 2
+  },
+  {
+   "date": "2026-02-11",
+   "count": 2,
+   "weekday": 3
+  },
+  {
+   "date": "2026-02-12",
+   "count": 2,
+   "weekday": 4
+  },
+  {
+   "date": "2026-02-13",
+   "count": 1,
+   "weekday": 5
+  },
+  {
+   "date": "2026-02-14",
+   "count": 0,
+   "weekday": 6
+  },
+  {
+   "date": "2026-02-15",
+   "count": 4,
+   "weekday": 0
+  },
+  {
+   "date": "2026-02-16",
+   "count": 3,
+   "weekday": 1
+  },
+  {
+   "date": "2026-02-17",
+   "count": 11,
+   "weekday": 2
+  },
+  {
+   "date": "2026-02-18",
+   "count": 2,
+   "weekday": 3
+  },
+  {
+   "date": "2026-02-19",
+   "count": 7,
+   "weekday": 4
+  },
+  {
+   "date": "2026-02-20",
+   "count": 3,
+   "weekday": 5
+  },
+  {
+   "date": "2026-02-21",
+   "count": 8,
+   "weekday": 6
+  },
+  {
+   "date": "2026-02-22",
+   "count": 11,
+   "weekday": 0
+  },
+  {
+   "date": "2026-02-23",
+   "count": 0,
+   "weekday": 1
+  },
+  {
+   "date": "2026-02-24",
+   "count": 6,
+   "weekday": 2
+  },
+  {
+   "date": "2026-02-25",
+   "count": 2,
+   "weekday": 3
+  },
+  {
+   "date": "2026-02-26",
+   "count": 15,
+   "weekday": 4
+  },
+  {
+   "date": "2026-02-27",
+   "count": 2,
+   "weekday": 5
+  },
+  {
+   "date": "2026-02-28",
+   "count": 0,
+   "weekday": 6
+  },
+  {
+   "date": "2026-03-01",
+   "count": 4,
+   "weekday": 0
+  },
+  {
+   "date": "2026-03-02",
+   "count": 0,
+   "weekday": 1
+  },
+  {
+   "date": "2026-03-03",
+   "count": 3,
+   "weekday": 2
+  },
+  {
+   "date": "2026-03-04",
+   "count": 0,
+   "weekday": 3
+  },
+  {
+   "date": "2026-03-05",
+   "count": 0,
+   "weekday": 4
+  },
+  {
+   "date": "2026-03-06",
+   "count": 16,
+   "weekday": 5
+  },
+  {
+   "date": "2026-03-07",
+   "count": 0,
+   "weekday": 6
+  },
+  {
+   "date": "2026-03-08",
+   "count": 1,
+   "weekday": 0
+  },
+  {
+   "date": "2026-03-09",
+   "count": 8,
+   "weekday": 1
+  },
+  {
+   "date": "2026-03-10",
+   "count": 6,
+   "weekday": 2
+  },
+  {
+   "date": "2026-03-11",
+   "count": 1,
+   "weekday": 3
+  },
+  {
+   "date": "2026-03-12",
+   "count": 5,
+   "weekday": 4
+  },
+  {
+   "date": "2026-03-13",
+   "count": 18,
+   "weekday": 5
+  },
+  {
+   "date": "2026-03-14",
+   "count": 8,
+   "weekday": 6
+  },
+  {
+   "date": "2026-03-15",
+   "count": 0,
+   "weekday": 0
+  },
+  {
+   "date": "2026-03-16",
+   "count": 5,
+   "weekday": 1
+  },
+  {
+   "date": "2026-03-17",
+   "count": 13,
+   "weekday": 2
+  },
+  {
+   "date": "2026-03-18",
+   "count": 0,
+   "weekday": 3
+  },
+  {
+   "date": "2026-03-19",
+   "count": 17,
+   "weekday": 4
+  },
+  {
+   "date": "2026-03-20",
+   "count": 15,
+   "weekday": 5
+  },
+  {
+   "date": "2026-03-21",
+   "count": 3,
+   "weekday": 6
+  },
+  {
+   "date": "2026-03-22",
+   "count": 4,
+   "weekday": 0
+  },
+  {
+   "date": "2026-03-23",
+   "count": 0,
+   "weekday": 1
+  },
+  {
+   "date": "2026-03-24",
+   "count": 13,
+   "weekday": 2
+  },
+  {
+   "date": "2026-03-25",
+   "count": 0,
+   "weekday": 3
+  },
+  {
+   "date": "2026-03-26",
+   "count": 2,
+   "weekday": 4
+  },
+  {
+   "date": "2026-03-27",
+   "count": 0,
+   "weekday": 5
+  },
+  {
+   "date": "2026-03-28",
+   "count": 2,
+   "weekday": 6
+  },
+  {
+   "date": "2026-03-29",
+   "count": 2,
+   "weekday": 0
+  },
+  {
+   "date": "2026-03-30",
+   "count": 18,
+   "weekday": 1
+  },
+  {
+   "date": "2026-03-31",
+   "count": 10,
+   "weekday": 2
+  },
+  {
+   "date": "2026-04-01",
+   "count": 4,
+   "weekday": 3
+  },
+  {
+   "date": "2026-04-02",
+   "count": 2,
+   "weekday": 4
+  },
+  {
+   "date": "2026-04-03",
+   "count": 7,
+   "weekday": 5
+  },
+  {
+   "date": "2026-04-04",
+   "count": 0,
+   "weekday": 6
+  },
+  {
+   "date": "2026-04-05",
+   "count": 1,
+   "weekday": 0
+  },
+  {
+   "date": "2026-04-06",
+   "count": 0,
+   "weekday": 1
+  },
+  {
+   "date": "2026-04-07",
+   "count": 11,
+   "weekday": 2
+  },
+  {
+   "date": "2026-04-08",
+   "count": 8,
+   "weekday": 3
+  },
+  {
+   "date": "2026-04-09",
+   "count": 7,
+   "weekday": 4
+  },
+  {
+   "date": "2026-04-10",
+   "count": 0,
+   "weekday": 5
+  },
+  {
+   "date": "2026-04-11",
+   "count": 9,
+   "weekday": 6
+  },
+  {
+   "date": "2026-04-12",
+   "count": 47,
+   "weekday": 0
+  },
+  {
+   "date": "2026-04-13",
+   "count": 11,
+   "weekday": 1
+  },
+  {
+   "date": "2026-04-14",
+   "count": 3,
+   "weekday": 2
+  },
+  {
+   "date": "2026-04-15",
+   "count": 0,
+   "weekday": 3
+  },
+  {
+   "date": "2026-04-16",
+   "count": 2,
+   "weekday": 4
+  },
+  {
+   "date": "2026-04-17",
+   "count": 4,
+   "weekday": 5
+  },
+  {
+   "date": "2026-04-18",
+   "count": 3,
+   "weekday": 6
+  },
+  {
+   "date": "2026-04-19",
+   "count": 2,
+   "weekday": 0
+  },
+  {
+   "date": "2026-04-20",
+   "count": 0,
+   "weekday": 1
+  },
+  {
+   "date": "2026-04-21",
+   "count": 10,
+   "weekday": 2
+  },
+  {
+   "date": "2026-04-22",
+   "count": 11,
+   "weekday": 3
+  },
+  {
+   "date": "2026-04-23",
+   "count": 19,
+   "weekday": 4
+  },
+  {
+   "date": "2026-04-24",
+   "count": 6,
+   "weekday": 5
+  },
+  {
+   "date": "2026-04-25",
+   "count": 9,
+   "weekday": 6
+  },
+  {
+   "date": "2026-04-26",
+   "count": 6,
+   "weekday": 0
+  },
+  {
+   "date": "2026-04-27",
+   "count": 2,
+   "weekday": 1
+  },
+  {
+   "date": "2026-04-28",
+   "count": 5,
+   "weekday": 2
+  },
+  {
+   "date": "2026-04-29",
+   "count": 4,
+   "weekday": 3
+  },
+  {
+   "date": "2026-04-30",
+   "count": 7,
+   "weekday": 4
+  },
+  {
+   "date": "2026-05-01",
+   "count": 3,
+   "weekday": 5
+  },
+  {
+   "date": "2026-05-02",
+   "count": 1,
+   "weekday": 6
+  },
+  {
+   "date": "2026-05-03",
+   "count": 3,
+   "weekday": 0
+  },
+  {
+   "date": "2026-05-04",
+   "count": 1,
+   "weekday": 1
+  },
+  {
+   "date": "2026-05-05",
+   "count": 0,
+   "weekday": 2
+  },
+  {
+   "date": "2026-05-06",
+   "count": 6,
+   "weekday": 3
+  },
+  {
+   "date": "2026-05-07",
+   "count": 0,
+   "weekday": 4
+  },
+  {
+   "date": "2026-05-08",
+   "count": 3,
+   "weekday": 5
+  },
+  {
+   "date": "2026-05-09",
+   "count": 8,
+   "weekday": 6
+  },
+  {
+   "date": "2026-05-10",
+   "count": 1,
+   "weekday": 0
+  },
+  {
+   "date": "2026-05-11",
+   "count": 0,
+   "weekday": 1
+  },
+  {
+   "date": "2026-05-12",
+   "count": 10,
+   "weekday": 2
+  },
+  {
+   "date": "2026-05-13",
+   "count": 2,
+   "weekday": 3
+  },
+  {
+   "date": "2026-05-14",
+   "count": 0,
+   "weekday": 4
+  },
+  {
+   "date": "2026-05-15",
+   "count": 0,
+   "weekday": 5
+  },
+  {
+   "date": "2026-05-16",
+   "count": 0,
+   "weekday": 6
+  },
+  {
+   "date": "2026-05-17",
+   "count": 0,
+   "weekday": 0
+  },
+  {
+   "date": "2026-05-18",
+   "count": 3,
+   "weekday": 1
+  },
+  {
+   "date": "2026-05-19",
+   "count": 1,
+   "weekday": 2
+  },
+  {
+   "date": "2026-05-20",
+   "count": 4,
+   "weekday": 3
+  },
+  {
+   "date": "2026-05-21",
+   "count": 4,
+   "weekday": 4
+  },
+  {
+   "date": "2026-05-22",
+   "count": 1,
+   "weekday": 5
+  },
+  {
+   "date": "2026-05-23",
+   "count": 2,
+   "weekday": 6
+  },
+  {
+   "date": "2026-05-24",
+   "count": 9,
+   "weekday": 0
+  },
+  {
+   "date": "2026-05-25",
+   "count": 8,
+   "weekday": 1
+  },
+  {
+   "date": "2026-05-26",
+   "count": 11,
+   "weekday": 2
+  },
+  {
+   "date": "2026-05-27",
+   "count": 13,
+   "weekday": 3
+  },
+  {
+   "date": "2026-05-28",
+   "count": 5,
+   "weekday": 4
+  },
+  {
+   "date": "2026-05-29",
+   "count": 0,
+   "weekday": 5
+  },
+  {
+   "date": "2026-05-30",
+   "count": 1,
+   "weekday": 6
+  },
+  {
+   "date": "2026-05-31",
+   "count": 7,
+   "weekday": 0
+  },
+  {
+   "date": "2026-06-01",
+   "count": 6,
+   "weekday": 1
+  },
+  {
+   "date": "2026-06-02",
+   "count": 10,
+   "weekday": 2
+  },
+  {
+   "date": "2026-06-03",
+   "count": 1,
+   "weekday": 3
+  },
+  {
+   "date": "2026-06-04",
+   "count": 5,
+   "weekday": 4
+  },
+  {
+   "date": "2026-06-05",
+   "count": 4,
+   "weekday": 5
+  },
+  {
+   "date": "2026-06-06",
+   "count": 0,
+   "weekday": 6
+  },
+  {
+   "date": "2026-06-07",
+   "count": 0,
+   "weekday": 0
+  },
+  {
+   "date": "2026-06-08",
+   "count": 4,
+   "weekday": 1
+  },
+  {
+   "date": "2026-06-09",
+   "count": 0,
+   "weekday": 2
+  },
+  {
+   "date": "2026-06-10",
+   "count": 1,
+   "weekday": 3
+  },
+  {
+   "date": "2026-06-11",
+   "count": 1,
+   "weekday": 4
+  },
+  {
+   "date": "2026-06-12",
+   "count": 1,
+   "weekday": 5
+  },
+  {
+   "date": "2026-06-13",
+   "count": 0,
+   "weekday": 6
+  },
+  {
+   "date": "2026-06-14",
+   "count": 4,
+   "weekday": 0
+  },
+  {
+   "date": "2026-06-15",
+   "count": 5,
+   "weekday": 1
+  },
+  {
+   "date": "2026-06-16",
+   "count": 1,
+   "weekday": 2
+  },
+  {
+   "date": "2026-06-17",
+   "count": 0,
+   "weekday": 3
+  },
+  {
+   "date": "2026-06-18",
+   "count": 2,
+   "weekday": 4
+  },
+  {
+   "date": "2026-06-19",
+   "count": 1,
+   "weekday": 5
+  },
+  {
+   "date": "2026-06-20",
+   "count": 3,
+   "weekday": 6
+  },
+  {
+   "date": "2026-06-21",
+   "count": 4,
+   "weekday": 0
+  },
+  {
+   "date": "2026-06-22",
+   "count": 2,
+   "weekday": 1
+  },
+  {
+   "date": "2026-06-23",
+   "count": 6,
+   "weekday": 2
+  },
+  {
+   "date": "2026-06-24",
+   "count": 7,
+   "weekday": 3
+  },
+  {
+   "date": "2026-06-25",
+   "count": 7,
+   "weekday": 4
+  },
+  {
+   "date": "2026-06-26",
+   "count": 2,
+   "weekday": 5
+  },
+  {
+   "date": "2026-06-27",
+   "count": 2,
+   "weekday": 6
+  },
+  {
+   "date": "2026-06-28",
+   "count": 5,
+   "weekday": 0
+  },
+  {
+   "date": "2026-06-29",
+   "count": 9,
+   "weekday": 1
+  },
+  {
+   "date": "2026-06-30",
+   "count": 2,
+   "weekday": 2
+  },
+  {
+   "date": "2026-07-01",
+   "count": 5,
+   "weekday": 3
+  },
+  {
+   "date": "2026-07-02",
+   "count": 11,
+   "weekday": 4
+  },
+  {
+   "date": "2026-07-03",
+   "count": 2,
+   "weekday": 5
+  },
+  {
+   "date": "2026-07-04",
+   "count": 13,
+   "weekday": 6
+  },
+  {
+   "date": "2026-07-05",
+   "count": 7,
+   "weekday": 0
+  },
+  {
+   "date": "2026-07-06",
+   "count": 1,
+   "weekday": 1
+  },
+  {
+   "date": "2026-07-07",
+   "count": 4,
+   "weekday": 2
+  },
+  {
+   "date": "2026-07-08",
+   "count": 2,
+   "weekday": 3
+  },
+  {
+   "date": "2026-07-09",
+   "count": 3,
+   "weekday": 4
+  },
+  {
+   "date": "2026-07-10",
+   "count": 4,
+   "weekday": 5
+  },
+  {
+   "date": "2026-07-11",
+   "count": 0,
+   "weekday": 6
+  },
+  {
+   "date": "2026-07-12",
+   "count": 13,
+   "weekday": 0
+  },
+  {
+   "date": "2026-07-13",
+   "count": 8,
+   "weekday": 1
+  },
+  {
+   "date": "2026-07-14",
+   "count": 7,
+   "weekday": 2
+  },
+  {
+   "date": "2026-07-15",
+   "count": 0,
+   "weekday": 3
+  },
+  {
+   "date": "2026-07-16",
+   "count": 5,
+   "weekday": 4
+  },
+  {
+   "date": "2026-07-17",
+   "count": 6,
+   "weekday": 5
+  },
+  {
+   "date": "2026-07-18",
+   "count": 0,
+   "weekday": 6
+  },
+  {
+   "date": "2026-07-19",
+   "count": 8,
+   "weekday": 0
+  },
+  {
+   "date": "2026-07-20",
+   "count": 6,
+   "weekday": 1
+  },
+  {
+   "date": "2026-07-21",
+   "count": 2,
+   "weekday": 2
+  },
+  {
+   "date": "2026-07-22",
+   "count": 8,
+   "weekday": 3
+  },
+  {
+   "date": "2026-07-23",
+   "count": 8,
+   "weekday": 4
+  },
+  {
+   "date": "2026-07-24",
+   "count": 4,
+   "weekday": 5
+  },
+  {
+   "date": "2026-07-25",
+   "count": 3,
+   "weekday": 6
+  },
+  {
+   "date": "2026-07-26",
+   "count": 3,
+   "weekday": 0
+  },
+  {
+   "date": "2026-07-27",
+   "count": 4,
+   "weekday": 1
+  },
+  {
+   "date": "2026-07-28",
+   "count": 8,
+   "weekday": 2
+  },
+  {
+   "date": "2026-07-29",
+   "count": 7,
+   "weekday": 3
+  },
+  {
+   "date": "2026-07-30",
+   "count": 6,
+   "weekday": 4
+  },
+  {
+   "date": "2026-07-31",
+   "count": 6,
+   "weekday": 5
+  },
+  {
+   "date": "2026-08-01",
+   "count": 0,
+   "weekday": 6
+  },
+  {
+   "date": "2026-08-02",
+   "count": 6,
+   "weekday": 0
+  },
+  {
+   "date": "2026-08-03",
+   "count": 1,
+   "weekday": 1
+  },
+  {
+   "date": "2026-08-04",
+   "count": 1,
+   "weekday": 2
+  },
+  {
+   "date": "2026-08-05",
+   "count": 0,
+   "weekday": 3
+  },
+  {
+   "date": "2026-08-06",
+   "count": 0,
+   "weekday": 4
+  },
+  {
+   "date": "2026-08-07",
+   "count": 2,
+   "weekday": 5
+  },
+  {
+   "date": "2026-08-08",
+   "count": 7,
+   "weekday": 6
+  },
+  {
+   "date": "2026-08-09",
+   "count": 17,
+   "weekday": 0
+  },
+  {
+   "date": "2026-08-10",
+   "count": 0,
+   "weekday": 1
+  },
+  {
+   "date": "2026-08-11",
+   "count": 0,
+   "weekday": 2
+  },
+  {
+   "date": "2026-08-12",
+   "count": 0,
+   "weekday": 3
+  },
+  {
+   "date": "2026-08-13",
+   "count": 3,
+   "weekday": 4
+  },
+  {
+   "date": "2026-08-14",
+   "count": 4,
+   "weekday": 5
+  },
+  {
+   "date": "2026-08-15",
+   "count": 0,
+   "weekday": 6
+  },
+  {
+   "date": "2026-08-16",
+   "count": 2,
+   "weekday": 0
+  },
+  {
+   "date": "2026-08-17",
+   "count": 0,
+   "weekday": 1
+  },
+  {
+   "date": "2026-08-18",
+   "count": 0,
+   "weekday": 2
+  },
+  {
+   "date": "2026-08-19",
+   "count": 2,
+   "weekday": 3
+  },
+  {
+   "date": "2026-08-20",
+   "count": 5,
+   "weekday": 4
+  },
+  {
+   "date": "2026-08-21",
+   "count": 4,
+   "weekday": 5
+  },
+  {
+   "date": "2026-08-22",
+   "count": 1,
+   "weekday": 6
+  },
+  {
+   "date": "2026-08-23",
+   "count": 0,
+   "weekday": 0
+  },
+  {
+   "date": "2026-08-24",
+   "count": 7,
+   "weekday": 1
+  },
+  {
+   "date": "2026-08-25",
+   "count": 2,
+   "weekday": 2
+  },
+  {
+   "date": "2026-08-26",
+   "count": 0,
+   "weekday": 3
+  },
+  {
+   "date": "2026-08-27",
+   "count": 0,
+   "weekday": 4
+  },
+  {
+   "date": "2026-08-28",
+   "count": 1,
+   "weekday": 5
+  },
+  {
+   "date": "2026-08-29",
+   "count": 1,
+   "weekday": 6
+  },
+  {
+   "date": "2026-08-30",
+   "count": 3,
+   "weekday": 0
+  },
+  {
+   "date": "2026-08-31",
+   "count": 10,
+   "weekday": 1
+  },
+  {
+   "date": "2026-09-01",
+   "count": 12,
+   "weekday": 2
+  },
+  {
+   "date": "2026-09-02",
+   "count": 1,
+   "weekday": 3
+  },
+  {
+   "date": "2026-09-03",
+   "count": 1,
+   "weekday": 4
+  },
+  {
+   "date": "2026-09-04",
+   "count": 2,
+   "weekday": 5
+  },
+  {
+   "date": "2026-09-05",
+   "count": 3,
+   "weekday": 6
+  },
+  {
+   "date": "2026-09-06",
+   "count": 3,
+   "weekday": 0
+  },
+  {
+   "date": "2026-09-07",
+   "count": 8,
+   "weekday": 1
+  },
+  {
+   "date": "2026-09-08",
+   "count": 0,
+   "weekday": 2
+  },
+  {
+   "date": "2026-09-09",
+   "count": 11,
+   "weekday": 3
+  },
+  {
+   "date": "2026-09-10",
+   "count": 11,
+   "weekday": 4
+  },
+  {
+   "date": "2026-09-11",
+   "count": 0,
+   "weekday": 5
+  },
+  {
+   "date": "2026-09-12",
+   "count": 1,
+   "weekday": 6
+  },
+  {
+   "date": "2026-09-13",
+   "count": 5,
+   "weekday": 0
+  },
+  {
+   "date": "2026-09-14",
+   "count": 2,
+   "weekday": 1
+  },
+  {
+   "date": "2026-09-15",
+   "count": 3,
+   "weekday": 2
+  },
+  {
+   "date": "2026-09-16",
+   "count": 0,
+   "weekday": 3
+  },
+  {
+   "date": "2026-09-17",
+   "count": 7,
+   "weekday": 4
+  },
+  {
+   "date": "2026-09-18",
+   "count": 7,
+   "weekday": 5
+  },
+  {
+   "date": "2026-09-19",
+   "count": 15,
+   "weekday": 6
+  },
+  {
+   "date": "2026-09-20",
+   "count": 19,
+   "weekday": 0
+  },
+  {
+   "date": "2026-09-21",
+   "count": 4,
+   "weekday": 1
+  },
+  {
+   "date": "2026-09-22",
+   "count": 2,
+   "weekday": 2
+  },
+  {
+   "date": "2026-09-23",
+   "count": 16,
+   "weekday": 3
+  },
+  {
+   "date": "2026-09-24",
+   "count": 0,
+   "weekday": 4
+  },
+  {
+   "date": "2026-09-25",
+   "count": 1,
+   "weekday": 5
+  },
+  {
+   "date": "2026-09-26",
+   "count": 6,
+   "weekday": 6
+  },
+  {
+   "date": "2026-09-27",
+   "count": 9,
+   "weekday": 0
+  },
+  {
+   "date": "2026-09-28",
+   "count": 13,
+   "weekday": 1
+  },
+  {
+   "date": "2026-09-29",
+   "count": 0,
+   "weekday": 2
+  },
+  {
+   "date": "2026-09-30",
+   "count": 0,
+   "weekday": 3
+  },
+  {
+   "date": "2026-10-01",
+   "count": 1,
+   "weekday": 4
+  },
+  {
+   "date": "2026-10-02",
+   "count": 0,
+   "weekday": 5
+  },
+  {
+   "date": "2026-10-03",
+   "count": 3,
+   "weekday": 6
+  },
+  {
+   "date": "2026-10-04",
+   "count": 6,
+   "weekday": 0
+  },
+  {
+   "date": "2026-10-05",
+   "count": 0,
+   "weekday": 1
+  },
+  {
+   "date": "2026-10-06",
+   "count": 4,
+   "weekday": 2
+  },
+  {
+   "date": "2026-10-07",
+   "count": 0,
+   "weekday": 3
+  },
+  {
+   "date": "2026-10-08",
+   "count": 0,
+   "weekday": 4
+  },
+  {
+   "date": "2026-10-09",
+   "count": 1,
+   "weekday": 5
+  },
+  {
+   "date": "2026-10-10",
+   "count": 5,
+   "weekday": 6
+  },
+  {
+   "date": "2026-10-11",
+   "count": 0,
+   "weekday": 0
+  },
+  {
+   "date": "2026-10-12",
+   "count": 5,
+   "weekday": 1
+  },
+  {
+   "date": "2026-10-13",
+   "count": 7,
+   "weekday": 2
+  },
+  {
+   "date": "2026-10-14",
+   "count": 0,
+   "weekday": 3
+  },
+  {
+   "date": "2026-10-15",
+   "count": 3,
+   "weekday": 4
+  },
+  {
+   "date": "2026-10-16",
+   "count": 8,
+   "weekday": 5
+  },
+  {
+   "date": "2026-10-17",
+   "count": 28,
+   "weekday": 6
+  },
+  {
+   "date": "2026-10-18",
+   "count": 6,
+   "weekday": 0
+  },
+  {
+   "date": "2026-10-19",
+   "count": 2,
+   "weekday": 1
+  },
+  {
+   "date": "2026-10-20",
+   "count": 1,
+   "weekday": 2
+  },
+  {
+   "date": "2026-10-21",
+   "count": 11,
+   "weekday": 3
+  },
+  {
+   "date": "2026-10-22",
+   "count": 0,
+   "weekday": 4
+  },
+  {
+   "date": "2026-10-23",
+   "count": 0,
+   "weekday": 5
+  },
+  {
+   "date": "2026-10-24",
+   "count": 1,
+   "weekday": 6
+  },
+  {
+   "date": "2026-10-25",
+   "count": 1,
+   "weekday": 0
+  },
+  {
+   "date": "2026-10-26",
+   "count": 11,
+   "weekday": 1
+  },
+  {
+   "date": "2026-10-27",
+   "count": 1,
+   "weekday": 2
+  },
+  {
+   "date": "2026-10-28",
+   "count": 0,
+   "weekday": 3
+  },
+  {
+   "date": "2026-10-29",
+   "count": 0,
+   "weekday": 4
+  },
+  {
+   "date": "2026-10-30",
+   "count": 6,
+   "weekday": 5
+  },
+  {
+   "date": "2026-10-31",
+   "count": 9,
+   "weekday": 6
+  },
+  {
+   "date": "2026-11-01",
+   "count": 2,
+   "weekday": 0
+  },
+  {
+   "date": "2026-11-02",
+   "count": 0,
+   "weekday": 1
+  },
+  {
+   "date": "2026-11-03",
+   "count": 3,
+   "weekday": 2
+  },
+  {
+   "date": "2026-11-04",
+   "count": 1,
+   "weekday": 3
+  },
+  {
+   "date": "2026-11-05",
+   "count": 0,
+   "weekday": 4
+  },
+  {
+   "date": "2026-11-06",
+   "count": 8,
+   "weekday": 5
+  },
+  {
+   "date": "2026-11-07",
+   "count": 0,
+   "weekday": 6
+  },
+  {
+   "date": "2026-11-08",
+   "count": 13,
+   "weekday": 0
+  },
+  {
+   "date": "2026-11-09",
+   "count": 3,
+   "weekday": 1
+  },
+  {
+   "date": "2026-11-10",
+   "count": 0,
+   "weekday": 2
+  },
+  {
+   "date": "2026-11-11",
+   "count": 1,
+   "weekday": 3
+  },
+  {
+   "date": "2026-11-12",
+   "count": 1,
+   "weekday": 4
+  },
+  {
+   "date": "2026-11-13",
+   "count": 3,
+   "weekday": 5
+  },
+  {
+   "date": "2026-11-14",
+   "count": 7,
+   "weekday": 6
+  },
+  {
+   "date": "2026-11-15",
+   "count": 9,
+   "weekday": 0
+  },
+  {
+   "date": "2026-11-16",
+   "count": 3,
+   "weekday": 1
+  },
+  {
+   "date": "2026-11-17",
+   "count": 1,
+   "weekday": 2
+  }
+ ],
+ "monthly": [
+  109,
+  130,
+  174,
+  200,
+  107,
+  95,
+  164,
+  79,
+  162,
+  120,
+  55,
+  0
+ ],
+ "weekday": [
+  267,
+  201,
+  224,
+  161,
+  195,
+  169,
+  178
+ ],
+ "hours": [
+  43,
+  27,
+  50,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  43,
+  51,
+  0,
+  0,
+  43,
+  37,
+  33,
+  0,
+  0,
+  0,
+  0,
+  31,
+  44,
+  76
+ ],
+ "languages": [
+  {
+   "name": "TypeScript",
+   "color": "#3178c6",
+   "share": 0.4004
+  },
+  {
+   "name": "Rust",
+   "color": "#dea584",
+   "share": 0.2232
+  },
+  {
+   "name": "Python",
+   "color": "#3572A5",
+   "share": 0.1505
+  },
+  {
+   "name": "Go",
+   "color": "#00ADD8",
+   "share": 0.0785
+  },
+  {
+   "name": "Vue",
+   "color": "#41b883",
+   "share": 0.0471
+  },
+  {
+   "name": "Kotlin",
+   "color": "#A97BFF",
+   "share": 0.0278
+  },
+  {
+   "name": "Lua",
+   "color": "#000080",
+   "share": 0.0253
+  },
+  {
+   "name": "HTML",
+   "color": "#e34c26",
+   "share": 0.0226
+  },
+  {
+   "name": "Shell",
+   "color": "#89e051",
+   "share": 0.0151
+  },
+  {
+   "name": "CSS",
+   "color": "#563d7c",
+   "share": 0.0094
+  }
+ ],
+ "projects": [
+  {
+   "id": "demo-dev/agent-forge",
+   "name": "agent-forge",
+   "full_name": "demo-dev/agent-forge",
+   "description": "A multi-agent orchestration framework with tool sandboxing",
+   "url": "https://github.com/demo-dev/agent-forge",
+   "homepage": null,
+   "owner_is_user": true,
+   "is_new": true,
+   "is_private": false,
+   "is_fork": false,
+   "created_at": "2026-02-03T00:00:00Z",
+   "pushed_at": "2026-11-10T10:00:00Z",
+   "stars": 412,
+   "forks": 51,
+   "commits": 486,
+   "pull_requests": 0,
+   "primary_language": "TypeScript",
+   "primary_color": "#3178c6",
+   "languages": [
+    {
+     "name": "TypeScript",
+     "color": "#3178c6",
+     "share": 0.86
+    },
+    {
+     "name": "Python",
+     "color": "#3572A5",
+     "share": 0.129
+    },
+    {
+     "name": "Shell",
+     "color": "#89e051",
+     "share": 0.011
+    }
+   ],
+   "topics": [
+    "ai",
+    "agents",
+    "llm"
+   ],
+   "releases": [
+    {
+     "tag": "v1.0.0",
+     "name": "v1.0.0",
+     "date": "2026-03-15T00:00:00Z"
+    },
+    {
+     "tag": "v1.1.0",
+     "name": "v1.1.0",
+     "date": "2026-05-15T00:00:00Z"
+    },
+    {
+     "tag": "v1.2.0",
+     "name": "v1.2.0",
+     "date": "2026-07-15T00:00:00Z"
+    },
+    {
+     "tag": "v1.3.0",
+     "name": "v1.3.0",
+     "date": "2026-09-15T00:00:00Z"
+    }
+   ]
+  },
+  {
+   "id": "demo-dev/rust-kv",
+   "name": "rust-kv",
+   "full_name": "demo-dev/rust-kv",
+   "description": "Embedded LSM-tree key-value store written in Rust",
+   "url": "https://github.com/demo-dev/rust-kv",
+   "homepage": null,
+   "owner_is_user": true,
+   "is_new": true,
+   "is_private": false,
+   "is_fork": false,
+   "created_at": "2026-05-20T00:00:00Z",
+   "pushed_at": "2026-11-10T10:00:00Z",
+   "stars": 156,
+   "forks": 19,
+   "commits": 233,
+   "pull_requests": 0,
+   "primary_language": "Rust",
+   "primary_color": "#dea584",
+   "languages": [
+    {
+     "name": "Rust",
+     "color": "#dea584",
+     "share": 1.0
+    }
+   ],
+   "topics": [
+    "database",
+    "rust",
+    "storage"
+   ],
+   "releases": [
+    {
+     "tag": "v1.0.0",
+     "name": "v1.0.0",
+     "date": "2026-03-15T00:00:00Z"
+    },
+    {
+     "tag": "v1.1.0",
+     "name": "v1.1.0",
+     "date": "2026-05-15T00:00:00Z"
+    }
+   ]
+  },
+  {
+   "id": "demo-dev/homelab-dash",
+   "name": "homelab-dash",
+   "full_name": "demo-dev/homelab-dash",
+   "description": "Self-hosted dashboard for home servers",
+   "url": "https://github.com/demo-dev/homelab-dash",
+   "homepage": null,
+   "owner_is_user": true,
+   "is_new": true,
+   "is_private": false,
+   "is_fork": false,
+   "created_at": "2026-08-11T00:00:00Z",
+   "pushed_at": "2026-11-10T10:00:00Z",
+   "stars": 38,
+   "forks": 4,
+   "commits": 141,
+   "pull_requests": 0,
+   "primary_language": "Go",
+   "primary_color": "#00ADD8",
+   "languages": [
+    {
+     "name": "Go",
+     "color": "#00ADD8",
+     "share": 0.581
+    },
+    {
+     "name": "Vue",
+     "color": "#41b883",
+     "share": 0.349
+    },
+    {
+     "name": "CSS",
+     "color": "#563d7c",
+     "share": 0.07
+    }
+   ],
+   "topics": [
+    "homelab",
+    "dashboard"
+   ],
+   "releases": []
+  },
+  {
+   "id": "demo-dev/invoice-saas",
+   "name": "invoice-saas",
+   "full_name": "demo-dev/invoice-saas",
+   "description": "Invoicing SaaS for freelancers",
+   "url": "https://github.com/demo-dev/invoice-saas",
+   "homepage": null,
+   "owner_is_user": true,
+   "is_new": false,
+   "is_private": true,
+   "is_fork": false,
+   "created_at": "2025-06-01T00:00:00Z",
+   "pushed_at": "2026-11-10T10:00:00Z",
+   "stars": 0,
+   "forks": 0,
+   "commits": 118,
+   "pull_requests": 0,
+   "primary_language": "Python",
+   "primary_color": "#3572A5",
+   "languages": [
+    {
+     "name": "Python",
+     "color": "#3572A5",
+     "share": 0.8
+    },
+    {
+     "name": "HTML",
+     "color": "#e34c26",
+     "share": 0.2
+    }
+   ],
+   "topics": [],
+   "releases": []
+  },
+  {
+   "id": "demo-dev/dotfiles",
+   "name": "dotfiles",
+   "full_name": "demo-dev/dotfiles",
+   "description": "My dev environment",
+   "url": "https://github.com/demo-dev/dotfiles",
+   "homepage": null,
+   "owner_is_user": true,
+   "is_new": false,
+   "is_private": false,
+   "is_fork": false,
+   "created_at": "2021-01-01T00:00:00Z",
+   "pushed_at": "2026-11-10T10:00:00Z",
+   "stars": 12,
+   "forks": 1,
+   "commits": 37,
+   "pull_requests": 0,
+   "primary_language": "Lua",
+   "primary_color": "#000080",
+   "languages": [
+    {
+     "name": "Lua",
+     "color": "#000080",
+     "share": 0.714
+    },
+    {
+     "name": "Shell",
+     "color": "#89e051",
+     "share": 0.286
+    }
+   ],
+   "topics": [
+    "neovim"
+   ],
+   "releases": []
+  },
+  {
+   "id": "demo-dev/kotlin-habit",
+   "name": "kotlin-habit",
+   "full_name": "demo-dev/kotlin-habit",
+   "description": "Minimal habit tracker for Android",
+   "url": "https://github.com/demo-dev/kotlin-habit",
+   "homepage": null,
+   "owner_is_user": true,
+   "is_new": true,
+   "is_private": false,
+   "is_fork": false,
+   "created_at": "2026-10-02T00:00:00Z",
+   "pushed_at": "2026-11-10T10:00:00Z",
+   "stars": 21,
+   "forks": 2,
+   "commits": 29,
+   "pull_requests": 0,
+   "primary_language": "Kotlin",
+   "primary_color": "#A97BFF",
+   "languages": [
+    {
+     "name": "Kotlin",
+     "color": "#A97BFF",
+     "share": 1.0
+    }
+   ],
+   "topics": [
+    "android",
+    "compose"
+   ],
+   "releases": []
+  }
+ ],
+ "external_prs": [
+  {
+   "title": "Fix memory leak in stream parser",
+   "url": "https://github.com/example/parser/pull/1",
+   "mergedAt": "2026-03-02T00:00:00Z",
+   "repository": {
+    "nameWithOwner": "example/parser",
+    "stargazerCount": 5400
+   }
+  }
+ ],
+ "achievements": [
+  {
+   "id": "stargazer",
+   "icon": "⭐",
+   "metric": "stars_owned",
+   "unit": "",
+   "title": {
+    "zh": "星光收集者",
+    "en": "Stargazer"
+   },
+   "desc": {
+    "zh": "活躍專案共獲得 {v} 顆星",
+    "en": "{v} stars across active repos"
+   },
+   "value": 639,
+   "thresholds": [
+    10,
+    50,
+    250,
+    1000
+   ],
+   "unlocked": true,
+   "eligible": true,
+   "tier": "epic",
+   "tier_index": 2,
+   "next_threshold": 1000,
+   "progress_to_next": 0.519
+  },
+  {
+   "id": "daily_builder",
+   "icon": "📅",
+   "metric": "active_days",
+   "unit": "days",
+   "title": {
+    "zh": "日更職人",
+    "en": "Daily Builder"
+   },
+   "desc": {
+    "zh": "一年中有 {v} 天在寫程式",
+    "en": "Active on {v} days"
+   },
+   "value": 248,
+   "thresholds": [
+    50,
+    100,
+    200,
+    300
+   ],
+   "unlocked": true,
+   "eligible": true,
+   "tier": "epic",
+   "tier_index": 2,
+   "next_threshold": 300,
+   "progress_to_next": 0.48
+  },
+  {
+   "id": "forged",
+   "icon": "⚒️",
+   "metric": "total_contributions",
+   "unit": "",
+   "title": {
+    "zh": "千錘百鍊",
+    "en": "Forged in Commits"
+   },
+   "desc": {
+    "zh": "今年累積 {v} 次貢獻",
+    "en": "{v} contributions this year"
+   },
+   "value": 1395,
+   "thresholds": [
+    100,
+    500,
+    1000,
+    3000
+   ],
+   "unlocked": true,
+   "eligible": true,
+   "tier": "epic",
+   "tier_index": 2,
+   "next_threshold": 3000,
+   "progress_to_next": 0.198
+  },
+  {
+   "id": "overdrive",
+   "icon": "⚡",
+   "metric": "busiest_day_count",
+   "unit": "",
+   "title": {
+    "zh": "爆肝日",
+    "en": "Overdrive"
+   },
+   "desc": {
+    "zh": "單日最高 {v} 次貢獻",
+    "en": "{v} contributions in a single day"
+   },
+   "value": 47,
+   "thresholds": [
+    10,
+    20,
+    40,
+    80
+   ],
+   "unlocked": true,
+   "eligible": true,
+   "tier": "epic",
+   "tier_index": 2,
+   "next_threshold": 80,
+   "progress_to_next": 0.175
+  },
+  {
+   "id": "deep_focus",
+   "icon": "🎯",
+   "metric": "top_repo_commits",
+   "unit": "",
+   "title": {
+    "zh": "專注一擊",
+    "en": "Deep Focus"
+   },
+   "desc": {
+    "zh": "在單一專案提交 {v} 次",
+    "en": "{v} commits to a single project"
+   },
+   "value": 486,
+   "thresholds": [
+    50,
+    150,
+    400,
+    1000
+   ],
+   "unlocked": true,
+   "eligible": true,
+   "tier": "epic",
+   "tier_index": 2,
+   "next_threshold": 1000,
+   "progress_to_next": 0.143
+  },
+  {
+   "id": "all_seasons",
+   "icon": "🍂",
+   "metric": "active_months",
+   "unit": "",
+   "title": {
+    "zh": "四季不輟",
+    "en": "All Seasons"
+   },
+   "desc": {
+    "zh": "{v} 個月份都有產出",
+    "en": "Active in {v} months"
+   },
+   "value": 11,
+   "thresholds": [
+    6,
+    9,
+    11,
+    12
+   ],
+   "unlocked": true,
+   "eligible": true,
+   "tier": "epic",
+   "tier_index": 2,
+   "next_threshold": 12,
+   "progress_to_next": 0.0
+  },
+  {
+   "id": "merge_master",
+   "icon": "🔀",
+   "metric": "prs_merged",
+   "unit": "",
+   "title": {
+    "zh": "合併大師",
+    "en": "Merge Master"
+   },
+   "desc": {
+    "zh": "{v} 個 Pull Request 被合併",
+    "en": "{v} pull requests merged"
+   },
+   "value": 63,
+   "thresholds": [
+    5,
+    25,
+    100,
+    250
+   ],
+   "unlocked": true,
+   "eligible": true,
+   "tier": "rare",
+   "tier_index": 1,
+   "next_threshold": 100,
+   "progress_to_next": 0.507
+  },
+  {
+   "id": "polyglot",
+   "icon": "🗣️",
+   "metric": "language_count",
+   "unit": "",
+   "title": {
+    "zh": "多語通",
+    "en": "Polyglot"
+   },
+   "desc": {
+    "zh": "使用了 {v} 種程式語言",
+    "en": "Wrote code in {v} languages"
+   },
+   "value": 5,
+   "thresholds": [
+    2,
+    4,
+    6,
+    8
+   ],
+   "unlocked": true,
+   "eligible": true,
+   "tier": "rare",
+   "tier_index": 1,
+   "next_threshold": 6,
+   "progress_to_next": 0.5
+  },
+  {
+   "id": "bug_hunter",
+   "icon": "🐞",
+   "metric": "issues",
+   "unit": "",
+   "title": {
+    "zh": "除錯獵人",
+    "en": "Bug Hunter"
+   },
+   "desc": {
+    "zh": "開了 {v} 個 Issue",
+    "en": "Opened {v} issues"
+   },
+   "value": 34,
+   "thresholds": [
+    5,
+    20,
+    50,
+    150
+   ],
+   "unlocked": true,
+   "eligible": true,
+   "tier": "rare",
+   "tier_index": 1,
+   "next_threshold": 50,
+   "progress_to_next": 0.467
+  },
+  {
+   "id": "gatekeeper",
+   "icon": "🛡️",
+   "metric": "reviews",
+   "unit": "",
+   "title": {
+    "zh": "守門人",
+    "en": "Gatekeeper"
+   },
+   "desc": {
+    "zh": "完成 {v} 次 Code Review",
+    "en": "{v} code reviews"
+   },
+   "value": 58,
+   "thresholds": [
+    5,
+    25,
+    100,
+    300
+   ],
+   "unlocked": true,
+   "eligible": true,
+   "tier": "rare",
+   "tier_index": 1,
+   "next_threshold": 100,
+   "progress_to_next": 0.44
+  },
+  {
+   "id": "night_owl",
+   "icon": "🦉",
+   "metric": "night_ratio",
+   "unit": "%",
+   "title": {
+    "zh": "夜貓子",
+    "en": "Night Owl"
+   },
+   "desc": {
+    "zh": "{v}% 的 commit 在午夜到清晨 5 點",
+    "en": "{v}% of commits between 0–5 AM"
+   },
+   "value": 25.1,
+   "thresholds": [
+    10,
+    20,
+    35,
+    50
+   ],
+   "unlocked": true,
+   "eligible": true,
+   "tier": "rare",
+   "tier_index": 1,
+   "next_threshold": 35,
+   "progress_to_next": 0.34
+  },
+  {
+   "id": "weekend_warrior",
+   "icon": "🏕️",
+   "metric": "weekend_ratio",
+   "unit": "%",
+   "title": {
+    "zh": "週末戰士",
+    "en": "Weekend Warrior"
+   },
+   "desc": {
+    "zh": "{v}% 的貢獻發生在週末",
+    "en": "{v}% of contributions on weekends"
+   },
+   "value": 31.9,
+   "thresholds": [
+    20,
+    30,
+    40,
+    50
+   ],
+   "unlocked": true,
+   "eligible": true,
+   "tier": "rare",
+   "tier_index": 1,
+   "next_threshold": 40,
+   "progress_to_next": 0.19
+  },
+  {
+   "id": "voyager",
+   "icon": "🧭",
+   "metric": "external_prs_merged",
+   "unit": "",
+   "title": {
+    "zh": "開源旅人",
+    "en": "Open Source Voyager"
+   },
+   "desc": {
+    "zh": "在別人的專案合併了 {v} 個 PR",
+    "en": "{v} PRs merged into others' projects"
+   },
+   "value": 7,
+   "thresholds": [
+    1,
+    5,
+    20,
+    50
+   ],
+   "unlocked": true,
+   "eligible": true,
+   "tier": "rare",
+   "tier_index": 1,
+   "next_threshold": 20,
+   "progress_to_next": 0.133
+  },
+  {
+   "id": "shipper",
+   "icon": "🚀",
+   "metric": "releases",
+   "unit": "",
+   "title": {
+    "zh": "出貨達人",
+    "en": "Shipper"
+   },
+   "desc": {
+    "zh": "今年發佈了 {v} 個 Release",
+    "en": "Published {v} releases"
+   },
+   "value": 6,
+   "thresholds": [
+    1,
+    5,
+    15,
+    40
+   ],
+   "unlocked": true,
+   "eligible": true,
+   "tier": "rare",
+   "tier_index": 1,
+   "next_threshold": 15,
+   "progress_to_next": 0.1
+  },
+  {
+   "id": "genesis",
+   "icon": "🌱",
+   "metric": "repos_created",
+   "unit": "",
+   "title": {
+    "zh": "創世者",
+    "en": "Genesis"
+   },
+   "desc": {
+    "zh": "今年從零開了 {v} 個新專案",
+    "en": "Started {v} new repositories"
+   },
+   "value": 4,
+   "thresholds": [
+    1,
+    5,
+    10,
+    20
+   ],
+   "unlocked": true,
+   "eligible": true,
+   "tier": "common",
+   "tier_index": 0,
+   "next_threshold": 5,
+   "progress_to_next": 0.75
+  },
+  {
+   "id": "eternal_flame",
+   "icon": "🔥",
+   "metric": "longest_streak",
+   "unit": "days",
+   "title": {
+    "zh": "不滅之火",
+    "en": "Eternal Flame"
+   },
+   "desc": {
+    "zh": "連續 {v} 天都有貢獻",
+    "en": "Contributed {v} days in a row"
+   },
+   "value": 23,
+   "thresholds": [
+    7,
+    30,
+    100,
+    200
+   ],
+   "unlocked": true,
+   "eligible": true,
+   "tier": "common",
+   "tier_index": 0,
+   "next_threshold": 30,
+   "progress_to_next": 0.696
+  },
+  {
+   "id": "multithreaded",
+   "icon": "🧵",
+   "metric": "repos_contributed",
+   "unit": "",
+   "title": {
+    "zh": "多線並行",
+    "en": "Multi-threaded"
+   },
+   "desc": {
+    "zh": "同時推進 {v} 個專案",
+    "en": "Pushed code to {v} repositories"
+   },
+   "value": 6,
+   "thresholds": [
+    3,
+    8,
+    15,
+    30
+   ],
+   "unlocked": true,
+   "eligible": true,
+   "tier": "common",
+   "tier_index": 0,
+   "next_threshold": 8,
+   "progress_to_next": 0.6
+  },
+  {
+   "id": "early_bird",
+   "icon": "🐦",
+   "metric": "morning_ratio",
+   "unit": "%",
+   "title": {
+    "zh": "晨型人",
+    "en": "Early Bird"
+   },
+   "desc": {
+    "zh": "{v}% 的 commit 在早上 5–9 點",
+    "en": "{v}% of commits between 5–9 AM"
+   },
+   "value": 0,
+   "thresholds": [
+    10,
+    20,
+    35,
+    50
+   ],
+   "unlocked": false,
+   "eligible": true,
+   "tier": null,
+   "tier_index": -1,
+   "next_threshold": 10,
+   "progress_to_next": 0.0
+  },
+  {
+   "id": "perfect_month",
+   "icon": "🗓️",
+   "metric": "perfect_months",
+   "unit": "",
+   "title": {
+    "zh": "全勤月",
+    "en": "Perfect Month"
+   },
+   "desc": {
+    "zh": "{v} 個月每天都有貢獻",
+    "en": "{v} months with no empty day"
+   },
+   "value": 0,
+   "thresholds": [
+    1,
+    3,
+    6,
+    12
+   ],
+   "unlocked": false,
+   "eligible": true,
+   "tier": null,
+   "tier_index": -1,
+   "next_threshold": 1,
+   "progress_to_next": 0.0
+  }
+ ],
+ "commit_messages": {
+  "demo-dev/agent-forge": [
+   "fix: off-by-one in WAL replay",
+   "refactor: split planner module",
+   "refactor: split planner module",
+   "fix: off-by-one in WAL replay",
+   "perf: cache embeddings",
+   "feat: SSE streaming",
+   "chore: bump deps",
+   "feat: add tool sandbox",
+   "fix: off-by-one in WAL replay",
+   "perf: cache embeddings",
+   "feat: SSE streaming",
+   "test: add fuzz tests",
+   "feat: SSE streaming",
+   "feat: add tool sandbox",
+   "perf: cache embeddings",
+   "feat: SSE streaming",
+   "test: add fuzz tests",
+   "docs: update README",
+   "feat: compaction worker",
+   "test: add fuzz tests",
+   "feat: compaction worker",
+   "chore: bump deps",
+   "fix: race in scheduler",
+   "fix: race in scheduler",
+   "refactor: split planner module",
+   "test: add fuzz tests",
+   "feat: SSE streaming",
+   "feat: compaction worker",
+   "feat: SSE streaming",
+   "feat: compaction worker",
+   "refactor: split planner module",
+   "chore: bump deps",
+   "fix: off-by-one in WAL replay",
+   "perf: cache embeddings",
+   "chore: bump deps",
+   "feat: SSE streaming",
+   "perf: cache embeddings",
+   "fix: off-by-one in WAL replay",
+   "chore: bump deps",
+   "fix: off-by-one in WAL replay",
+   "feat: SSE streaming",
+   "feat: compaction worker",
+   "test: add fuzz tests",
+   "perf: cache embeddings",
+   "fix: race in scheduler",
+   "feat: compaction worker",
+   "chore: bump deps",
+   "chore: bump deps",
+   "docs: update README",
+   "feat: add tool sandbox",
+   "refactor: split planner module",
+   "fix: race in scheduler",
+   "test: add fuzz tests",
+   "chore: bump deps",
+   "feat: add tool sandbox",
+   "refactor: split planner module",
+   "feat: SSE streaming",
+   "test: add fuzz tests",
+   "feat: compaction worker",
+   "feat: SSE streaming"
+  ],
+  "demo-dev/rust-kv": [
+   "docs: update README",
+   "test: add fuzz tests",
+   "chore: bump deps",
+   "feat: add tool sandbox",
+   "feat: add tool sandbox",
+   "feat: SSE streaming",
+   "feat: SSE streaming",
+   "fix: off-by-one in WAL replay",
+   "feat: compaction worker",
+   "feat: add tool sandbox",
+   "test: add fuzz tests",
+   "docs: update README",
+   "feat: compaction worker",
+   "docs: update README",
+   "fix: off-by-one in WAL replay",
+   "refactor: split planner module",
+   "feat: compaction worker",
+   "fix: race in scheduler",
+   "fix: race in scheduler",
+   "feat: SSE streaming",
+   "docs: update README",
+   "feat: add tool sandbox",
+   "feat: compaction worker",
+   "test: add fuzz tests",
+   "docs: update README",
+   "fix: off-by-one in WAL replay",
+   "feat: compaction worker",
+   "chore: bump deps",
+   "test: add fuzz tests",
+   "chore: bump deps",
+   "chore: bump deps",
+   "feat: compaction worker",
+   "test: add fuzz tests",
+   "fix: race in scheduler",
+   "docs: update README",
+   "refactor: split planner module",
+   "fix: off-by-one in WAL replay",
+   "test: add fuzz tests",
+   "fix: race in scheduler",
+   "fix: off-by-one in WAL replay",
+   "fix: off-by-one in WAL replay",
+   "fix: off-by-one in WAL replay",
+   "test: add fuzz tests",
+   "fix: off-by-one in WAL replay",
+   "perf: cache embeddings",
+   "fix: off-by-one in WAL replay",
+   "feat: SSE streaming",
+   "fix: race in scheduler",
+   "docs: update README",
+   "feat: compaction worker",
+   "feat: compaction worker",
+   "chore: bump deps",
+   "fix: race in scheduler",
+   "chore: bump deps",
+   "test: add fuzz tests",
+   "feat: compaction worker",
+   "perf: cache embeddings",
+   "test: add fuzz tests",
+   "feat: add tool sandbox",
+   "feat: SSE streaming"
+  ],
+  "demo-dev/homelab-dash": [
+   "docs: update README",
+   "docs: update README",
+   "feat: add tool sandbox",
+   "feat: compaction worker",
+   "refactor: split planner module",
+   "refactor: split planner module",
+   "test: add fuzz tests",
+   "docs: update README",
+   "feat: compaction worker",
+   "fix: off-by-one in WAL replay",
+   "feat: compaction worker",
+   "feat: compaction worker",
+   "docs: update README",
+   "fix: race in scheduler",
+   "docs: update README",
+   "chore: bump deps",
+   "perf: cache embeddings",
+   "feat: add tool sandbox",
+   "fix: race in scheduler",
+   "test: add fuzz tests",
+   "fix: race in scheduler",
+   "feat: add tool sandbox",
+   "feat: compaction worker",
+   "perf: cache embeddings",
+   "perf: cache embeddings",
+   "perf: cache embeddings",
+   "feat: SSE streaming",
+   "feat: SSE streaming",
+   "perf: cache embeddings",
+   "test: add fuzz tests",
+   "test: add fuzz tests",
+   "feat: SSE streaming",
+   "feat: add tool sandbox",
+   "feat: compaction worker",
+   "feat: add tool sandbox",
+   "feat: add tool sandbox",
+   "feat: add tool sandbox",
+   "chore: bump deps",
+   "feat: compaction worker",
+   "feat: add tool sandbox",
+   "chore: bump deps",
+   "fix: race in scheduler",
+   "fix: race in scheduler",
+   "docs: update README",
+   "feat: add tool sandbox",
+   "feat: SSE streaming",
+   "perf: cache embeddings",
+   "feat: add tool sandbox",
+   "docs: update README",
+   "test: add fuzz tests",
+   "feat: compaction worker",
+   "feat: add tool sandbox",
+   "chore: bump deps",
+   "fix: race in scheduler",
+   "chore: bump deps",
+   "feat: compaction worker",
+   "refactor: split planner module",
+   "docs: update README",
+   "docs: update README",
+   "refactor: split planner module"
+  ],
+  "demo-dev/invoice-saas": [
+   "fix: race in scheduler",
+   "refactor: split planner module",
+   "test: add fuzz tests",
+   "feat: SSE streaming",
+   "feat: add tool sandbox",
+   "perf: cache embeddings",
+   "test: add fuzz tests",
+   "refactor: split planner module",
+   "chore: bump deps",
+   "fix: race in scheduler",
+   "chore: bump deps",
+   "chore: bump deps",
+   "perf: cache embeddings",
+   "docs: update README",
+   "feat: add tool sandbox",
+   "feat: add tool sandbox",
+   "feat: compaction worker",
+   "test: add fuzz tests",
+   "perf: cache embeddings",
+   "docs: update README",
+   "fix: off-by-one in WAL replay",
+   "chore: bump deps",
+   "fix: off-by-one in WAL replay",
+   "perf: cache embeddings",
+   "fix: off-by-one in WAL replay",
+   "docs: update README",
+   "feat: compaction worker",
+   "refactor: split planner module",
+   "feat: add tool sandbox",
+   "feat: SSE streaming",
+   "fix: race in scheduler",
+   "feat: add tool sandbox",
+   "refactor: split planner module",
+   "test: add fuzz tests",
+   "fix: off-by-one in WAL replay",
+   "chore: bump deps",
+   "docs: update README",
+   "fix: race in scheduler",
+   "fix: off-by-one in WAL replay",
+   "chore: bump deps",
+   "refactor: split planner module",
+   "feat: add tool sandbox",
+   "test: add fuzz tests",
+   "feat: SSE streaming",
+   "chore: bump deps",
+   "test: add fuzz tests",
+   "perf: cache embeddings",
+   "chore: bump deps",
+   "test: add fuzz tests",
+   "docs: update README",
+   "chore: bump deps",
+   "refactor: split planner module",
+   "feat: compaction worker",
+   "chore: bump deps",
+   "test: add fuzz tests",
+   "feat: compaction worker",
+   "fix: off-by-one in WAL replay",
+   "docs: update README",
+   "refactor: split planner module",
+   "test: add fuzz tests"
+  ]
+ }
+}

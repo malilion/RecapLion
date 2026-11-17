@@ -1,0 +1,9 @@
+{
+  "name": "github-achievement",
+  "version": "1.0.0",
+  "description": "Animated GitHub year-in-review with achievement cards — recap the projects you built and the achievements you unlocked this year.",
+  "author": { "name": "malilion", "email": "malilion.dev@gmail.com" },
+  "repository": "https://github.com/malilion/Github-Achievement-Skill",
+  "license": "MIT",
+  "keywords": ["github", "year-in-review", "achievements", "wrapped", "skill"]
+}
